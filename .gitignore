@@ -1,0 +1,25 @@
+# Compiled Sources #
+####################
+*.o
+
+# Linked Program #
+##################
+aw
+
+# Build Files #
+###############
+build/*
+cmake-build-debug
+
+# Bin Folder #
+##############
+bin
+
+# Input Files #
+# ###############
+#*.in
+
+# Workspace Files #
+# #################
+.vscode
+.idea
