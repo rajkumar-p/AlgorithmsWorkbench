@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 
 template<typename T, typename F = std::less<T>>
 class priority_queue {
@@ -20,10 +21,11 @@ public:
 
     size_t size() const;
 
+    typename std::vector<T> elements_copy();
     void print_elements();
-private:
-    T at(int ) const;
 
+    T at(int ) const;
+private:
     int parent_index_of(int );
     int left_index_of(int );
     int right_index_of(int );
@@ -73,6 +75,15 @@ template<typename T, typename F>
 size_t priority_queue<T, F>::size() const
 {
     return elements.size();
+}
+
+template<typename T, typename F>
+typename std::vector<T> priority_queue<T, F>::elements_copy()
+{
+    std::vector<T> elements_copy;
+    std::copy(elements.begin(), elements.end(), std::back_inserter(elements_copy));
+
+    return elements_copy;
 }
 
 template<typename T, typename F>
