@@ -71,6 +71,10 @@ void merge(std::vector<int> &v, int p, int q, int r)
     }
 }
 
+int parent_index_of(int index) { return (index - 1) >> 1; }
+int left_index_of(int index) { return (index << 1) + 1; }
+int right_index_of(int index) { return (index << 1) + 2; }
+
 void heap_sort(std::vector<int> &v)
 {
 
