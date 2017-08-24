@@ -53,6 +53,7 @@ TEST_CASE("Checking Heap Sort Implementation", "[Heap Sort]")
         std::vector<int> v0;
 
         put_into_vector(v0, input_file_name);
+        heap_sort(v0, std::less<int>());
         // heap_sort(v0);
 
         REQUIRE(std::is_sorted(v0.begin(), v0.end()) == true);
