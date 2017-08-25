@@ -10,9 +10,9 @@ TEST_CASE("Checking Max Heapify Implementation", "[Max Heapify]")
         std::vector<int> v0;
 
         put_into_vector(v0, input_file_name);
-        // max_heapify(v0, 0);
+        heapify(v0, 0, v0.size(), std::greater<int>());
 
-        // REQUIRE(is_max_heap(v0, 0) == true);
+        REQUIRE(is_heap(v0, 0, std::greater<int>()) == true);
     }
 
     SECTION("1 Elements") {
@@ -20,9 +20,9 @@ TEST_CASE("Checking Max Heapify Implementation", "[Max Heapify]")
         std::vector<int> v1;
 
         put_into_vector(v1, input_file_name);
-        // max_heapify(v1, 0);
+        heapify(v1, 0, v1.size(), std::greater<int>());
 
-        // REQUIRE(is_max_heap(v1, 0) == true);
+        REQUIRE(is_heap(v1, 0, std::greater<int>()) == true);
     }
 
     SECTION("5 Elements") {
@@ -30,9 +30,9 @@ TEST_CASE("Checking Max Heapify Implementation", "[Max Heapify]")
         std::vector<int> v5;
 
         put_into_vector(v5, input_file_name);
-        // max_heapify(v5, 0);
+        heapify(v5, 0, v5.size(), std::greater<int>());
 
-        // REQUIRE(is_max_heap(v5, 0) == true);
+        REQUIRE(is_heap(v5, 0, std::greater<int>()) == true);
     }
 
     SECTION("10 Elements") {
@@ -40,9 +40,9 @@ TEST_CASE("Checking Max Heapify Implementation", "[Max Heapify]")
         std::vector<int> v10;
 
         put_into_vector(v10, input_file_name);
-        // max_heapify(v10, 0);
+        heapify(v10, 0, v10.size(), std::greater<int>());
 
-        // REQUIRE(is_max_heap(v10, 0) == true);
+        REQUIRE(is_heap(v10, 0, std::greater<int>()) == true);
     }
 }
 
@@ -53,10 +53,13 @@ TEST_CASE("Checking Heap Sort Implementation", "[Heap Sort]")
         std::vector<int> v0;
 
         put_into_vector(v0, input_file_name);
-        heap_sort(v0, std::less<int>());
-        // heap_sort(v0);
+        heap_sort(v0, std::greater<int>());
 
         REQUIRE(std::is_sorted(v0.begin(), v0.end()) == true);
+
+        heap_sort(v0, std::less<int>());
+
+        REQUIRE(std::is_sorted(v0.begin(), v0.end(), std::greater<int>()) == true);
     }
 
     SECTION("1 Elements") {
@@ -64,9 +67,13 @@ TEST_CASE("Checking Heap Sort Implementation", "[Heap Sort]")
         std::vector<int> v1;
 
         put_into_vector(v1, input_file_name);
-        // heap_sort(v1);
+        heap_sort(v1, std::greater<int>());
 
         REQUIRE(std::is_sorted(v1.begin(), v1.end()) == true);
+
+        heap_sort(v1, std::less<int>());
+
+        REQUIRE(std::is_sorted(v1.begin(), v1.end(), std::greater<int>()) == true);
     }
 
     SECTION("5 Elements") {
@@ -74,9 +81,13 @@ TEST_CASE("Checking Heap Sort Implementation", "[Heap Sort]")
         std::vector<int> v5;
 
         put_into_vector(v5, input_file_name);
-        // heap_sort(v5);
+        heap_sort(v5, std::greater<int>());
 
         REQUIRE(std::is_sorted(v5.begin(), v5.end()) == true);
+
+        heap_sort(v5, std::less<int>());
+
+        REQUIRE(std::is_sorted(v5.begin(), v5.end(), std::greater<int>()) == true);
     }
 
     SECTION("10 Elements") {
@@ -84,9 +95,13 @@ TEST_CASE("Checking Heap Sort Implementation", "[Heap Sort]")
         std::vector<int> v10;
 
         put_into_vector(v10, input_file_name);
-        // heap_sort(v10);
+        heap_sort(v10, std::greater<int>());
 
         REQUIRE(std::is_sorted(v10.begin(), v10.end()) == true);
+
+        heap_sort(v10, std::less<int>());
+
+        REQUIRE(std::is_sorted(v10.begin(), v10.end(), std::greater<int>()) == true);
     }
 
     SECTION("100 Elements") {
@@ -94,8 +109,12 @@ TEST_CASE("Checking Heap Sort Implementation", "[Heap Sort]")
         std::vector<int> v100;
 
         put_into_vector(v100, input_file_name);
-        // heap_sort(v100);
+        heap_sort(v100, std::greater<int>());
 
         REQUIRE(std::is_sorted(v100.begin(), v100.end()) == true);
+
+        heap_sort(v100, std::less<int>());
+
+        REQUIRE(std::is_sorted(v100.begin(), v100.end(), std::greater<int>()) == true);
     }
 }

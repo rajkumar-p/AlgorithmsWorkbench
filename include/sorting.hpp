@@ -1,5 +1,4 @@
 #include <vector>
-#include <iostream>
 
 // Sorting interfaces
 void insertion_sort(std::vector<int> &);
@@ -15,7 +14,7 @@ void make_heap(std::vector<T> &, F cmp_fn);
 template<typename T, typename F = std::less<int>>
 void heapify(std::vector<T> &, int , int , F cmp_fn);
 template<typename T, typename F = std::less<int>>
-bool is_max_heap(std::vector<T> &, int , F cmp_fn);
+bool is_heap(std::vector<T> &, int , F cmp_fn);
 
 int parent_index_of(int );
 int left_index_of(int );
@@ -28,7 +27,7 @@ void heap_sort(std::vector<T> &v, F cmp_fn)
     int heap_size = v.size() - 1;
     for(int i = heap_size; i > 0; --i) {
         std::swap(v[0], v[i]);
-        heapify(v, 0, i - 1, cmp_fn);
+        heapify(v, 0, i, cmp_fn);
     }
 }
 
@@ -37,14 +36,13 @@ void make_heap(std::vector<T> &v, F cmp_fn)
 {
     int last_non_leaf_node = (v.size() >> 1) - 1;
     for(int i = last_non_leaf_node; i >=0; --i) {
-        heapify(v, i, v.size() - 1, cmp_fn);
+        heapify(v, i, v.size(), cmp_fn);
     }
 }
 
 template<typename T, typename F>
 void heapify(std::vector<T> &v, int index, int heap_size, F cmp_fn)
 {
-    std::cout <<"index : "<<index<<", heap_size : "<<heap_size<<std::endl;
     int to_replace_index = index;
     int left_index = left_index_of(index);
     int right_index = right_index_of(index);
@@ -64,7 +62,26 @@ void heapify(std::vector<T> &v, int index, int heap_size, F cmp_fn)
 }
 
 template<typename T, typename F>
-bool is_max_heap(std::vector<T> &v, int index, F cmp_fn)
+bool is_heap(std::vector<T> &v, int index, F cmp_fn)
 {
-    return false;
+    if (index > (v.size() >> 1) - 1) {
+        return true;
+    } else {
+        int right_index = right_index_of(index);
+        int left_index = left_index_of(index);
+
+        int winner_index = index;
+        if (right_index < v.size() && cmp_fn(winner_index, right_index)) {
+            winner_index = right_index;
+        }
+        if (left_index < v.size() && cmp_fn(winner_index, left_index)) {
+            winner_index = left_index;
+        }
+
+        if (winner_index != index) {
+            return false;
+        } else {
+            return is_heap(v, left_index, cmp_fn) && is_heap(v, right_index, cmp_fn);
+        }
+    }
 }
