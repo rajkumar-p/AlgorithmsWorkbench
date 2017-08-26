@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     std::vector<int> v = { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
     make_heap(v, std::greater<int>());
 
+    v = {};
     bool res = is_heap(v, 0, std::greater<int>());
 
     // for (auto e : v) {

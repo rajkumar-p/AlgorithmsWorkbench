@@ -64,11 +64,12 @@ void heapify(std::vector<T> &v, int index, int heap_size, F cmp_fn)
 template<typename T, typename F>
 bool is_heap(std::vector<T> &v, int index, F cmp_fn)
 {
-    if (index > (v.size() >> 1) - 1) {
+    int limit = (v.size() >> 1) - 1;
+    if (index > limit) {
         return true;
     } else {
-        int right_index = right_index_of(index);
         int left_index = left_index_of(index);
+        int right_index = right_index_of(index);
 
         int winner_index = index;
         if (right_index < v.size() && cmp_fn(winner_index, right_index)) {
