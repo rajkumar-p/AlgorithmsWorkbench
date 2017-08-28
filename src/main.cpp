@@ -4,22 +4,13 @@
 
 int main(int argc, char *argv[])
 {
-    // std::string input_file_name = "/Users/raj/Projects/Cpp/AlgorithmsWorkbench/test/res/5_custom.in";
-    // std::vector<int> v10;
+    std::vector<int> v = { 2, 8, 7, 1, 3, 5, 6, 4 };
+    partition(v, 0, v.size() - 1, std::less<int>());
 
-    // put_into_vector(v10, input_file_name);
-    // heap_sort(v10, std::greater<int>());
-
-    std::vector<int> v = { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
-    make_heap(v, std::greater<int>());
-
-    v = {};
-    bool res = is_heap(v, 0, std::greater<int>());
-
-    // for (auto e : v) {
-    //     std::cout <<e<<"\t";
-    // }
-    // std::cout <<std::endl;
+    for (auto e : v) {
+        std::cout <<e<<"\t";
+    }
+    std::cout <<std::endl;
 
     return 0;
 }

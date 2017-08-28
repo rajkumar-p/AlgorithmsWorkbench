@@ -1,4 +1,6 @@
 #include <vector>
+#include <iostream>
+#include <random>
 
 // Sorting interfaces
 void insertion_sort(std::vector<int> &);
@@ -85,4 +87,31 @@ bool is_heap(std::vector<T> &v, int index, F cmp_fn)
             return is_heap(v, left_index, cmp_fn) && is_heap(v, right_index, cmp_fn);
         }
     }
+}
+
+template<typename T, typename F>
+void quick_sort(std::vector<T> &, int , F );
+template<typename T, typename F>
+void partition(std::vector<T> , int , int , F );
+
+template<typename T, typename F = std::less<T>>
+void partition(std::vector<T> v, int p, int r, F cmp_fn)
+{
+    int i = p - 1;
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> range(p, r);
+    int rnd_p_r = range(gen);
+
+    std::cout <<"rnd_p_r : "<<rnd_p_r<<std::endl;
+    std::swap(v[rnd_p_r], v[r]);
+
+    for(int j = p; j < r; ++j) {
+        if (!cmp_fn(v[j], v[r])) {
+            ++i;
+        }
+    }
+
+    std::swap(v[i + 1], v[r]);
 }
