@@ -14,6 +14,9 @@ public:
     void modify(int, T );
     void remove(int );
 
+    T top();
+    T extract_top();
+
     F &get_cmp_fn();
 
     typename std::vector<T>::const_iterator start_iterator();
@@ -192,6 +195,21 @@ void priority_queue<T, F>::remove(int index)
     elements.pop_back();
 
     modify(index, last_value);
+}
+
+template<typename T, typename F>
+T priority_queue<T, F>::top()
+{
+    return elements[0];
+}
+
+template<typename T, typename F>
+T priority_queue<T, F>::extract_top()
+{
+    T tmp = top();
+    remove(0);
+
+    return tmp;
 }
 
 bool index_within_range(int index, int size)

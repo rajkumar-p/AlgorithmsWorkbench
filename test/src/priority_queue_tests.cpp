@@ -67,6 +67,7 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
         priority_queue<int, std::greater<int>> max_pq(v);
         v = { 16, 14, 10, 8, 7, 9, 3, 2, 4, 1 };
         REQUIRE(max_pq.elements_copy() == v);
+        REQUIRE(max_pq.top() == 16);
 
         max_pq.modify(-2, 19);
         max_pq.modify(max_pq.size(), 19);
@@ -75,6 +76,7 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
 
         v = {19, 16, 10, 14, 7, 9, 3, 2, 4, 6};
         REQUIRE(max_pq.elements_copy() == v);
+        REQUIRE(max_pq.top() == 19);
 
         max_pq.add(20);
         max_pq.add(5);
@@ -84,6 +86,7 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
 
         v = {25, 19, 22, 14, 16, 10, 20, 2, 4, 6, 7, 5, 9, 3, 15};
         REQUIRE(max_pq.elements_copy() == v);
+        REQUIRE(max_pq.top() == 25);
 
         max_pq.remove(max_pq.size());
         max_pq.remove(-2);
@@ -92,6 +95,7 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
 
         v = {22, 19, 20, 14, 16, 10, 3, 2, 4, 6, 7, 5, 9};
         REQUIRE(max_pq.elements_copy() == v);
+        REQUIRE(max_pq.top() == 22);
     }
 
     SECTION("Max Priority Queue - Custom Data Types") {
@@ -157,6 +161,7 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
 
         v = { -165.78, -121.67, -92.5, 49.42, -97.64, 153.91, 149.84, 102.75, 58.75, -51.81 };
         REQUIRE(min_pq.elements_copy() == v);
+        REQUIRE(min_pq.top() == -165.78);
 
         min_pq.modify(-2, -200.58);
         min_pq.modify(min_pq.size(), -200.58);
@@ -165,6 +170,7 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
 
         v = { -200.58, -165.78, 149.84, -121.67, -97.64, 153.91, 170.85, 49.42, 58.75, -51.81 };
         REQUIRE(min_pq.elements_copy() == v);
+        REQUIRE(min_pq.top() == -200.58);
 
         min_pq.add(75.67);
         min_pq.add(200.99);
@@ -172,6 +178,7 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
 
         v = { -200.58, -165.78, -10.89, -121.67, -97.64, 149.84, 170.85, 49.42, 58.75, -51.81, 75.67, 200.99, 153.91 };
         REQUIRE(min_pq.elements_copy() == v);
+        REQUIRE(min_pq.top() == -200.58);
 
         min_pq.remove(-2);
         min_pq.remove(min_pq.size());
@@ -181,5 +188,6 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
 
         v = { -121.67, -97.64, -10.89, 49.42, -51.81, 149.84, 170.85, 200.99, 58.75, 75.67 };
         REQUIRE(min_pq.elements_copy() == v);
+        REQUIRE(min_pq.top() == -121.67);
     }
 }
