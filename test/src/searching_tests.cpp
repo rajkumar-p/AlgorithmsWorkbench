@@ -122,3 +122,14 @@ TEST_CASE("Checking Subset Sum Implementation", "[Subset Sum]")
         REQUIRE(subset_sum_search(v100, 360) == true);
     }
 }
+
+TEST_CASE("Select Implementation", "[Select]")
+{
+    std::vector<int> v10 = { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
+
+    REQUIRE(select(v10, 0, v10.size() - 1, 5) == 7);
+    REQUIRE(select(v10, 0, v10.size() - 1, 1) == 1);
+    REQUIRE(select(v10, 0, v10.size() - 1, 9) == 14);
+    REQUIRE(select(v10, 0, v10.size() - 1, 10) == 16);
+    REQUIRE(select(v10, 0, v10.size() - 1, 20) == 0);
+}
