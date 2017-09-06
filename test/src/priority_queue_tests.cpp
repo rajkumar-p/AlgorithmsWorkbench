@@ -61,6 +61,38 @@ public:
 
 TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
 {
+    SECTION("[extract_top() test] - Max Priority Queue - Built-In Data Types") {
+        std::vector<int> v = { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
+
+        priority_queue<int, std::greater<int>> max_pq(v);
+        REQUIRE(max_pq.extract_top() == 16);
+        REQUIRE(max_pq.size() == v.size() - 1);
+        REQUIRE(max_pq.top() == 14);
+    }
+
+    SECTION("[extract_top() test] - Max Priority Queue - Custom Data Types") {
+        std::vector<name_and_value> nv_v = { 
+            {"Marina", 4}, {"Robyn", 1},
+            {"Kasey", 3}, {"Christop", 2},
+            {"Mandy", 16}, {"Clemens", 9},
+            {"Angie", 10}, {"Evert", 14},
+            {"Natasha", 8}, {"Dena", 7}
+        };
+
+        priority_queue<name_and_value, std::greater<name_and_value>> nv_max_pq(nv_v);
+        name_and_value nv = nv_max_pq.extract_top();
+        REQUIRE(nv.get_name() == "Mandy");
+        REQUIRE(nv.get_value() == 16);
+
+        REQUIRE(nv_max_pq.size() == nv_v.size() - 1);
+
+        nv = nv_max_pq.top();
+        REQUIRE(nv.get_name() == "Evert");
+        REQUIRE(nv.get_value() == 14);
+
+        REQUIRE(nv_max_pq.size() == nv_v.size() - 1);
+    }
+
     SECTION("Max Priority Queue - Built-In Data Types") {
         std::vector<int> v = { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
 
