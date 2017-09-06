@@ -1,4 +1,5 @@
 #include "sorting.hpp"
+#include <iostream>
 
 void insertion_sort(std::vector<int> &v)
 {
@@ -69,6 +70,31 @@ void merge(std::vector<int> &v, int p, int q, int r)
     while (right_index < right.size()) {
         v[k++] = right[right_index++];
     }
+}
+
+std::vector<int> counting_sort(std::vector<int> &v, int range)
+{
+    std::vector<int> count_vec(range + 1, 0);
+
+    // Count the elements
+    for (auto e : v) {
+        count_vec[e] += 1;
+    }
+
+    // Accumulate the sum of elements
+    for (int i = 1; i < count_vec.size(); ++i) {
+        count_vec[i] += count_vec[i - 1];
+    }
+
+    std::vector<int> sorted_vec(v.size(), 0);
+
+    // Sort the elements based on its count
+    for (int i = v.size() - 1; i >= 0; --i) {
+        sorted_vec[count_vec[v[i]] - 1] = v[i];
+        count_vec[v[i]] -= 1;
+    }
+
+    return sorted_vec;
 }
 
 int parent_index_of(int index) { return (index - 1) >> 1; }

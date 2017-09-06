@@ -8,6 +8,8 @@ void selection_sort(std::vector<int> &);
 void merge_sort(std::vector<int> &,int , int);
 void merge(std::vector<int> &, int , int , int);
 
+std::vector<int> counting_sort(std::vector<int> &, int );
+
 template<typename T, typename F = std::less<int>>
 void heap_sort(std::vector<T> &, F cmp_fn);
 template<typename T, typename F = std::less<int>>
