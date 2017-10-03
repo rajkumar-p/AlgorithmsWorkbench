@@ -1,23 +1,27 @@
 template<typename T>
 class stack {
 private:
-    T *elements;
-    const size_t size;
+    size_t size;
     size_t length;
+
+    T *elements;
 
 public:
     explicit stack(size_t size);
     ~stack();
 
     stack(const stack &other);
-    stack<T> &operator=(const stack &other);
-
     stack(stack &&other);
+
+    stack<T> &operator=(const stack &other);
     stack<T> &operator=(stack &&other);
 
     void push(T element);
     T top() const;
     void pop();
+
+    bool empty() const { return length == 0; }
+    bool full() const { return length == size; }
 
     size_t get_size() const { return size; }
     size_t get_length() const { return length; }
@@ -43,7 +47,19 @@ stack<T>::~stack()
 template<typename T>
 stack<T>::stack(const stack &other) : size(other.size), length(other.length), elements(new T[size])
 {
-    std::copy(other.elements, other.elements + other.length, elements);
+    std::copy(other.elements, other.elements + other.size, elements);
+}
+
+template<typename T>
+stack<T>::stack(stack &&other) : elements(nullptr), size(0), length(0)
+{
+    elements = other.elements;
+    size = other.get_size();
+    length = other.get_length();
+
+    other.elements = nullptr;
+    other.reset_size();
+    other.reset_length();
 }
 
 template<typename T>
@@ -60,18 +76,6 @@ stack<T> &stack<T>::operator=(const stack &other)
     }
 
     return *this;
-}
-
-template<typename T>
-stack<T>::stack(stack &&other) : elements(nullptr), size(0), length(0)
-{
-    elements = other.elements;
-    size = other.get_size();
-    length = other.get_length();
-
-    other.elements = nullptr;
-    other.reset_size();
-    other.reset_length();
 }
 
 template<typename T>
@@ -95,28 +99,34 @@ stack<T> &stack<T>::operator=(stack &&other)
 template<typename T>
 void stack<T>::push(T element)
 {
-    if (length == size - 1) {
-        // Throw exception
+    if (this->full()) {
+        size_t new_size = size * 2;
+        T *new_elements = new T[new_size];
+        std::copy(elements, elements + size, new_elements);
+
+        delete[] elements;
+
+        elements = new_elements;
+        size = new_size;
+        elements[length++] = element;
     } else {
-        elements[++length] = element;
-    } 
+        elements[length++] = element;
+    }
 }
 
 template<typename T>
 T stack<T>::top() const
 {
-    if (length == 0) { 
-        // Throw exception
+    if (this->empty()) { 
+        return T();
     }
 
-    return elements[length];
+    return elements[length - 1];
 }
 
 template<typename T>
 void stack<T>::pop()
 {
-    if (length == 0) { return; }
-
+    if (this->empty()) { return; }
     --length;
-    delete elements[length + 1];
 }
