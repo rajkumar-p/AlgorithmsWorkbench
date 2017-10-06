@@ -1,7 +1,5 @@
 #include <iostream>
-#include "utils.hpp"
-#include "searching.hpp"
-#include "sorting.hpp"
+#include "queue.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -12,10 +10,17 @@ int main(int argc, char *argv[])
     //     std::cout <<e<<"\t";
     // }
     // std::cout <<std::endl;
+    queue<int> q;
 
-    std::vector<int> v = { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
+    q.enqueue(5);
+    q.enqueue(22);
+    q.enqueue(7);
+    q.enqueue(30);
 
-    std::cout <<select(v, 0, v.size() - 1, 10)<<std::endl;
+    q.dequeue();
+    q.dequeue();
+    q.dequeue();
+    q.dequeue();
 
     return 0;
 }

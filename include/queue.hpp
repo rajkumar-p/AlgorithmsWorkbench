@@ -92,12 +92,14 @@ void queue<T>::enqueue(T data)
 {
     queue_node<T> *node_to_enqueue = new queue_node<T>(data);
     
-    node_to_enqueue->_prev = _rear->_prev->_next;
-    _rear->_prev->_next = node_to_enqueue;
+    node_to_enqueue->_prev = _rear->_prev;
+    _rear->_prev = node_to_enqueue;
     node_to_enqueue->_next = _rear;
 
     if (empty()) {
         _front = node_to_enqueue;
+    } else {
+        node_to_enqueue->_prev->_next = node_to_enqueue;
     }
 
     ++_size;
@@ -107,7 +109,9 @@ template<typename T>
 void queue<T>::dequeue()
 {
     queue_node<T> *node_to_dequeue = _front;
+
     _front = _front->_next;
+    _front->_prev = node_to_dequeue->_prev;
 
     delete node_to_dequeue;
 
@@ -117,11 +121,11 @@ void queue<T>::dequeue()
 template<typename T>
 T queue<T>::front()
 {
-    if (_rear->_prev == nullptr) {
+    if (empty()) {
         return T();
     }
 
-    return _rear->_prev->data();
+    return _front->data();
 }
 
 template<typename T>
@@ -133,10 +137,10 @@ size_t queue<T>::size()
 template<typename T>
 typename std::vector<T> queue<T>::items()
 {
-    std::vector<T> t(size());
-    for (auto iter = _front; iter != _rear; iter = iter->_next()) {
-        t.push_back(iter->data());
+    std::vector<T> items;
+    for (auto iter = _front; iter != _rear; iter = iter->_next) {
+        items.push_back(iter->data());
     }
 
-    return t;
+    return items;
 }
