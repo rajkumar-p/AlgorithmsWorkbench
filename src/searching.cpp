@@ -1,5 +1,5 @@
 #include "searching.hpp"
-#include "sorting.hpp"
+#include "insertion_sort.hpp"
 
 int binary_search(std::vector<int> &v, int key, int min, int max)
 {
@@ -21,7 +21,7 @@ int binary_search(std::vector<int> &v, int key, int min, int max)
 bool subset_sum_search(const std::vector<int> &v, long sum)
 {
     std::vector<int> v_copy(v.begin(), v.end());
-    insertion_sort(v_copy);
+    insertion_sort(v_copy, std::less<int>());
 
     for(int i = 0; i < v_copy.size(); ++i) {
         // v[i] + x = sum => x = sum - v[i];

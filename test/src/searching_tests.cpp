@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include "aw_tests_constants.hpp"
 #include "utils.hpp"
-#include "sorting.hpp"
+#include "insertion_sort.hpp"
 #include "searching.hpp"
 
 TEST_CASE("Checking Binary Search Implementation", "[Binary Search]")
@@ -11,7 +11,7 @@ TEST_CASE("Checking Binary Search Implementation", "[Binary Search]")
         std::vector<int> v0;
 
         put_into_vector(v0, input_file_name);
-        insertion_sort(v0);
+        insertion_sort(v0, std::less<int>());
 
         REQUIRE(binary_search(v0, -10, 0, v0.size() - 1) == -1);
     }
@@ -21,7 +21,7 @@ TEST_CASE("Checking Binary Search Implementation", "[Binary Search]")
         std::vector<int> v1;
 
         put_into_vector(v1, input_file_name);
-        insertion_sort(v1);
+        insertion_sort(v1, std::less<int>());
 
         REQUIRE(binary_search(v1, 630, 0, v1.size() - 1) == 0);
     }
@@ -31,7 +31,7 @@ TEST_CASE("Checking Binary Search Implementation", "[Binary Search]")
         std::vector<int> v5;
 
         put_into_vector(v5, input_file_name);
-        insertion_sort(v5);
+        insertion_sort(v5, std::less<int>());
 
         REQUIRE(binary_search(v5, 999, 0, v5.size() - 1) == -1);
         REQUIRE(binary_search(v5, 3, 0, v5.size() - 1) == 2);
@@ -43,7 +43,7 @@ TEST_CASE("Checking Binary Search Implementation", "[Binary Search]")
         std::vector<int> v10;
 
         put_into_vector(v10, input_file_name);
-        insertion_sort(v10);
+        insertion_sort(v10, std::less<int>());
 
         REQUIRE(binary_search(v10, -624, 0, v10.size() - 1) == 1);
         REQUIRE(binary_search(v10, -900, 0, v10.size() - 1) == -1);
@@ -55,7 +55,7 @@ TEST_CASE("Checking Binary Search Implementation", "[Binary Search]")
         std::vector<int> v100;
 
         put_into_vector(v100, input_file_name);
-        insertion_sort(v100);
+        insertion_sort(v100, std::less<int>());
 
         REQUIRE(binary_search(v100, 524, 0, v100.size() - 1) == 68);
         REQUIRE(binary_search(v100, 162, 0, v100.size() - 1) == 51);
