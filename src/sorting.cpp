@@ -1,20 +1,6 @@
 #include "sorting.hpp"
 #include <iostream>
 
-void selection_sort(std::vector<int> &v)
-{
-    for(int i = 0; i < v.size(); ++i) {
-        for(int j = i + 1; j < v.size(); ++j) {
-            int min_index = i;
-            if (v[j] < v[min_index]) {
-                min_index = j;
-            }
-
-            v[i] = v[min_index];
-        }
-    }
-}
-
 void merge_sort(std::vector<int> &v,int p, int r)
 {
     if (p < r) {
