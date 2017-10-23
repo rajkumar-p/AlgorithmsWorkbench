@@ -8,9 +8,7 @@ void insertion_sort(std::vector<int> &v)
         int j = i - 1;
 
         while(j >= 0 && v[j] > key) {
-            if (v[j] > key) {
-                v[j+1] = v[j];
-            }
+            v[j+1] = v[j];
             --j;
         }
 
