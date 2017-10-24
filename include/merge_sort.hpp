@@ -32,7 +32,7 @@ void merge(std::vector<T> &v, int p, int q, int r, F cmp_fn)
     std::vector<T> right(v.begin() + q + 1, v.begin() + r + 1);
 
     int k = p;
-    unsigned int left_index = 0, right_index = 0;
+    size_t left_index = 0, right_index = 0;
 
     while (left_index < left.size() && right_index < right.size()) {
         if (cmp_fn(left[left_index], right[right_index]) == true) {

@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "sorting.hpp"
+#include "counting_sort.hpp"
 
 TEST_CASE("Checking Counting Sort Implementation", "[Counting Sort]")
 {

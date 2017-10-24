@@ -22,7 +22,7 @@ file(GLOB SOURCE_FILES src/*.cpp)
 
 # Setup test files
 # set(TEST_INCLUDE include/catch.hpp include/utils.hpp include/sorting.hpp)
-set(TEST_SOURCES test/src/aw_tests.cpp src/utils.cpp src/sorting.cpp  src/searching.cpp src/counting.cpp test/src/aw_tests_constants.cpp test/src/utils_tests.cpp test/src/insertion_sort_tests.cpp test/src/selection_sort_tests.cpp test/src/merge_sort_tests.cpp test/src/counting_sort_tests.cpp test/src/priority_queue_tests.cpp test/src/quick_sort_tests.cpp test/src/heap_sort_tests.cpp test/src/searching_tests.cpp test/src/counting_tests.cpp test/src/stack_tests.cpp test/src/queue_tests.cpp)
+set(TEST_SOURCES test/src/aw_tests.cpp src/utils.cpp src/sorting.cpp src/counting_sort.cpp src/searching.cpp src/counting.cpp test/src/aw_tests_constants.cpp test/src/utils_tests.cpp test/src/insertion_sort_tests.cpp test/src/selection_sort_tests.cpp test/src/merge_sort_tests.cpp test/src/counting_sort_tests.cpp test/src/priority_queue_tests.cpp test/src/quick_sort_tests.cpp test/src/heap_sort_tests.cpp test/src/searching_tests.cpp test/src/counting_tests.cpp test/src/stack_tests.cpp test/src/queue_tests.cpp)
 
 # Executable targets
 add_executable(aw ${SOURCE_FILES})
