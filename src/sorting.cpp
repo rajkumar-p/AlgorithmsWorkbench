@@ -1,46 +1,6 @@
 #include "sorting.hpp"
 #include <iostream>
 
-void merge_sort(std::vector<int> &v,int p, int r)
-{
-    if (p < r) {
-        int q = ((unsigned int) p + (unsigned int) r) >> 1;
-        merge_sort(v, p, q);
-        merge_sort(v, q + 1, r);
-
-        merge(v, p, q, r);
-    }
-}
-
-void merge(std::vector<int> &v, int p, int q, int r)
-{
-    if (p > r) {
-        return;
-    }
-
-    std::vector<int> left(v.begin() + p, v.begin() + q + 1);
-    std::vector<int> right(v.begin() + q + 1, v.begin() + r + 1);
-
-    int k = p;
-    int left_index = 0, right_index = 0;
-
-    while (left_index < left.size() && right_index < right.size()) {
-        if (left[left_index] <= right[right_index]) {
-            v[k++] = left[left_index++];
-        } else {
-            v[k++] = right[right_index++];
-        }
-    }
-
-    while (left_index < left.size()) {
-        v[k++] = left[left_index++];
-    }
-    
-    while (right_index < right.size()) {
-        v[k++] = right[right_index++];
-    }
-}
-
 std::vector<int> counting_sort(std::vector<int> &v, int range)
 {
     std::vector<int> count_vec(range + 1, 0);
