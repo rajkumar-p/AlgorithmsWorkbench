@@ -7,12 +7,12 @@ public:
     priority_queue();
     priority_queue(const std::vector<T> &);
 
-    void heapify(int );
-    void reverse_heapify(int );
+    void heapify(const size_t index);
+    void reverse_heapify(const size_t index);
 
-    void add(T );
-    void modify(int, T );
-    void remove(int );
+    void add(const T );
+    void modify(const size_t, T );
+    void remove(const size_t );
 
     T top();
     T extract_top();
@@ -27,17 +27,17 @@ public:
     typename std::vector<T> elements_copy();
     void print_elements();
 
-    T at(int ) const;
+    T at(const int ) const;
 private:
-    int parent_index_of(int );
-    int left_index_of(int );
-    int right_index_of(int );
+    size_t parent_index_of(int );
+    size_t left_index_of(int );
+    size_t right_index_of(int );
 private:
     std::vector<T> elements;
     F cmp_fn;
 };
 
-bool index_within_range(int , int );
+bool index_within_range(int index, int heap_size);
 
 template<typename T, typename F>
 priority_queue<T, F>::priority_queue() : cmp_fn(F())
@@ -50,8 +50,7 @@ priority_queue<T, F>::priority_queue(const std::vector<T> &v)
 {
     std::copy(v.begin(), v.end(), std::back_inserter(elements));
 
-    int last_non_leaf_index = size() >> 1;
-    for(int i = last_non_leaf_index - 1; i >= 0; --i) {
+    for(int i = std::floor((v.size() - 1) / 2) - 1; i >= 0; --i) {
         heapify(i);
     }
 }
@@ -99,39 +98,36 @@ void priority_queue<T, F>::print_elements()
 }
 
 template<typename T, typename F>
-T priority_queue<T, F>::at(int index) const
+T priority_queue<T, F>::at(const int index) const
 {
     return elements[index];
 }
 
 template<typename T, typename F>
-int priority_queue<T, F>::parent_index_of(int index)
+size_t priority_queue<T, F>::parent_index_of(int index)
 {
-    int parent_index = (index - 1) >> 1;
-    return parent_index;
+    return (index - 1) >> 1;
 }
 
 template<typename T, typename F>
-int priority_queue<T, F>::left_index_of(int index)
+size_t priority_queue<T, F>::left_index_of(int index)
 {
-    int left_index = (index << 1) + 1; 
-    return left_index;
+    return (index << 1) + 1;
 }
 
 template<typename T, typename F>
-int priority_queue<T, F>::right_index_of(int index)
+size_t priority_queue<T, F>::right_index_of(int index)
 {
-    int right_index = (index << 1) + 2;
-    return right_index;
+    return (index << 1) + 2;
 }
 
 template<typename T, typename F>
-void priority_queue<T, F>::heapify(int index)
+void priority_queue<T, F>::heapify(const size_t index)
 {
-    int left_index = left_index_of(index);
-    int right_index = right_index_of(index);
+    size_t left_index = left_index_of(index);
+    size_t right_index = right_index_of(index);
 
-    int to_replace_index = index;
+    size_t to_replace_index = index;
 
     if (left_index < size() && cmp_fn(at(left_index), at(to_replace_index))) {
         to_replace_index = left_index;
@@ -148,11 +144,11 @@ void priority_queue<T, F>::heapify(int index)
 }
 
 template<typename T, typename F>
-void priority_queue<T, F>::reverse_heapify(int index)
+void priority_queue<T, F>::reverse_heapify(const size_t index)
 {
     if (index < 1) { return; }
 
-    int parent_index = parent_index_of(index);
+    size_t parent_index = parent_index_of(index);
 
     if (cmp_fn(at(index), at(parent_index))) {
         std::swap(elements[index], elements[parent_index]);
@@ -162,14 +158,14 @@ void priority_queue<T, F>::reverse_heapify(int index)
 }
 
 template<typename T, typename F>
-void priority_queue<T, F>::add(T new_element)
+void priority_queue<T, F>::add(const T new_element)
 {
     elements.push_back(new_element);
     reverse_heapify(size() - 1);
 }
 
 template<typename T, typename F>
-void priority_queue<T, F>::modify(int index, T new_value)
+void priority_queue<T, F>::modify(const size_t index, const T new_value)
 {
     if (!index_within_range(index, size())) {
         return;
@@ -185,7 +181,7 @@ void priority_queue<T, F>::modify(int index, T new_value)
 }
 
 template<typename T, typename F>
-void priority_queue<T, F>::remove(int index)
+void priority_queue<T, F>::remove(size_t index)
 {
     if (!index_within_range(index, size())) {
         return;
@@ -212,7 +208,7 @@ T priority_queue<T, F>::extract_top()
     return tmp;
 }
 
-bool index_within_range(int index, int size)
+bool index_within_range(int index, int heap_size)
 {
-    return (index >=0 && index < size);
+    return (index >=0 && index < heap_size);
 }

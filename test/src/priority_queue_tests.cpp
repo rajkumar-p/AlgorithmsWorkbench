@@ -143,7 +143,7 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
 
         nv_v = {{"Mandy", 16}, {"Evert", 14}, {"Angie", 10}, {"Natasha", 8}, {"Dena", 7}, {"Clemens", 9}, {"Kasey", 3}, {"Christop", 2}, {"Marina", 4}, {"Robyn", 1}};
         REQUIRE(nv_max_pq.size() == nv_v.size());
-        for(int i = 0; i < nv_max_pq.size(); ++i) {
+        for(size_t i = 0; i < nv_max_pq.size(); ++i) {
             REQUIRE(nv_max_pq.at(i).get_name() == nv_v[i].get_name());
             REQUIRE(nv_max_pq.at(i).get_value() == nv_v[i].get_value());
         }
@@ -155,7 +155,7 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
 
         nv_v = {{"Akeem", 19}, {"Mandy", 16}, {"Angie", 10}, {"Evert", 14}, {"Dena", 7}, {"Clemens", 9}, {"Kasey", 3}, {"Christop", 2}, {"Marina", 4}, {"Laron", 6}};
         REQUIRE(nv_max_pq.size() == nv_v.size());
-        for(int i = 0; i < nv_max_pq.size(); ++i) {
+        for(size_t i = 0; i < nv_max_pq.size(); ++i) {
             REQUIRE(nv_max_pq.at(i).get_name() == nv_v[i].get_name());
             REQUIRE(nv_max_pq.at(i).get_value() == nv_v[i].get_value());
         }
@@ -168,7 +168,7 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
 
         nv_v = {{"Cierra", 25}, {"Akeem", 19}, {"Benedict", 22}, {"Evert", 14}, {"Mandy", 16}, {"Angie", 10}, {"Cecil", 20}, {"Christop", 2}, {"Marina", 4}, {"Laron", 6}, {"Dena", 7}, {"Asa", 5}, {"Clemens", 9}, {"Kasey", 3}, {"Sylvester", 15}};
         REQUIRE(nv_max_pq.size() == nv_v.size());
-        for(int i = 0; i < nv_max_pq.size(); ++i) {
+        for(size_t i = 0; i < nv_max_pq.size(); ++i) {
             REQUIRE(nv_max_pq.at(i).get_name() == nv_v[i].get_name());
             REQUIRE(nv_max_pq.at(i).get_value() == nv_v[i].get_value());
         }
@@ -180,7 +180,7 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
 
         nv_v = {{"Benedict", 22}, {"Akeem", 19}, {"Cecil", 20}, {"Evert", 14}, {"Mandy", 16}, {"Angie", 10}, {"Kasey", 3}, {"Christop", 2}, {"Marina", 4}, {"Laron", 6}, {"Dena", 7}, {"Asa", 5}, {"Clemens", 9}};
         REQUIRE(nv_max_pq.size() == nv_v.size());
-        for(int i = 0; i < nv_max_pq.size(); ++i) {
+        for(size_t i = 0; i < nv_max_pq.size(); ++i) {
             REQUIRE(nv_max_pq.at(i).get_name() == nv_v[i].get_name());
             REQUIRE(nv_max_pq.at(i).get_value() == nv_v[i].get_value());
         }
