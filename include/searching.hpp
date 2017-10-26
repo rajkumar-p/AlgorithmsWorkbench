@@ -1,4 +1,8 @@
+#ifndef SEARCHING_HPP
+#define SEARCHING_HPP
+
 #include <vector>
+#include "quick_sort_utils.hpp"
 
 int binary_search(std::vector<int> &, int, int , int);
 bool subset_sum_search(const std::vector<int> &, long);
@@ -26,3 +30,5 @@ T select(std::vector<T> &v, int p, int r, int rank)
     }
 
 }
+
+#endif

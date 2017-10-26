@@ -1,7 +1,8 @@
 #include "catch.hpp"
 #include "aw_tests_constants.hpp"
 #include "utils.hpp"
-#include "sorting.hpp"
+#include "quick_sort.hpp"
+#include "quick_sort_utils.hpp"
 
 TEST_CASE("Checking Partition Implementation", "[Partition Method]")
 {

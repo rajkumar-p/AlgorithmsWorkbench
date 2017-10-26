@@ -1,3 +1,6 @@
+#ifndef PRIORITY_QUEUE_H
+#define PRIORITY_QUEUE_H
+
 #include <vector>
 #include <iostream>
 
@@ -212,3 +215,5 @@ bool index_within_range(int index, int heap_size)
 {
     return (index >=0 && index < heap_size);
 }
+
+#endif
