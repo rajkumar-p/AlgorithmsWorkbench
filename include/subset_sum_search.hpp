@@ -2,15 +2,15 @@
 #define SUBSET_SUM_SEARCH_HPP
 
 #include <vector>
-#include "insertion_sort.hpp"
+#include "quick_sort.hpp"
 #include "binary_search.hpp"
 
-bool subset_search_sum(const std::vector<int> &v, long sum);
+bool subset_sum_search(const std::vector<int> &v, long sum);
 
-bool subset_search_sum(const std::vector<int> &v, long sum)
+bool subset_sum_search(const std::vector<int> &v, long sum)
 {
     std::vector<int> v_copy(v.begin(), v.end());
-    insertion_sort(v_copy, std::less<int>());
+    quick_sort(v_copy, 0, v_copy.size() - 1, std::less<int>());
 
     for(int i = 0; i < v_copy.size(); ++i) {
         // v[i] + x = sum => x = sum - v[i];
