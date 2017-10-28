@@ -1,3 +1,6 @@
+#ifndef QUEUE_HPP
+#define QUEUE_HPP
+
 #include <vector>
 
 template<typename T>
@@ -144,3 +147,5 @@ typename std::vector<T> queue<T>::items()
 
     return items;
 }
+
+#endif

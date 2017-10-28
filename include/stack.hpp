@@ -1,3 +1,6 @@
+#ifndef STACK_HPP
+#define STACK_HPP
+
 template<typename T>
 class stack {
 private:
@@ -130,3 +133,5 @@ void stack<T>::pop()
     if (this->empty()) { return; }
     --length;
 }
+
+#endif
