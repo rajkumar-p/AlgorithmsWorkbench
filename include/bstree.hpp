@@ -10,7 +10,7 @@ private:
     bstree_node<T> *_pseudo_root;
 
     void delete_entire_tree(bstree_node<T> *root);
-    bstree_node<T> *insert(bstree_node<T> *node, bstree_node<T> *new_node);
+    bstree_node<T> *insert(bstree_node<T> *node, bstree_node<T> *parent, T key);
 
 public:
     bstree();
@@ -22,9 +22,7 @@ public:
     bstree_node<T> *pseudo_root();
 
     bstree_node<T> *insert(T key);
-
-    void insert_by_looping(T key);
-    void insert(std::vector<T> &v);
+    void insert(std::vector<T> &keys);
 };
 
 template<typename T>
@@ -59,7 +57,7 @@ template<typename T>
 bstree<T>::~bstree()
 {
     delete_entire_tree(root());
-    delete pseudo_root;
+    delete pseudo_root();
 }
 
 template<typename T>
@@ -69,8 +67,8 @@ void bstree<T>::delete_entire_tree(bstree_node<T> *node)
         return;
     }
 
-    delete_entire_tree(node->left);
-    delete_entire_tree(node->right);
+    delete_entire_tree(node->_left);
+    delete_entire_tree(node->_right);
 
     delete node;
 }
@@ -78,24 +76,42 @@ void bstree<T>::delete_entire_tree(bstree_node<T> *node)
 template<typename T>
 bstree_node<T> *bstree<T>::insert(T key)
 {
-    bstree_node<T> *new_node = new bstree_node<T>(key);
-
-    insert(root(), new_node);
-
+    bstree_node<T> *new_node = insert(root(), pseudo_root(), key);
     return new_node;
 }
 
 template<typename T>
-bstree_node<T> *bstree<T>::insert(bstree_node<T> *node, bstree_node<T> *new_node)
+bstree_node<T> *bstree<T>::insert(bstree_node<T> *node, bstree_node<T> *parent, T key)
 {
     if (node == nullptr) {
+        bstree_node<T> *new_node = new bstree_node<T>(key);
+        new_node->_left = nullptr;
+        new_node->_right = nullptr;
+
+        if (parent->data() > key) {
+            parent->_left = new_node;
+        } else {
+            parent->_right = new_node;
+        }
+
         return new_node;
     }
 
-    if (node->data() == new_node->data()) {
+    if (node->data() == key) {
         node->increment_count();
+        return node;
+    } else if (node->data() > key) {
+        return insert(node->_left, node, key);
+    } else {
+        return insert(node->_right, node, key);
+    }
+}
 
-        delete new_node;
+template<typename T>
+void bstree<T>::insert(std::vector<T> &keys)
+{
+    for (const T key : keys) {
+        insert(key);
     }
 }
 
