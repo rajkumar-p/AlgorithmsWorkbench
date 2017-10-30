@@ -23,6 +23,14 @@ public:
 
     bstree_node<T> *insert(T key);
     void insert(std::vector<T> &keys);
+
+    bstree_node<T> *find(bstree_node<T> *node, T key);
+
+    void remove(T key);
+
+    void inorder_walk(bstree_node<T> *node, std::function<void(bstree_node<T> const *current)> fn);  
+    void preorder_walk(bstree_node<T> *node, std::function<void(bstree_node<T> const *current)> fn);
+    void postorder_walk(bstree_node<T> *node, std::function<void(bstree_node<T> const *current)> fn);
 };
 
 template<typename T>
@@ -113,6 +121,64 @@ void bstree<T>::insert(std::vector<T> &keys)
     for (const T key : keys) {
         insert(key);
     }
+}
+
+template<typename T>
+bstree_node<T> *bstree<T>::find(bstree_node<T> *node, T key)
+{
+    if (node == nullptr) {
+        return nullptr;
+    }
+
+    if (node->data() == key) {
+        return node;
+    } else if (node->data() > key) {
+        return find(node->_left, key);
+    } else {
+        return find(node->_right, key);
+    }
+}
+
+template<typename T>
+void bstree<T>::remove(T key)
+{
+
+}
+
+template<typename T>
+void bstree<T>::inorder_walk(bstree_node<T> *node, std::function<void(bstree_node<T> const *current)> fn)
+{
+    if (node == nullptr) {
+        return;
+    }
+
+    inorder_walk(node->_left, fn);
+    fn(node);
+    inorder_walk(node->_right, fn);
+}
+
+template<typename T>
+void bstree<T>::preorder_walk(bstree_node<T> *node, std::function<void(bstree_node<T> const *current)> fn)
+{
+    if (node == nullptr) {
+        return;
+    }
+
+    preorder_walk(node->_left, fn);
+    preorder_walk(node->_right, fn);
+    fn(node);
+}
+
+template<typename T>
+void bstree<T>::postorder_walk(bstree_node<T> *node, std::function<void(bstree_node<T> const *current)> fn)
+{
+    if (node == nullptr) {
+        return;
+    }
+
+    fn(node);
+    postorder_walk(node->_left, fn);
+    postorder_walk(node->_right, fn);
 }
 
 template<typename T>
