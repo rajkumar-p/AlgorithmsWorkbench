@@ -24,3 +24,9 @@ bin
 .vscode
 .idea
 -w
+
+# Ctags Files #
+# #############
+GPATH
+GRTAGS
+GTAGS
