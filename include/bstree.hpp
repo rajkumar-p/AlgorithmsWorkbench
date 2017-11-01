@@ -9,8 +9,15 @@ class bstree {
 private:
     bstree_node<T> *_pseudo_root;
 
+    bstree_node<T> *insert(T key, bstree_node<T> *node, bstree_node<T> *parent);
+
+    void copy_node_data(bstree_node<T> *from, bstree_node<T> *to);
+
+    void remove_node_with_no_children(bstree_node<T> *node_to_remove, bstree_node<T> *node_to_remove_parent);
+    void remove_node_with_single_child(bstree_node<T> *node_to_remove, bstree_node<T> *node_to_remove_parent);
+    void remove_node_with_both_children(bstree_node<T> *node_to_remove, bstree_node<T> *node_to_remove_parent);
+
     void delete_entire_tree(bstree_node<T> *root);
-    bstree_node<T> *insert(bstree_node<T> *node, bstree_node<T> *parent, T key);
 
 public:
     bstree();
@@ -24,9 +31,16 @@ public:
     bstree_node<T> *insert(T key);
     void insert(std::vector<T> &keys);
 
-    bstree_node<T> *find(bstree_node<T> *node, T key);
+    bstree_node<T> *find(T key, bstree_node<T> *node);
+    bstree_node<T> *parent_of_key(T key, bstree_node<T> *node, bstree_node<T> *parent);
 
     void remove(T key);
+
+    bstree_node<T> *max(bstree_node<T> *node);
+    bstree_node<T> *min(bstree_node<T> *node);
+
+    bstree_node<T> *parent_of_max(bstree_node<T> *node, bstree_node<T> *parent);
+    bstree_node<T> *parent_of_min(bstree_node<T> *node, bstree_node<T> *parent);
 
     void inorder_walk(bstree_node<T> *node, std::function<void(bstree_node<T> const *current)> fn);  
     void preorder_walk(bstree_node<T> *node, std::function<void(bstree_node<T> const *current)> fn);
@@ -82,14 +96,21 @@ void bstree<T>::delete_entire_tree(bstree_node<T> *node)
 }
 
 template<typename T>
+void bstree<T>::copy_node_data(bstree_node<T> *from, bstree_node<T> *to)
+{
+    to->set_data(from->data());
+    to->set_count(from->count());
+}
+
+template<typename T>
 bstree_node<T> *bstree<T>::insert(T key)
 {
-    bstree_node<T> *new_node = insert(root(), pseudo_root(), key);
+    bstree_node<T> *new_node = insert(key, root(), pseudo_root());
     return new_node;
 }
 
 template<typename T>
-bstree_node<T> *bstree<T>::insert(bstree_node<T> *node, bstree_node<T> *parent, T key)
+bstree_node<T> *bstree<T>::insert(T key, bstree_node<T> *node, bstree_node<T> *parent)
 {
     if (node == nullptr) {
         bstree_node<T> *new_node = new bstree_node<T>(key);
@@ -109,9 +130,9 @@ bstree_node<T> *bstree<T>::insert(bstree_node<T> *node, bstree_node<T> *parent, 
         node->increment_count();
         return node;
     } else if (node->data() > key) {
-        return insert(node->_left, node, key);
+        return insert(key, node->_left, node);
     } else {
-        return insert(node->_right, node, key);
+        return insert(key, node->_right, node);
     }
 }
 
@@ -124,7 +145,7 @@ void bstree<T>::insert(std::vector<T> &keys)
 }
 
 template<typename T>
-bstree_node<T> *bstree<T>::find(bstree_node<T> *node, T key)
+bstree_node<T> *bstree<T>::find(T key, bstree_node<T> *node)
 {
     if (node == nullptr) {
         return nullptr;
@@ -133,16 +154,137 @@ bstree_node<T> *bstree<T>::find(bstree_node<T> *node, T key)
     if (node->data() == key) {
         return node;
     } else if (node->data() > key) {
-        return find(node->_left, key);
+        return find(key, node->_left);
     } else {
-        return find(node->_right, key);
+        return find(key, node->_right);
+    }
+}
+
+template<typename T>
+bstree_node<T> *bstree<T>::parent_of_key(T key, bstree_node<T> *node, bstree_node<T> *parent)
+{
+    if (node == nullptr) {
+        return nullptr;
+    }
+
+    if (node->data() == key) {
+        return parent;
+    } else if (node->data() > key) {
+        return parent_of_key(key, node->_left, node);
+    } else {
+        return parent_of_key(key, node->_right, node);
     }
 }
 
 template<typename T>
 void bstree<T>::remove(T key)
 {
+    bstree_node<T> *node_to_remove_parent = parent_of_key(key, root(), pseudo_root());
+    bstree_node<T> *node_to_remove = find(key, node_to_remove_parent);
 
+    if (node_to_remove->_left == nullptr && node_to_remove->_right == nullptr) {
+        remove_node_with_no_children(node_to_remove, node_to_remove_parent);
+    } else if (node_to_remove->_left != nullptr && node_to_remove->_right != nullptr) {
+        remove_node_with_both_children(node_to_remove, node_to_remove_parent);
+    } else {
+        remove_node_with_single_child(node_to_remove, node_to_remove_parent);
+    }
+
+}
+
+template<typename T>
+void bstree<T>::remove_node_with_no_children(bstree_node<T> *node_to_remove, bstree_node<T> *node_to_remove_parent)
+{
+    if (node_to_remove_parent->_left == node_to_remove) {
+        node_to_remove_parent->_left = nullptr;
+    } else {
+        node_to_remove_parent->_right = nullptr;
+    }
+
+    delete node_to_remove;
+}
+
+template<typename T>
+void bstree<T>::remove_node_with_both_children(bstree_node<T> *node_to_remove, bstree_node<T> *node_to_remove_parent)
+{
+    bstree_node<T> *parent_of_max_node = parent_of_max(node_to_remove->_right, node_to_remove);
+    bstree_node<T> *max_node = parent_of_max_node->_right;
+
+    parent_of_max_node->_right = max_node->_left;
+
+    max_node->_left = node_to_remove->_left;
+    max_node->_right = node_to_remove->_right;
+
+    if (node_to_remove_parent->_left == node_to_remove) {
+        node_to_remove_parent->_left = max_node;
+    } else {
+        node_to_remove_parent->_right = max_node;
+    }
+
+    node_to_remove->_left = nullptr;
+    node_to_remove->_right = nullptr;
+
+    delete node_to_remove;
+}
+
+template<typename T>
+void bstree<T>::remove_node_with_single_child(bstree_node<T> *node_to_remove, bstree_node<T> *node_to_remove_parent)
+{
+    if (node_to_remove_parent->_left == node_to_remove) {
+        if (node_to_remove->_left != nullptr) {
+            node_to_remove_parent->_left = node_to_remove->_left;
+        } else {
+            node_to_remove_parent->_left = node_to_remove->_right;
+        }
+    } else {
+        if (node_to_remove->_left != nullptr) {
+            node_to_remove_parent->_right = node_to_remove->_left;
+        } else {
+            node_to_remove_parent->_right = node_to_remove->_right;
+        }
+    }
+
+    delete node_to_remove;
+}
+
+template<typename T>
+bstree_node<T> *bstree<T>::max(bstree_node<T> *node)
+{
+    if (node->_right == nullptr) {
+        return node;
+    } else {
+        return max(node->_right);
+    }
+}
+
+template<typename T>
+bstree_node<T> *bstree<T>::min(bstree_node<T> *node)
+{
+    if (node->_left == nullptr) {
+        return node;
+    } else {
+        return min(node->_left);
+    }
+}
+
+template<typename T>
+bstree_node<T> *bstree<T>::parent_of_max(bstree_node<T> *node, bstree_node<T> *parent)
+{
+    if (node->_right == nullptr) {
+        return parent;
+    } else {
+        return parent_of_max(node->_right, node);
+    }
+}
+
+template<typename T>
+bstree_node<T> *bstree<T>::parent_of_min(bstree_node<T> *node, bstree_node<T> *parent)
+{
+    if (node->_left == nullptr) {
+        return parent;
+    } else {
+        return parent_of_min(node->_left, node);
+    }
 }
 
 template<typename T>

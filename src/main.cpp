@@ -18,10 +18,14 @@ int main(int argc, char *argv[])
     bstree<int> *bst = new bstree<int>(15);
     bst->insert(nums);
 
+    bst->remove(7);
+    bst->remove(22);
+    bst->remove(20);
+
     std::vector<int> sorted_vec;
-    bst->postorder_walk(bst->root(), [&sorted_vec](bstree_node<int> const *current) {
+    bst->inorder_walk(bst->root(), [&sorted_vec](bstree_node<int> const *current) {
         // sorted_vec.push_back(current->data());
-        std::cout <<current->data()<<"\t";
+        std::cout <<current->data()<<", ";
     });
 
     std::cout <<std::endl;
