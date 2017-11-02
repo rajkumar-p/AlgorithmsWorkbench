@@ -18,6 +18,8 @@ TEST_CASE("Checking Bstree Implementation", "[BSTree]")
         REQUIRE(b1->root() == nullptr);
         REQUIRE(b2->root()->data() == "Alice");
         REQUIRE(b3->root()->data() == 22);
+
+        delete b1;
     }
 
     SECTION("Insert into a BSTree") {
@@ -30,7 +32,7 @@ TEST_CASE("Checking Bstree Implementation", "[BSTree]")
         REQUIRE(same_node->data() == 22);
         REQUIRE(same_node->count() == 2);
 
-        //TODO: Test insert of vector elements
+        delete b1;
     }
 
     SECTION("BSTree tree traversal") {
@@ -62,6 +64,8 @@ TEST_CASE("Checking Bstree Implementation", "[BSTree]")
 
         REQUIRE(walk_output_vec == postorder_vec);
         walk_output_vec.clear();
+
+        delete bst;
     }
 
     SECTION("BSTree find()") {
@@ -110,6 +114,8 @@ TEST_CASE("Checking Bstree Implementation", "[BSTree]")
         bstree_node<int> *node7 = bst->parent_of_key(40, bst->root(), bst->pseudo_root());
 
         REQUIRE(node7 == nullptr);
+
+        delete bst;
     }
 
     SECTION("Min and Max") {
@@ -159,6 +165,8 @@ TEST_CASE("Checking Bstree Implementation", "[BSTree]")
         REQUIRE(node17->data() == 21);
         REQUIRE(node17->_right->data() == 22);
         REQUIRE(node18->data() == 21);
+
+        delete bst;
     }
 
     SECTION("BSTree remove()") {
@@ -209,5 +217,7 @@ TEST_CASE("Checking Bstree Implementation", "[BSTree]")
         
         expected_vec = { 3, 5, 6, 10, 12, 13, 15, 16, 18, 21, 23 };
         REQUIRE(walk_output_vec == expected_vec);
+
+        delete bst;
     }
 }
