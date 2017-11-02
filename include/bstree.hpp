@@ -182,6 +182,10 @@ void bstree<T>::remove(T key)
     bstree_node<T> *node_to_remove_parent = parent_of_key(key, root(), pseudo_root());
     bstree_node<T> *node_to_remove = find(key, node_to_remove_parent);
 
+    if (node_to_remove == nullptr) {
+        return;
+    }
+
     if (node_to_remove->_left == nullptr && node_to_remove->_right == nullptr) {
         remove_node_with_no_children(node_to_remove, node_to_remove_parent);
     } else if (node_to_remove->_left != nullptr && node_to_remove->_right != nullptr) {
@@ -207,18 +211,22 @@ void bstree<T>::remove_node_with_no_children(bstree_node<T> *node_to_remove, bst
 template<typename T>
 void bstree<T>::remove_node_with_both_children(bstree_node<T> *node_to_remove, bstree_node<T> *node_to_remove_parent)
 {
-    bstree_node<T> *parent_of_max_node = parent_of_max(node_to_remove->_right, node_to_remove);
-    bstree_node<T> *max_node = parent_of_max_node->_right;
+    bstree_node<T> *parent_of_min_node_in_subtree = parent_of_min(node_to_remove->_right, node_to_remove);
+    bstree_node<T> *min_node_in_subtree = parent_of_min_node_in_subtree->_left;
 
-    parent_of_max_node->_right = max_node->_left;
+    if (parent_of_min_node_in_subtree->_left == min_node_in_subtree) {
+        parent_of_min_node_in_subtree->_left = min_node_in_subtree->_right;
+    } else {
+        parent_of_min_node_in_subtree->_right = min_node_in_subtree->_right;
+    }
 
-    max_node->_left = node_to_remove->_left;
-    max_node->_right = node_to_remove->_right;
+    min_node_in_subtree->_left = node_to_remove->_left;
+    min_node_in_subtree->_right = node_to_remove->_right;
 
     if (node_to_remove_parent->_left == node_to_remove) {
-        node_to_remove_parent->_left = max_node;
+        node_to_remove_parent->_left = min_node_in_subtree;
     } else {
-        node_to_remove_parent->_right = max_node;
+        node_to_remove_parent->_right = min_node_in_subtree;
     }
 
     node_to_remove->_left = nullptr;

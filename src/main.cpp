@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     bstree<int> *bst = new bstree<int>(15);
     bst->insert(nums);
 
+    bst->remove(55);
     bst->remove(7);
     bst->remove(22);
     bst->remove(20);

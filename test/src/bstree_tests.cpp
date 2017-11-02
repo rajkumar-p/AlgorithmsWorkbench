@@ -167,14 +167,25 @@ TEST_CASE("Checking Bstree Implementation", "[BSTree]")
         bstree<int> *bst = new bstree<int>(15);
         bst->insert(nums);
 
-        bst->remove(7);
+        bst->remove(55);
 
         std::vector<int> walk_output_vec;
         bst->inorder_walk(bst->root(), [&walk_output_vec](bstree_node<int> const *current) {
             walk_output_vec.push_back(current->data());
         });
 
-        std::vector<int> expected_vec = { 3, 5, 6, 10, 12, 13, 15, 16, 18, 20, 21, 22, 23 };
+        std::vector<int> expected_vec = { 3, 5, 6, 7, 10, 12, 13, 15, 16, 18, 20, 21, 22, 23 };
+        REQUIRE(walk_output_vec == expected_vec);
+
+        walk_output_vec.clear();
+
+        bst->remove(7);
+
+        bst->inorder_walk(bst->root(), [&walk_output_vec](bstree_node<int> const *current) {
+            walk_output_vec.push_back(current->data());
+        });
+
+        expected_vec = { 3, 5, 6, 10, 12, 13, 15, 16, 18, 20, 21, 22, 23 };
         REQUIRE(walk_output_vec == expected_vec);
 
         walk_output_vec.clear();
@@ -188,6 +199,15 @@ TEST_CASE("Checking Bstree Implementation", "[BSTree]")
         expected_vec = { 3, 5, 6, 10, 12, 13, 15, 16, 18, 20, 21, 23 };
         REQUIRE(walk_output_vec == expected_vec);
 
+        walk_output_vec.clear();
+
         bst->remove(20);
+
+        bst->inorder_walk(bst->root(), [&walk_output_vec](bstree_node<int> const *current) {
+            walk_output_vec.push_back(current->data());
+        });
+        
+        expected_vec = { 3, 5, 6, 10, 12, 13, 15, 16, 18, 21, 23 };
+        REQUIRE(walk_output_vec == expected_vec);
     }
 }
