@@ -14,6 +14,9 @@ public:
     bstree_node(T data);
     ~bstree_node();
 
+    bstree_node(const bstree_node<T> &other);
+    bstree_node<T> &operator=(const bstree_node<T> &other);
+
     T data() const;
     size_t count() const;
 
@@ -36,6 +39,23 @@ bstree_node<T>::~bstree_node()
 {
     _left = nullptr;
     _right = nullptr;
+}
+
+template<typename T>
+bstree_node<T>::bstree_node(const bstree_node<T> &other) : _data(other.data()), _count(other.count())
+{
+
+}
+
+template<typename T>
+bstree_node<T> &bstree_node<T>::operator=(const bstree_node<T> &other)
+{
+    if (this != &other) {
+        _data = other.data();
+        _count = other.count();
+    }
+
+    return *this;
 }
 
 template<typename T>
