@@ -5,7 +5,7 @@ This repo is a slate to various algorithm implementations.
 
 ## Build Instructions
 * Create a new directory, **build**
-* Cd into **build**, run **cmake ..**
+* Cd into **build**, run **cmake -DCMAKE_BUILD_TYPE=Debug ..** for debug configuration and **cmake -DCMAKE_BUILD_TYPE=Release ..** for release configuration
 * Run **make**, after the above command completes
 * Targets are copied over to **{Project.Dir}/bin/{Target}/aw**
 * Test target is copied to **{Project.Dir}/bin/test/aw_tests**
