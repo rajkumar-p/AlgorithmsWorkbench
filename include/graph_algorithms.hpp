@@ -3,6 +3,6 @@
 
 #include "graph.hpp"
 
-std::map<std::string, vertex_search_details *> *bfs(graph G, vertex *source);
+std::map<std::string, vertex *> *bfs(graph *G, vertex *source);
 
 #endif
