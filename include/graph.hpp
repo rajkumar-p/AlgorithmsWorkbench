@@ -43,7 +43,7 @@ class graph {
 private:
     std::map<std::string, vertex *> _vertices;
     std::list<edge *> _edges;
-    std::map<std::string, std::list<edge *> *> _adj_list; 
+    std::map<std::string, std::list<edge *> *> _adj_edges; 
 
 public:
     graph();
@@ -57,10 +57,10 @@ public:
 
     void add_edge(vertex *v1, vertex *v2);
 
-    std::list<edge *> *get_adj_vertices_to(vertex *v);
+    std::list<edge *> *get_adj_edges(vertex *v);
 
 private:
-    void deinit_adj_list();
+    void deinit_adj_edges();
     void deinit_edges();
     void deinit_vertices();
 };

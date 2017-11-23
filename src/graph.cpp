@@ -1,57 +1,74 @@
 #include "graph.hpp"
 
-// graph::graph() : _vertices(), _adj_list()
-// {
+graph::graph() : _vertices(), _edges(), _adj_edges()
+{
 
-// }
+}
 
-// graph::~graph()
-// {
-//     deinit_adj_list();
-//     deinit_vertices();
-// }
+graph::~graph()
+{
+    deinit_adj_edges();
+    deinit_edges();
+    deinit_vertices();
+}
 
-// void graph::deinit_adj_list()
-// {
-//     for (std::pair<const std::string, std::list<vertex *> *> &adj : _adj_list) {
-//         adj.second = nullptr;
-//     }
-// }
+void graph::deinit_adj_edges()
+{
+    for (std::pair<const std::string, std::list<edge *> *> &adj : _adj_edges) {
+        adj.second = nullptr;
+    }
+}
 
-// void graph::deinit_vertices()
-// {
-//     for (std::pair<const std::string, vertex *> &kv : _vertices) {
-//         delete kv.second;
+void graph::deinit_edges()
+{
+    for (edge *e : _edges) {
+        delete e;
 
-//         kv.second = nullptr;
-//     }
-// }
+        e = nullptr;
+    }
+}
 
-// void graph::add_vertex(vertex *v)
-// {
-//     _vertices.insert(std::pair<std::string, vertex *>(v->id(), v));
-//     _adj_list.insert(std::pair<std::string, std::list<vertex *> *>(v->id(), new std::list<vertex *>()));
-// }
+void graph::deinit_vertices()
+{
+    for (std::pair<const std::string, vertex *> &kv : _vertices) {
+        delete kv.second;
 
-// vertex *graph::get_vertex(const std::string s)
-// {
-//     std::map<std::string, vertex *>::iterator it;
+        kv.second = nullptr;
+    }
+}
 
-//     it = _vertices.find(s);
+void graph::add_vertex(vertex *v)
+{
+    _vertices.insert(std::pair<std::string, vertex *>(v->id(), v));
+    _adj_edges.insert(std::pair<std::string, std::list<edge *> *>(v->id(), new std::list<edge *>()));
+}
 
-//     if (it != _vertices.end()) {
-//         return it->second;
-//     }
+vertex *graph::get_vertex(const std::string s)
+{
+    std::map<std::string, vertex *>::iterator it;
 
-//     return nullptr;
-// }
+    it = _vertices.find(s);
 
-// void graph::foreach_vertex(const std::function<void (const vertex *v)> fn)
-// {
-//     for (std::pair<const std::string, vertex *> &kv : _vertices) {
-//         fn(kv.second);
-//     }
-// }
+    if (it != _vertices.end()) {
+        return it->second;
+    }
+
+    return nullptr;
+}
+
+void graph::foreach_vertex(const std::function<void (const vertex *v)> fn)
+{
+    for (std::pair<const std::string, vertex *> &kv : _vertices) {
+        fn(kv.second);
+    }
+}
+
+void graph::foreach_edge(const std::function<void (const edge *e)> fn)
+{
+    for (const edge *e : _edges) {
+        fn(e);
+    }
+}
 
 // void graph::add_edge(vertex *v1, vertex *v2)
 // {
