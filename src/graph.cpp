@@ -70,12 +70,34 @@ void graph::foreach_edge(const std::function<void (const edge *e)> fn)
     }
 }
 
-// void graph::add_edge(vertex *v1, vertex *v2)
-// {
-//     if (v1 != v2 && v1 != nullptr && v2 != nullptr) {
-//         _adj_list[v1->id()]->push_back(v2);
-//     }
-// }
+void graph::add_directed_edge(vertex *v1, vertex *v2, int weight)
+{
+    if (v1 != v2 && v1 != nullptr && v2 != nullptr) {
+        edge *e = new edge(v1, v2, weight);
+        _edges.push_back(e);
+        _adj_edges[v1->id()]->push_back(e);
+    }
+}
+
+void graph::add_edge(vertex *v1, vertex *v2, int weight)
+{
+    if (v1 != v2 && v1 != nullptr && v2 != nullptr) {
+        add_directed_edge(v1, v2, weight);
+        add_directed_edge(v2, v1, weight);
+    }
+}
+
+std::list<edge *> *graph::get_adj_edges(vertex *v)
+{
+    std::map<std::string, std::list<edge *> *>::iterator it;
+    it = _adj_edges.find(v->id());
+
+    if (it != _adj_edges.end()) {
+        return it->second;
+    }
+
+    return nullptr;
+}
 
 // std::list<vertex *> *graph::get_adj_vertices_to(vertex *v)
 // {

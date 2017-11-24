@@ -32,7 +32,7 @@ private:
     int _weight;
 
 public:
-    edge(vertex *from, vertex *to, int weight = 1) : _from(from), _to(to), _weight(weight) {}
+    edge(vertex *from, vertex *to, int weight) : _from(from), _to(to), _weight(weight) {}
 
     vertex *from() const { return _from; }
     vertex *to() const { return _to; }
@@ -55,7 +55,8 @@ public:
     void foreach_vertex(const std::function<void(const vertex *v)> fn);
     void foreach_edge(const std::function<void(const edge *e)> fn);
 
-    void add_edge(vertex *v1, vertex *v2);
+    void add_directed_edge(vertex *v1, vertex *v2, int weight = 1);
+    void add_edge(vertex *v1, vertex *v2, int weight = 1);
 
     std::list<edge *> *get_adj_edges(vertex *v);
 
