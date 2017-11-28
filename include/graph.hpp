@@ -49,8 +49,12 @@ public:
     graph();
     ~graph();
 
+    vertex *make_vertex(std::string id);
     void add_vertex(vertex *v);
     vertex *get_vertex(const std::string id);
+
+    size_t get_vertex_count();
+    size_t get_edge_count();
 
     void foreach_vertex(const std::function<void(const vertex *v)> fn);
     void foreach_edge(const std::function<void(const edge *e)> fn);
@@ -59,6 +63,7 @@ public:
     void add_edge(vertex *v1, vertex *v2, int weight = 1);
 
     std::list<edge *> *get_adj_edges(vertex *v);
+    size_t get_adj_edge_count(vertex *v);
 
 private:
     void deinit_adj_edges();

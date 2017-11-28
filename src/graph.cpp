@@ -22,19 +22,26 @@ void graph::deinit_adj_edges()
 void graph::deinit_edges()
 {
     for (edge *e : _edges) {
-        delete e;
-
-        e = nullptr;
+        if (e != nullptr) {
+            delete e;
+            e = nullptr;
+        }
     }
 }
 
 void graph::deinit_vertices()
 {
     for (std::pair<const std::string, vertex *> &kv : _vertices) {
-        delete kv.second;
-
-        kv.second = nullptr;
+        if (kv.second != nullptr) {
+            delete kv.second;
+            kv.second = nullptr;
+        }
     }
+}
+
+vertex *graph::make_vertex(std::string id)
+{
+    return new vertex(id);
 }
 
 void graph::add_vertex(vertex *v)
@@ -54,6 +61,16 @@ vertex *graph::get_vertex(const std::string s)
     }
 
     return nullptr;
+}
+
+size_t graph::get_vertex_count()
+{
+    return _vertices.size();
+}
+
+size_t graph::get_edge_count()
+{
+    return _edges.size();
 }
 
 void graph::foreach_vertex(const std::function<void (const vertex *v)> fn)
@@ -99,15 +116,14 @@ std::list<edge *> *graph::get_adj_edges(vertex *v)
     return nullptr;
 }
 
-// std::list<vertex *> *graph::get_adj_vertices_to(vertex *v)
-// {
-//     std::map<std::string, std::list<vertex *> *>::iterator it;
+size_t graph::get_adj_edge_count(vertex *v)
+{
+    std::map<std::string, std::list<edge *> *>::iterator it;
+    it = _adj_edges.find(v->id());
 
-//     it = _adj_list.find(v->id());
+    if (it != _adj_edges.end()) {
+        return it->second->size();
+    }
 
-//     if (it != _adj_list.end()) {
-//         return it->second;
-//     }
-
-//     return nullptr;
-// }
+    return 0;
+}
