@@ -1,54 +1,70 @@
 #include "graph_algorithms.hpp"
 #include <queue>
+#include <iostream>
 
-// vertex_search_details *get_vertex_search_details(std::map<std::string, vertex_search_details *> *search_details, std::string id)
-// {
-//     std::map<std::string, vertex_search_details *>::iterator it;
-//     it = search_details->find(id);
+void init_vertices_for_bfs(graph *G)
+{
+    G->foreach_vertex_change([](vertex *v) {
+        v->set_color(vertex_color::white);
+        v->set_dist_from_root(INT32_MAX);
+        v->set_prev("");
+    });
+}
 
-//     if (it != search_details->end()) {
-//         return it->second;
-//     }
+void init_source_vertex_for_bfs(vertex *source)
+{
+    source->set_color(vertex_color::gray);
+    source->set_dist_from_root(0);
+    source->set_prev("");
+}
 
-//     return nullptr;
-// }
+std::map<std::string, vertex> bfs(graph *G, vertex *source)
+{
+    init_vertices_for_bfs(G);
+    init_source_vertex_for_bfs(source);
 
-// std::map<std::string, vertex_search_details *> *bfs(graph *G, vertex *source)
-// {
-//     std::map<std::string, vertex_search_details *> *search_details = new std::map<std::string, vertex_search_details *>();
+    std::queue<vertex *> Q;
 
-//     G->foreach_vertex([search_details](const vertex *v) {
-//         vertex_search_details *vsd = new vertex_search_details(v->id());
-//         vsd->set_color(vertex_color::white);
-//         vsd->set_dist_from_root(0);
-//         vsd->set_parent(nullptr);
+    Q.push(source);
 
-//         search_details->insert(std::pair<std::string, vertex_search_details *>(vsd->id(), vsd));
-//     });
+    while (!Q.empty()) {
+        vertex *u = Q.front();
+        Q.pop();
 
-//     vertex_search_details *vsd = get_vertex_search_details(search_details, source->id());
-//     vsd->set_color(vertex_color::gray);
+        std::list<edge *> *adj_edges_to_u = G->get_adj_edges(u);
+        for (const edge *e : *adj_edges_to_u) {
+            if (e->to()->color() == vertex_color::white) {
+                e->to()->set_color(vertex_color::gray);
+                e->to()->set_dist_from_root(u->distance_from_root() + 1);
+                e->to()->set_prev(u->id());
 
-//     std::queue<vertex *> Q = std::queue<vertex *>();
-//     Q.push(source);
+                Q.push(e->to());
+            }
+        }
 
-//     while (!Q.empty()) {
-//         vertex *v = Q.front();
-//         std::list<vertex *> *adj_vertices = G->get_adj_vertices_to(v);
+        u->set_color(vertex_color::black);
+    }
 
-//         for (vertex *av : *adj_vertices) {
-//             vertex_search_details *av_vsd = get_vertex_search_details(search_details, av->id());
-//             if (av_vsd != nullptr) {
-//                 av_vsd->set_color(vertex_color::gray);
-//                 av_vsd->set_dist_from_root(vsd->dist_from_root() + 1);
-//                 av_vsd->set_parent(v);
-//             }
+    std::map<std::string, vertex> bfs_vertices;
+    G->foreach_vertex([&bfs_vertices](const vertex *v) {
+        bfs_vertices.insert(std::pair<std::string, vertex>(v->id(), *v));
+    });
 
-//             Q.push(av);
-//         }
+    return bfs_vertices;
+}
 
-//         vsd->set_color(vertex_color::black);
-//     }
+void print_bfs_path(std::map<std::string, vertex> &bfs_vertices, vertex *target)
+{
+    std::string id = target->id();
+    std::map<std::string, vertex>::iterator it;
+    while((it = bfs_vertices.find(id)) != bfs_vertices.end()) {
+        std::cout <<it->first;
 
-//     return search_details;
-// }
+        if (it->second.prev() == "") {
+            return;
+        } else {
+            id = it->second.prev();
+            std::cout <<"<---";
+        }
+    }
+}

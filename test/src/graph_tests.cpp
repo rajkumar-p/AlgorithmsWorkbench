@@ -48,6 +48,30 @@ TEST_CASE("Checking Graph Implementation", "[Graph]")
 
         REQUIRE(G->get_edge_count() == 20);
 
+        std::list<edge *> *edges_adj_to_s = G->get_adj_edges(s);
+        REQUIRE(edges_adj_to_s->size() == 2);
+
+        std::list<std::string> ver_ids_adj_to_s = { "R", "W" };
+
+        for (const edge *e : *edges_adj_to_s) {
+            REQUIRE(e->from()->id() == "S");
+            REQUIRE(e->to()->id() == ver_ids_adj_to_s.front());
+
+            ver_ids_adj_to_s.pop_front();
+        }
+
+        std::list<edge *> *edges_adj_to_u = G->get_adj_edges(u);
+        REQUIRE(edges_adj_to_u->size() == 3);
+
+        std::list<std::string> ver_ids_adj_to_u = { "T", "X", "Y" };
+
+        for (const edge *e : *edges_adj_to_u) {
+            REQUIRE(e->from()->id() == "U");
+            REQUIRE(e->to()->id() == ver_ids_adj_to_u.front());
+
+            ver_ids_adj_to_u.pop_front();
+        }
+
         delete G;
     }
 }

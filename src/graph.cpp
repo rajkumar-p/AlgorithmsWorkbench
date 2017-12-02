@@ -87,6 +87,13 @@ void graph::foreach_edge(const std::function<void (const edge *e)> fn)
     }
 }
 
+void graph::foreach_vertex_change(const std::function<void(vertex *v)> changes)
+{
+    for (std::pair<const std::string, vertex *> &kv : _vertices) {
+        changes(kv.second);
+    }
+}
+
 void graph::add_directed_edge(vertex *v1, vertex *v2, int weight)
 {
     if (v1 != v2 && v1 != nullptr && v2 != nullptr) {

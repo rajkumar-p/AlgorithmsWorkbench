@@ -22,7 +22,11 @@ public:
     std::string id() const { return _id; }
     vertex_color color() const { return _color; }
     size_t distance_from_root() const { return _dist_from_root; }
-    std::string prev() const { return _prev; }
+    const std::string prev() const { return _prev; }
+
+    void set_color(vertex_color color) { _color = color; }
+    void set_dist_from_root(size_t dist_from_root) { _dist_from_root = dist_from_root; }
+    void set_prev(std::string prev) { _prev = prev; }
 };
 
 class edge {
@@ -58,6 +62,8 @@ public:
 
     void foreach_vertex(const std::function<void(const vertex *v)> fn);
     void foreach_edge(const std::function<void(const edge *e)> fn);
+
+    void foreach_vertex_change(const std::function<void(vertex *v)> fn);
 
     void add_directed_edge(vertex *v1, vertex *v2, int weight = 1);
     void add_edge(vertex *v1, vertex *v2, int weight = 1);
