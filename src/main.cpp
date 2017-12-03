@@ -1,52 +1,24 @@
 #include <iostream>
-#include "graph.hpp"
-#include "graph_algorithms.hpp"
+#include "dp_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
-    graph *G = new graph();
+    std::vector<interval> intervals;
 
-    vertex *s = G->make_vertex("S");
-    vertex *r = G->make_vertex("R");
-    vertex *v = G->make_vertex("V");
-    vertex *w = G->make_vertex("W");
-    vertex *t = G->make_vertex("T");
-    vertex *x = G->make_vertex("X");
-    vertex *u = G->make_vertex("U");
-    vertex *y = G->make_vertex("Y");
+    intervals.push_back(interval("1", 0, 6, 3));
+    intervals.push_back(interval("2", 1, 4, 5));
+    intervals.push_back(interval("3", 3, 5, 5));
+    intervals.push_back(interval("4", 3, 8, 8));
+    intervals.push_back(interval("5", 4, 7, 3));
+    intervals.push_back(interval("6", 5, 9, 7));
+    intervals.push_back(interval("7", 6, 10, 3));
+    intervals.push_back(interval("8", 8, 11, 4));
 
-    G->add_vertex(s);
-    G->add_vertex(r);
-    G->add_vertex(v);
-    G->add_vertex(w);
-    G->add_vertex(t);
-    G->add_vertex(x);
-    G->add_vertex(u);
-    G->add_vertex(y);
+    weighted_interval_scheduling(intervals);
 
-    G->add_edge(s, r);
-    G->add_edge(s, w);
-    G->add_edge(r, v);
-    G->add_edge(w, t);
-    G->add_edge(w, x);
-    G->add_edge(t, x);
-    G->add_edge(t, u);
-    G->add_edge(x, u);
-    G->add_edge(x, y);
-    G->add_edge(u, y);
-
-    std::map<std::string, vertex> bfs_vertices = bfs(G, s);
-    for (auto &kv : bfs_vertices) {
-        std::cout <<"ID : "<<kv.first<<", DIST : "<<kv.second.distance_from_root()<<std::endl;
+    for (const interval &i : intervals) {
+        std::cout <<"Id : "<<i.id()<<", Start : "<<i.start()<<", End : "<<i.end()<<", Weight : "<<i.weight()<<std::endl;
     }
-
-    std::cout <<std::endl;
-
-    print_bfs_path(bfs_vertices, G->get_vertex("Y"));
-
-    std::cout <<std::endl;
-
-    delete G;
 
     return 0;
 }
