@@ -1,6 +1,8 @@
 #ifndef LIST_ALGORITHMS_HPP
 #define LIST_ALGORITHMS_HPP
 
+#include <functional>
+
 template<typename T>
 class node {
 private:
@@ -11,24 +13,42 @@ public:
 
 public:
     explicit node(T data) : _data(data), _next(nullptr) {}
+    ~node() { _next = nullptr; }
 
     T data() const { return _data; }
 };
 
 template<typename T>
 class list {
-private:
+public:
     node<T> *_head;
     node<T> *_tail;
 
-    size_t _size;
+private:
+    unsigned int _size;
 
 public:
     list() : _head(nullptr), _tail(nullptr), _size(0) {}
+    list(node<T> *head) : _head(head), _tail(nullptr), _size(0) {
+        node<T> *start = _head;
+        while (start != nullptr) {
+            start = start->_next;
+            ++_size;
+        }
+    }
+    ~list() {
+        node<T> *n = nullptr;
 
-    node<T> *head() { return _head; }
-    node<T> *tail() { return _tail; }
-    
+        while (_head != nullptr) {
+            n = _head;
+            _head = _head->_next;
+
+            delete n;
+        }
+
+        _head = _tail = nullptr;
+    }
+
     void insert(T data) {
         node<T> *new_node = new node<T>(data);
 
@@ -43,7 +63,7 @@ public:
         ++_size;
     }
 
-    size_t size() { return _size; }
+    unsigned int size() { return _size; }
 
     void for_each_node(std::function<void(const node<T> *n)> fn) {
         node<T> *start = _head;
@@ -54,5 +74,8 @@ public:
         }
     }
 };
+
+void capture_odd_list_items(node<int> *head, list<int> *odd_lst);
+void capture_even_list_items(node<int> *head, list<int> *even_lst);
 
 #endif
