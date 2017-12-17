@@ -23,4 +23,12 @@ TEST_CASE("Checking Math Algorithms Implementation", "[Math Algorithms]")
         primes = { 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0 };
         REQUIRE(all_primes_till(50) == primes);
     }
+
+    SECTION("gcd() and lcm() tests") {
+        REQUIRE(gcd(2336, 1314) == 146);
+        REQUIRE(lcm(2336, 1314) == 21024);
+
+        REQUIRE(gcd(9, 6) == 3);
+        REQUIRE(lcm(9, 6) == 18);
+    }
 }

@@ -4,15 +4,9 @@
 
 int main(int argc, char *argv[])
 {
-    std::vector<bool> primes = all_primes_till(50);
-
-    for(size_t i = 0; i < primes.size(); ++i) {
-        if (primes[i] == true) {
-            std::cout <<i<<"\t";
-        }
-    }
-
-    std::cout <<std::endl;
+    int a = 9, b = 6;
+    std::cout <<"gcd("<<a<<", "<<b<<")"<<gcd(a, b)<<std::endl;
+    std::cout <<"lcm("<<a<<", "<<b<<")"<<lcm(a, b)<<std::endl;
 
     return 0;
 }
