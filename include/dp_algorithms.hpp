@@ -33,4 +33,19 @@ public:
 
 size_t weighted_interval_scheduling(std::vector<interval> &intervals);
 
+class max_subarray_struct {
+private:
+    int _sum;
+    size_t _start_index;
+    size_t _end_index;
+
+public:
+    max_subarray_struct(int sum, size_t start_index, size_t end_index) : _sum(sum), _start_index(start_index), _end_index(end_index) {}
+    int sum() const { return _sum; }
+    size_t start_index() const { return _start_index; }
+    size_t end_index() const { return _end_index; }
+};
+
+max_subarray_struct get_max_subarray_properties(std::vector<int> &numbers);
+
 #endif
