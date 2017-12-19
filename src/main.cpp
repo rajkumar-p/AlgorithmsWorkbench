@@ -4,10 +4,14 @@
 
 int main(int argc, char *argv[])
 {
-    std::vector<int> numbers = { 13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7 };
-    max_subarray_struct max_subarray = get_max_subarray_properties(numbers);
+    std::vector<int> numbers = { 3, 4, -1, 5, 8, 2, 3, 12, 7, 9, 10 };
+    std::vector<int> increasing_subsequence = get_longest_increasing_subsequence(numbers);
 
-    std::cout <<"Sum : "<<max_subarray.sum()<<", Start_index : "<<max_subarray.start_index()<<", End_index : "<<max_subarray.end_index()<<std::endl;
+    for (const int &v : increasing_subsequence) {
+        std::cout <<v<<"\t";
+    }
+
+    std::cout <<std::endl;
 
     return 0;
 }

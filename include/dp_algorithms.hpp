@@ -48,4 +48,6 @@ public:
 
 max_subarray_struct get_max_subarray_properties(std::vector<int> &numbers);
 
+std::vector<int> get_longest_increasing_subsequence(std::vector<int> &numbers);
+
 #endif

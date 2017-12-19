@@ -42,4 +42,27 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
         REQUIRE(max_subarray.start_index() == 3);
         REQUIRE(max_subarray.end_index() == 6);
     }
+
+    SECTION("Longest Increasing Subsequence Problem") {
+        std::vector<int> numbers = { 3, 4, -1, 5, 8, 2, 3, 12, 7, 9, 10 };
+        std::vector<int> increasing_subsequence = get_longest_increasing_subsequence(numbers);
+
+        std::vector<int> result = { -1, 2, 3, 7, 9, 10 };
+        REQUIRE(increasing_subsequence.size() == 6);
+        REQUIRE(increasing_subsequence == result);
+
+        numbers = { 15, 27, 14, 38, 26, 55, 46, 65, 85 };
+        increasing_subsequence = get_longest_increasing_subsequence(numbers);
+
+        result = { 15, 27, 38, 46, 65, 85 };
+        REQUIRE(increasing_subsequence.size() == 6);
+        REQUIRE(increasing_subsequence == result);
+
+        numbers = { 0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15 };
+        increasing_subsequence = get_longest_increasing_subsequence(numbers);
+
+        result = { 0, 2, 6, 9, 11, 15 };
+        REQUIRE(increasing_subsequence.size() == 6);
+        REQUIRE(increasing_subsequence == result);
+    }
 }
