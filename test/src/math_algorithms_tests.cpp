@@ -31,4 +31,24 @@ TEST_CASE("Checking Math Algorithms Implementation", "[Math Algorithms]")
         REQUIRE(gcd(9, 6) == 3);
         REQUIRE(lcm(9, 6) == 18);
     }
+
+    SECTION("to_decimal() tests") {
+        REQUIRE(to_decimal(1011, 2) == 11);
+        REQUIRE(to_decimal(0000, 2) == 0);
+        REQUIRE(to_decimal(1111, 2) == 15);
+
+        REQUIRE(to_decimal(22, 7) == 16);
+        REQUIRE(to_decimal(34, 7) == 25);
+        REQUIRE(to_decimal(123, 7) == 66);
+    }
+
+    SECTION("from_decimal() tests") {
+        REQUIRE(from_decimal(11, 2) == 1011);
+        REQUIRE(from_decimal(0, 2) == 0);
+        REQUIRE(from_decimal(15, 2) == 1111);
+
+        REQUIRE(from_decimal(16, 7) == 22);
+        REQUIRE(from_decimal(25, 7) == 34);
+        REQUIRE(from_decimal(66, 7) == 123);
+    }
 }

@@ -9,4 +9,7 @@ std::vector<bool> all_primes_till(int number);
 int gcd(int a, int b);
 int lcm(int a, int b);
 
+int to_decimal(int number, int base);
+int from_decimal(const int number, const int base);
+
 #endif

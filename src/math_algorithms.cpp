@@ -49,3 +49,35 @@ int lcm(int a, int b)
 {
     return (a * b) / gcd(a, b);
 }
+
+int to_decimal(int number, int base)
+{
+    int n = number;
+    int sum = 0, power = 0;
+
+    while (n != 0) {
+        int rem = n % 10;
+        sum += (rem * pow(base, power));
+
+        ++power;
+        n = n / 10;
+    }
+
+    return sum;
+}
+
+int from_decimal(const int number, const int base)
+{
+    int n = number;
+    int sum = 0, power = 0;
+
+    while (n != 0) {
+        int rem = n % base;
+        sum += (rem * pow(10, power));
+
+        ++power;
+        n = n / base;
+    }
+
+    return sum;
+}
