@@ -23,3 +23,88 @@ void capture_even_list_items(node<int> *head, list<int> *even_lst)
 
     even_lst->insert(head->data());
 }
+
+ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
+{
+    ListNode *result_node = nullptr;
+    ListNode *result_tail = nullptr;
+
+    size_t carry = 0;
+    while (l1 != nullptr && l2 != nullptr) {
+        int value;
+        int result = l1->val + l2->val + carry;
+        if (result > 9) {
+            value = result % 10;
+            carry = 1;
+        } else {
+            value = result;
+            carry = 0;
+        }
+
+        if (result_tail == nullptr) {
+            result_node = new ListNode(value);
+            result_node->next = nullptr;
+
+            result_tail = result_node;
+        } else {
+            ListNode *new_node = new ListNode(value);
+            new_node->next = nullptr;
+            
+            result_tail->next = new_node;
+            result_tail = new_node;
+        }
+
+        l1 = l1->next;
+        l2 = l2->next;
+    }
+
+    while (l1 != nullptr) {
+        int value;
+        int result = l1->val + carry;
+        if (result > 9) {
+            value = result % 10;
+            carry = 1;
+        } else {
+            value = result;
+            carry = 0;
+        }
+
+        ListNode *new_node = new ListNode(value);
+        new_node->next = nullptr;
+
+        result_tail->next = new_node;
+        result_tail = new_node;
+
+        l1 = l1->next;
+    }
+
+    while (l2 != nullptr) {
+        int value;
+        int result = l2->val + carry;
+        if (result > 9) {
+            value = result % 10;
+            carry = 1;
+        } else {
+            value = result;
+            carry = 0;
+        }
+
+        ListNode *new_node = new ListNode(value);
+        new_node->next = nullptr;
+
+        result_tail->next = new_node;
+        result_tail = new_node;
+
+        l2 = l2->next;
+    }
+
+    if (carry == 1) {
+        ListNode *new_node = new ListNode(carry);
+        new_node->next = nullptr;
+
+        result_tail->next = new_node;
+        result_tail = new_node;
+    }
+
+    return result_node;
+}

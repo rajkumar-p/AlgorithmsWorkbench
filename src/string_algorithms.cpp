@@ -112,3 +112,29 @@ std::vector<size_t> compute_prefix_for(const std::string pattern)
 
     return prefix_table;
 }
+
+std::string reverse_words(std::string &s)
+{
+    std::reverse(s.begin(), s.end());
+
+    std::vector<std::tuple<int, int>> words_start_end;
+    int prev_space = -1;
+    int m = s.length();
+    for (int i = -1; i < m - 1; ++i) {
+        if (isspace(s[i + 1]) ||  i + 1 == m - 1) {
+            if (prev_space + 1 != i + 1) {
+                words_start_end.push_back(std::make_tuple(prev_space + 1, i));
+            }
+
+            prev_space = i + 1;
+        }
+    }
+
+    for (const std::tuple<int, int> &t : words_start_end) {
+        int start = std::get<0>(t);
+        int end = std::get<1>(t);
+        std::reverse(s.begin() + start, s.begin() + end + 1);
+    }
+
+    return s;
+}

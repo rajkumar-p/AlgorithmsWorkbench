@@ -62,4 +62,9 @@ TEST_CASE("Checking String Algorithms Implementation", "[String Algorithms]")
         result = {};
         REQUIRE(kmp(text, pattern) == result);
     }
+
+    SECTION("reverse_words(str) tests") {
+        std::string s = "the sky is blue";
+        REQUIRE(reverse_words(s) == "blue is sky the");
+    }
 }

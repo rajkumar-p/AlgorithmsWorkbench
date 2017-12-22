@@ -78,4 +78,13 @@ public:
 void capture_odd_list_items(node<int> *head, list<int> *odd_lst);
 void capture_even_list_items(node<int> *head, list<int> *even_lst);
 
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
+// https://leetcode.com/problems/add-two-numbers/description/
+ListNode *addTwoNumbers(ListNode *l1, ListNode *l2);
+
 #endif
