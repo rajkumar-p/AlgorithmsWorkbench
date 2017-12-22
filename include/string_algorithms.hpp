@@ -14,4 +14,7 @@ int strstr(std::string haystack, std::string needle);
 std::vector<size_t> kmp(const std::string text, const std::string pattern);
 std::vector<size_t> compute_prefix_for(const std::string pattern);
 
+// https://leetcode.com/problems/reverse-words-in-a-string/description/
+std::string reverse_words(std::string &s);
+
 #endif

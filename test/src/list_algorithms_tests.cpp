@@ -64,4 +64,77 @@ TEST_CASE("Checking List Implementation", "[List]") {
         delete odd_lst;
         delete even_lst;
     }
+
+    SECTION("addTwoNumbers(l1, l2) tests") {
+        std::vector<int> numbers;
+        ListNode *l1 = nullptr;
+        ListNode *l1_tail = nullptr;
+
+        numbers = { 2, 4, 3, 9, 9, 9 };
+        for (const int &n : numbers) {
+            if (l1_tail == nullptr) {
+                l1 = new ListNode(n);
+                l1->next = nullptr;
+
+                l1_tail = l1;
+            } else {
+                ListNode *new_node = new ListNode(n);
+                new_node->next = nullptr;
+
+                l1_tail->next = new_node;
+                l1_tail = new_node;
+            }
+        }
+
+        ListNode *l2 = nullptr;
+        ListNode *l2_tail = nullptr;
+
+        numbers = { 5, 6, 7 };
+        for (const int &n : numbers) {
+            if (l2_tail == nullptr) {
+                l2 = new ListNode(n);
+                l2->next = nullptr;
+
+                l2_tail = l2;
+            } else {
+                ListNode *new_node = new ListNode(n);
+                new_node->next = nullptr;
+
+                l2_tail->next = new_node;
+                l2_tail = new_node;
+            }
+        }
+
+        ListNode *result = addTwoNumbers(l1, l2);
+        std::vector<int> result_to_compare = { 7, 0, 1, 0, 0, 0, 1 };
+
+        size_t index = 0;
+        while (result != nullptr) {
+            REQUIRE(result->val == result_to_compare[index++]);
+            result = result->next;
+        }
+
+        REQUIRE(index == result_to_compare.size());
+
+        while (l1 != nullptr) {
+            ListNode *to_delete = l1;
+            l1 = l1->next;
+
+            delete to_delete;
+        }
+
+        while (l2 != nullptr) {
+            ListNode *to_delete = l2;
+            l2 = l2->next;
+
+            delete to_delete;
+        }
+
+        while (result != nullptr) {
+            ListNode *to_delete = result;
+            result = result->next;
+
+            delete to_delete;
+        }
+    }
 }
