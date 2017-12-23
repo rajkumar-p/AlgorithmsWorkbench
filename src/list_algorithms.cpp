@@ -108,3 +108,18 @@ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
 
     return result_node;
 }
+
+std::string get_task(std::vector<std::string> &tasks, size_t n)
+{
+    size_t next_start = 0;
+    size_t cycle_length = n - 1;
+
+    while (tasks.size() != 1) {
+        size_t index_to_remove = (next_start + cycle_length) % tasks.size();
+        next_start = index_to_remove % tasks.size();
+
+        tasks.erase(tasks.begin() + index_to_remove);
+    }
+
+    return tasks.front();
+}

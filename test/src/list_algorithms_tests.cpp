@@ -137,4 +137,32 @@ TEST_CASE("Checking List Implementation", "[List]") {
             delete to_delete;
         }
     }
+
+    SECTION("get_task(tasks, n)") {
+        std::vector<std::string> tasks;
+        size_t n;
+
+        tasks = { "a","b","c","d" };
+        n = 2;
+        REQUIRE(get_task(tasks, n) == "a");
+
+        tasks = { "a","b","c","d","e" };
+        n = 3;
+        REQUIRE(get_task(tasks, n) == "d");
+
+        tasks = { "alpha","beta","gamma","delta","epsilon" } ;
+        n = 1;
+        REQUIRE(get_task(tasks, n) == "epsilon");
+
+        tasks = { "a", "b" };
+        n = 1000;
+        REQUIRE(get_task(tasks, n) == "a");
+
+        tasks = { "zlqamum","yjsrpybmq","tjllfea","fxjqzznvg","nvhekxr","am","skmazcey","piklp",
+                    "olcqvhg","dnpo","bhcfc","y","h","fj","bjeoaxglt","oafduixsz","kmtbaxu",
+                    "qgcxjbfx","my","mlhy","bt","bo","q"
+        };
+        n = 9000000;
+        REQUIRE(get_task(tasks, n) == "fxjqzznvg");
+    }
 }

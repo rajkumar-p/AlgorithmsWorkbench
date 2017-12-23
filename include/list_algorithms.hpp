@@ -2,6 +2,8 @@
 #define LIST_ALGORITHMS_HPP
 
 #include <functional>
+#include <vector>
+#include <string>
 
 template<typename T>
 class node {
@@ -86,5 +88,8 @@ struct ListNode {
 
 // https://leetcode.com/problems/add-two-numbers/description/
 ListNode *addTwoNumbers(ListNode *l1, ListNode *l2);
+
+// https://community.topcoder.com/stat?c=problem_statement&pm=1585&rd=6535
+std::string get_task(std::vector<std::string> &tasks, size_t n);
 
 #endif
