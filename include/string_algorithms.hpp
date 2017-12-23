@@ -17,4 +17,7 @@ std::vector<size_t> compute_prefix_for(const std::string pattern);
 // https://leetcode.com/problems/reverse-words-in-a-string/description/
 std::string reverse_words(std::string &s);
 
+// https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+std::vector<std::string> lengthOfLongestSubstring(const std::string s);
+
 #endif

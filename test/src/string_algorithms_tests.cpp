@@ -67,4 +67,11 @@ TEST_CASE("Checking String Algorithms Implementation", "[String Algorithms]")
         std::string s = "the sky is blue";
         REQUIRE(reverse_words(s) == "blue is sky the");
     }
+
+    SECTION("lengthOfLongestSubstring(str) tests") {
+        std::string s = "abcabcbb";
+        std::vector<std::string> result = { "abc", "bca", "cab", "abc" };
+
+        REQUIRE(lengthOfLongestSubstring(s) == result);
+    }
 }

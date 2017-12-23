@@ -1,6 +1,8 @@
 #include "string_algorithms.hpp"
+#include <algorithm>
 #include <cctype>
 #include <set>
+#include <map>
 
 std::string shortestCompletingWord(std::string licensePlate, std::vector<std::string> &words)
 {
@@ -137,4 +139,35 @@ std::string reverse_words(std::string &s)
     }
 
     return s;
+}
+
+std::vector<std::string> lengthOfLongestSubstring(const std::string str)
+{
+    std::vector<std::string> longest_substrings;
+    size_t n = str.length();
+    size_t ans = 0;
+
+    std::map<char, size_t> mp;
+    for (size_t i = 0, j = 0; j < n; ++j) {
+        if (mp.find(str[j]) != mp.end()) {
+            i = std::max(mp[str[j]], i);
+        }
+
+        if (ans <= j - i + 1) {
+            longest_substrings.push_back(str.substr(i, j - i + 1));
+            ans = j - i + 1;
+        }
+
+        mp[str[j]] = j + 1;
+    }
+
+    size_t longest_substring_size = longest_substrings.back().length();
+    std::vector<std::string> result;
+    for (const std::string &s : longest_substrings) {
+        if (s.length() == longest_substring_size) {
+            result.push_back(s);
+        }
+    }
+
+    return result;
 }
