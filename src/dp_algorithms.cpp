@@ -5,7 +5,7 @@ size_t weighted_interval_scheduling(std::vector<interval> &intervals)
 {
     void fill_p_table(const std::vector<interval> &intervals, std::vector<int> &ptable);
 
-    std::sort(intervals.begin(), intervals.end(), [](const interval i1, const interval i2) { 
+    std::sort(intervals.begin(), intervals.end(), [](const interval &i1, const interval &i2) { 
         return i1.end() < i2.end(); 
     });
 
