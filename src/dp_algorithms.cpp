@@ -131,3 +131,50 @@ size_t floor_binary_search(std::vector<int> &numbers, int low, int high, int key
 
     return low;
 }
+
+std::vector<std::pair<size_t, size_t>> cut_rod(std::vector<std::pair<size_t, size_t>> &len_and_prices, size_t n)
+{
+    std::vector<size_t> opt_table(n + 1, 0);
+    std::vector<size_t> sol_table(n + 1, 0);
+
+    for (size_t i = 1; i <= n ; ++i) {
+        size_t max_value = 0;
+        for (size_t j = 0; j < len_and_prices.size(); ++j) {
+            size_t j_length = len_and_prices[j].first;
+            size_t j_price = len_and_prices[j].second;
+
+            if (j_length <= i) {
+                if (max_value < j_price + opt_table[i - j_length]) {
+                    opt_table[i] = max_value = j_price + opt_table[i - j_length];
+                    sol_table[i] = j_length;
+                }
+            }
+        }
+    }
+
+    std::vector<std::pair<size_t, size_t>> cuts;
+    size_t result_index = n;
+    while (result_index > 0) {
+        cuts.push_back(len_and_prices[sol_table[result_index]]);
+        result_index -= sol_table[result_index];
+    }
+
+    return cuts;
+}
+
+size_t min_coin_change(std::vector<size_t> &coins, size_t sum)
+{
+    std::vector<size_t> opt_table(sum + 1, INT32_MAX);
+
+    opt_table[0] = 0;
+    for (size_t i = 1; i <= sum; ++i) {
+        size_t min_value = opt_table[i];
+        for (size_t j = 0; coins[j] <= i; ++j) {
+            if (min_value > 1 + opt_table[i - coins[j]]) {
+                opt_table[i] = min_value = 1 + opt_table[i - coins[j]];
+            }
+        }
+    }
+
+    return opt_table[sum];
+}
