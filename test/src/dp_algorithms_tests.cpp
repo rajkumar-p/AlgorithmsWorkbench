@@ -71,7 +71,7 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
         std::vector<std::pair<size_t, size_t>> cuts;
         std::vector<std::pair<size_t, size_t>> result_to_check;
 
-        len_and_prices = { {0, 0}, {1, 1}, {2, 5},{3, 8}, {4, 9}, {5, 10}, {6, 17}, {7, 17}, {8, 20}, {9, 24}, {10, 30} };
+        len_and_prices = { {1, 1}, {2, 5},{3, 8}, {4, 9}, {5, 10}, {6, 17}, {7, 17}, {8, 20}, {9, 24}, {10, 30} };
 
         result_to_check = { {2, 5}, {2, 5} };
         cuts = cut_rod(len_and_prices, 4);
@@ -80,7 +80,7 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
             REQUIRE(result_to_check[i].second == cuts[i].second);
         }
 
-        result_to_check = { {2, 5}, {6, 17} };
+        result_to_check = { {6, 17}, {2, 5} };
         cuts = cut_rod(len_and_prices, 8);
         for (size_t i = 0; i < result_to_check.size(); ++i) {
             REQUIRE(result_to_check[i].first == cuts[i].first);

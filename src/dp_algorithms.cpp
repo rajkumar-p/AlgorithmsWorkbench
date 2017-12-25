@@ -137,17 +137,14 @@ std::vector<std::pair<size_t, size_t>> cut_rod(std::vector<std::pair<size_t, siz
     std::vector<size_t> opt_table(n + 1, 0);
     std::vector<size_t> sol_table(n + 1, 0);
 
-    for (size_t i = 1; i <= n ; ++i) {
-        size_t max_value = 0;
-        for (size_t j = 0; j < len_and_prices.size(); ++j) {
-            size_t j_length = len_and_prices[j].first;
-            size_t j_price = len_and_prices[j].second;
+    for (size_t i = 0; i < len_and_prices.size(); ++i) {
+        size_t i_len = len_and_prices[i].first;
+        size_t i_price = len_and_prices[i].second;
 
-            if (j_length <= i) {
-                if (max_value < j_price + opt_table[i - j_length]) {
-                    opt_table[i] = max_value = j_price + opt_table[i - j_length];
-                    sol_table[i] = j_length;
-                }
+        for (size_t j = i_len; j <= n; ++j) {
+            if (opt_table[j] < i_price + opt_table[j - i_len]) {
+                opt_table[j] = i_price + opt_table[j - i_len];
+                sol_table[j] = i;
             }
         }
     }
@@ -156,7 +153,7 @@ std::vector<std::pair<size_t, size_t>> cut_rod(std::vector<std::pair<size_t, siz
     size_t result_index = n;
     while (result_index > 0) {
         cuts.push_back(len_and_prices[sol_table[result_index]]);
-        result_index -= sol_table[result_index];
+        result_index -= len_and_prices[sol_table[result_index]].first;
     }
 
     return cuts;
@@ -167,11 +164,10 @@ size_t min_coin_change(std::vector<size_t> &coins, size_t sum)
     std::vector<size_t> opt_table(sum + 1, INT32_MAX);
 
     opt_table[0] = 0;
-    for (size_t i = 1; i <= sum; ++i) {
-        size_t min_value = opt_table[i];
-        for (size_t j = 0; coins[j] <= i; ++j) {
-            if (min_value > 1 + opt_table[i - coins[j]]) {
-                opt_table[i] = min_value = 1 + opt_table[i - coins[j]];
+    for (size_t i = 0; i < coins.size(); ++i) {
+        for (size_t j = i; j <= sum; ++j) {
+            if (opt_table[j] > 1 + opt_table[j - coins[i]]) {
+                opt_table[j] = 1 + opt_table[j - coins[i]];
             }
         }
     }

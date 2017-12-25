@@ -4,12 +4,14 @@
 
 int main(int argc, char *argv[])
 {
-    std::vector<size_t> coins;
-    size_t sum;
+    std::vector<std::pair<size_t, size_t>> len_and_prices;
+    std::vector<std::pair<size_t, size_t>> cuts;
+    std::vector<std::pair<size_t, size_t>> result_to_check;
 
-    coins = { 1, 3, 5 };
-    sum = 11;
+    len_and_prices = { {1, 1}, {2, 5},{3, 8}, {4, 9}, {5, 10}, {6, 17}, {7, 17}, {8, 20}, {9, 24}, {10, 30} };
 
-    min_coin_change(coins, sum);
+    result_to_check = { {2, 5}, {2, 5} };
+    cuts = cut_rod(len_and_prices, 8);
+
     return 0;
 }
