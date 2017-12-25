@@ -1,16 +1,15 @@
 #include <iostream>
 #include <vector>
-#include "list_algorithms.hpp"
+#include "dp_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
+    std::vector<size_t> coins;
+    size_t sum;
 
-    std::vector<std::string> tasks;
-    size_t n;
+    coins = { 1, 3, 5 };
+    sum = 11;
 
-    tasks = { "a","b","c","d","e" };
-    n = 3;
-    std::cout<<get_task(tasks, n);
-
+    min_coin_change(coins, sum);
     return 0;
 }
