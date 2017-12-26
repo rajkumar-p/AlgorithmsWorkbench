@@ -56,4 +56,10 @@ std::vector<std::pair<size_t, size_t>> cut_rod(std::vector<std::pair<size_t, siz
 // https://www.geeksforgeeks.org/dynamic-programming-set-7-coin-change/
 size_t min_coin_change(std::vector<size_t> &coins, size_t sum);
 
+// https://www.geeksforgeeks.org/dynamic-programming-set-7-coin-change/
+size_t no_of_coin_changes(const std::vector<size_t> &coins, const size_t sum);
+
+// https://www.geeksforgeeks.org/knapsack-problem/
+size_t max_value_from_01_knapsack(const std::vector<std::pair<size_t, size_t>> &value_and_weight, const size_t max_weight);
+
 #endif

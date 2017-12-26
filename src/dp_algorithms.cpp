@@ -174,3 +174,45 @@ size_t min_coin_change(std::vector<size_t> &coins, size_t sum)
 
     return opt_table[sum];
 }
+
+size_t no_of_coin_changes(const std::vector<size_t> &coins, const size_t sum)
+{
+    std::vector<size_t> n_table(sum + 1, 0);
+
+    n_table[0] = 1;
+    for (size_t i = 0; i < coins.size(); ++i) {
+        for (size_t j = coins[i]; j <= sum; ++j) {
+            n_table[j] += n_table[j - coins[i]];
+        }
+    }
+
+    return n_table[sum];
+}
+
+size_t max_value_from_01_knapsack(const std::vector<std::pair<size_t, size_t>> &value_and_weight, const size_t max_weight)
+{
+    size_t opt_table[value_and_weight.size() + 1][max_weight + 1];
+
+    for (size_t i = 0; i <= max_weight; ++i) {
+        opt_table[0][i] = 0;
+    }
+
+    for (size_t i = 0; i <= value_and_weight.size(); ++i) {
+        opt_table[i][0] = 0;
+    }
+
+    for (size_t i = 1; i <= value_and_weight.size(); ++i) {
+        size_t i_value = value_and_weight[i - 1].first;
+        size_t i_weight = value_and_weight[i - 1].second;
+
+        for (size_t j = 1; j <= max_weight; ++j) {
+            if (j < i_weight) {
+                opt_table[i][j] = opt_table[i - 1][j];
+            } else {
+                opt_table[i][j] = std::max(opt_table[i - 1][j], i_value + opt_table[i - 1][j - i_weight]);
+            }
+        }
+    }
+
+    return opt_table[value_and_weight.size()][max_weight];
+}
