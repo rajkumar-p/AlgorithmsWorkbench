@@ -102,12 +102,36 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
 
         coins = { 1, 3, 5 };
         sum = 11;
-
         REQUIRE(min_coin_change(coins, sum) == 3);
 
         coins = { 2, 3, 6, 7 };
         sum = 13;
-
         REQUIRE(min_coin_change(coins, sum) == 2);
+    }
+
+    SECTION("no_of_coin_changes(coins, sum) tests") {
+        std::vector<size_t> coins;
+        size_t sum;
+
+        coins = { 1, 2, 3 };
+        sum = 4;
+        REQUIRE(no_of_coin_changes(coins, sum) == 4);
+
+        coins = { 2, 5, 3, 6 };
+        sum = 10;
+        REQUIRE(no_of_coin_changes(coins, sum) == 5);
+    }
+
+    SECTION("max_value_from_01_knapsack(value_and_weight, max_weight) tests") {
+        std::vector<std::pair<size_t, size_t>> value_and_weight;
+        size_t max_weight;
+
+        value_and_weight = { {60, 10}, {100, 20}, {120, 30} };
+        max_weight = 50;
+        REQUIRE(max_value_from_01_knapsack(value_and_weight, max_weight) == 220);
+
+        value_and_weight = { {1, 1}, {4, 3}, {5, 4}, {7, 5} };
+        max_weight = 7;
+        REQUIRE(max_value_from_01_knapsack(value_and_weight, max_weight) == 9);
     }
 }
