@@ -62,4 +62,13 @@ size_t no_of_coin_changes(const std::vector<size_t> &coins, const size_t sum);
 // https://www.geeksforgeeks.org/knapsack-problem/
 size_t max_value_from_01_knapsack(const std::vector<std::pair<size_t, size_t>> &value_and_weight, const size_t max_weight);
 
+// https://www.geeksforgeeks.org/longest-common-subsequence/
+size_t lcs(const std::string x, const std::string y);
+
+// https://www.geeksforgeeks.org/dynamic-programming-set-5-edit-distance/
+size_t edit_distance(const std::string x, const std::string y);
+
+// https://www.geeksforgeeks.org/dynamic-programming-set-8-matrix-chain-multiplication/
+size_t matrix_chain_mul(const std::vector<size_t> &dims);
+
 #endif

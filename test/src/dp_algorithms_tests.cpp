@@ -134,4 +134,45 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
         max_weight = 7;
         REQUIRE(max_value_from_01_knapsack(value_and_weight, max_weight) == 9);
     }
+
+    SECTION("lcs(x, y) tests") {
+        std::string x;
+        std::string y;
+
+        x = "ABCBDAB";
+        y = "BDCABA";
+        REQUIRE(lcs(x, y) == 4);
+
+        x = "ABCDGH";
+        y = "AEDFHR";
+        REQUIRE(lcs(x, y) == 3);
+
+        x = "AGGTAB";
+        y = "GXTXAYB";
+        REQUIRE(lcs(x, y) == 4);
+    }
+
+    SECTION("edit_distance(x, y) tests") {
+        std::string x;
+        std::string y;
+
+        x = "geek";
+        y = "gesek";
+        REQUIRE(edit_distance(x, y) == 1);
+
+        x = "sunday";
+        y = "saturday";
+        REQUIRE(edit_distance(x, y) == 3);
+
+        x = "sitting";
+        y = "kitten";
+        REQUIRE(edit_distance(x, y) == 3);
+    }
+
+    SECTION("matrix_chain_mul(dims) tests") {
+        std::vector<size_t> dims;
+
+        dims = { 30, 35, 15, 5, 10, 20, 25 };
+        REQUIRE(matrix_chain_mul(dims) == 15125);
+    }
 }
