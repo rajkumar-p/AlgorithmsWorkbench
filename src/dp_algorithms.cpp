@@ -216,3 +216,89 @@ size_t max_value_from_01_knapsack(const std::vector<std::pair<size_t, size_t>> &
 
     return opt_table[value_and_weight.size()][max_weight];
 }
+
+size_t lcs(const std::string x, const std::string y)
+{
+    size_t lcs_table[x.length() + 1][y.length() + 1];
+
+    for (size_t i = 0; i < x.length() + 1; ++i) {
+        lcs_table[i][0] = 0;
+    }
+
+    for (size_t j = 0; j < y.length() + 1; ++j) {
+        lcs_table[0][j] = 0;
+    }
+
+    for (size_t i = 1; i < x.length() + 1; ++i) {
+        for (size_t j = 1; j < y.length() + 1; ++j) {
+            if (x[i - 1] == y[j - 1]) {
+                lcs_table[i][j] = 1 + lcs_table[i - 1][j - 1];
+            } else {
+                lcs_table[i][j] = std::max(lcs_table[i][j - 1], lcs_table[i - 1][j]);
+            }
+        }
+    }
+
+    return lcs_table[x.length()][y.length()];
+}
+
+size_t edit_distance(const std::string x, const std::string y)
+{
+    size_t ed_table[x.length() + 1][y.length() + 1];
+
+    for (size_t i = 0; i < x.length() + 1; ++i) {
+        ed_table[i][0] = i;
+    }
+
+    for (size_t j = 0; j < y.length() + 1; ++j) {
+        ed_table[0][j] = j;
+    }
+
+    for (size_t i = 1; i < x.length() + 1; ++i) {
+        for (size_t j = 1; j < y.length() + 1; ++j) {
+            if (x[i - 1] == y[j - 1]) {
+                ed_table[i][j] = ed_table[i - 1][j - 1];
+            } else {
+                ed_table[i][j] = 1 + std::min({ ed_table[i][j - 1], ed_table[i - 1][j], ed_table[i - 1][j - 1] });
+            }
+        }
+    }
+
+    return ed_table[x.length()][y.length()];
+}
+
+size_t matrix_chain_mul(const std::vector<size_t> &dims)
+{
+    size_t N = dims.size();
+
+    size_t opt_table[N][N];
+    size_t sol_table[N][N];
+
+    for (size_t i = 1; i < N; ++i) {
+        for (size_t j = 1; j < N; ++j) {
+            opt_table[i][j] = 0;
+            sol_table[i][j] = 0;
+        }
+    }
+
+    for (size_t i = 0; i < N; ++i) {
+        opt_table[i][i] = 0;
+    }
+
+    for (size_t chain_len = 2; chain_len < N; ++chain_len) {
+        for (size_t i = 1; i < N - chain_len + 1; i++) {
+            size_t j = i + chain_len - 1;
+            opt_table[i][j] = INT32_MAX;
+
+            for (size_t k = i; k <= j - 1; ++k) {
+                size_t val = opt_table[i][k] + opt_table[k+1][j] + dims[i - 1] * dims[k] * dims[j];
+                if (val < opt_table[i][j]) {
+                    opt_table[i][j] = val;
+                    sol_table[i][j] = k;
+                }
+            }
+        }
+    }
+
+    return opt_table[1][N - 1];
+}
