@@ -86,6 +86,10 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
 };
 
+ListNode *insert_data(std::vector<int> &elements);
+void delete_list(ListNode *node);
+void for_each_node(ListNode *node, std::function<void(const ListNode *node)> fn);
+
 // https://leetcode.com/problems/add-two-numbers/description/
 ListNode *addTwoNumbers(ListNode *l1, ListNode *l2);
 
@@ -94,5 +98,8 @@ ListNode *remove_dups_from_sorted_list(ListNode *root);
 
 // https://community.topcoder.com/stat?c=problem_statement&pm=1585&rd=6535
 std::string get_task(std::vector<std::string> &tasks, size_t n);
+
+// https://algorithm.yuanbin.me/zh-hans/linked_list/reverse_linked_list.html
+ListNode *reverse_list(ListNode *root);
 
 #endif

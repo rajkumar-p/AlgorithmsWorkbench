@@ -166,3 +166,59 @@ std::string get_task(std::vector<std::string> &tasks, size_t n)
 
     return tasks.front();
 }
+
+ListNode *insert_data(std::vector<int> &elements)
+{
+    ListNode *dummy = new ListNode(0);
+    dummy->next = nullptr;
+
+    ListNode *tail = dummy;
+
+    for (const int &e : elements) {
+        ListNode *to_insert = new ListNode(e);
+        to_insert->next = nullptr;
+
+        tail->next = to_insert;
+        tail = tail->next;
+    }
+
+    return dummy->next;
+}
+
+void delete_list(ListNode *node) 
+{
+    while (node != nullptr) {
+        ListNode *to_delete = node;
+
+        node = node->next;
+
+        delete to_delete;
+    }
+}
+
+void for_each_node(ListNode *node, std::function<void(const ListNode *node)> fn)
+{
+    while (node != nullptr) {
+        fn(node);
+        node = node->next;
+    }
+}
+
+ListNode *reverse_list(ListNode *root)
+{
+    if (root == nullptr) { return nullptr; }
+
+    ListNode *head = root;
+    ListNode *first = root;
+    ListNode *second = root->next;
+
+    while (second != nullptr) {
+        first->next = second->next;
+        second->next = head;
+
+        head = second;
+        second = first->next;
+    }
+
+    return head;
+}
