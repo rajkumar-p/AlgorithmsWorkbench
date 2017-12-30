@@ -71,4 +71,10 @@ size_t edit_distance(const std::string x, const std::string y);
 // https://www.geeksforgeeks.org/dynamic-programming-set-8-matrix-chain-multiplication/
 size_t matrix_chain_mul(const std::vector<size_t> &dims);
 
+// https://www.geeksforgeeks.org/minimum-maximum-values-expression/
+std::tuple<size_t, size_t> min_and_max_of_expr(const std::string expr);
+
+// https://www.hackerearth.com/practice/algorithms/dynamic-programming/introduction-to-dynamic-programming-1/tutorial/
+size_t diff_way_as_sum_of(std::vector<size_t> &sums, int N);
+
 #endif

@@ -109,6 +109,49 @@ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
     return result_node;
 }
 
+ListNode *remove_dups_from_sorted_list(ListNode *root)
+{
+    ListNode *dummy = new ListNode(0);
+    dummy->next = root;
+
+    ListNode *prev = dummy;
+    ListNode *ptr = root;
+
+    while (ptr != nullptr) {
+        if (ptr->next != nullptr && ptr->val != ptr->next->val) {
+            prev = ptr;
+            ptr = ptr->next;
+        } else {
+            ListNode *del_begin = ptr;
+            ListNode *del_end = ptr;
+
+            while (del_end->next != nullptr && del_end->next->val == del_begin->val) {
+                del_end = del_end->next;
+            }
+
+            if (del_begin == del_end) {
+                // No elements left
+                prev = ptr;
+                ptr = ptr->next;
+            } else {
+                ptr = del_end->next;
+                prev->next = ptr;
+
+                del_end->next = nullptr;
+                while (del_begin != nullptr) {
+                    ListNode *to_delete = del_begin;
+                    del_begin = del_begin->next;
+
+                    delete to_delete;
+                }
+            }
+        }
+    }
+
+
+    return nullptr;
+}
+
 std::string get_task(std::vector<std::string> &tasks, size_t n)
 {
     size_t next_start = 0;
