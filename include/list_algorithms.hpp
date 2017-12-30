@@ -89,6 +89,9 @@ struct ListNode {
 // https://leetcode.com/problems/add-two-numbers/description/
 ListNode *addTwoNumbers(ListNode *l1, ListNode *l2);
 
+// https://algorithm.yuanbin.me/zh-hans/linked_list/remove_duplicates_from_sorted_list_ii.html
+ListNode *remove_dups_from_sorted_list(ListNode *root);
+
 // https://community.topcoder.com/stat?c=problem_statement&pm=1585&rd=6535
 std::string get_task(std::vector<std::string> &tasks, size_t n);
 

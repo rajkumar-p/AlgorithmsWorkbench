@@ -302,3 +302,88 @@ size_t matrix_chain_mul(const std::vector<size_t> &dims)
 
     return opt_table[1][N - 1];
 }
+
+std::tuple<size_t, size_t> min_and_max_of_expr(const std::string expr) {
+    std::vector<int> nums;
+    std::vector<char> ops;
+    std::string tmp = "";
+ 
+    for (size_t i = 0; i < expr.length(); i++)
+    {
+        if (expr[i] == '+' || expr[i] == '*')
+        {
+            ops.push_back(expr[i]);
+            nums.push_back(atoi(tmp.c_str()));
+            tmp = "";
+        }
+        else
+        {
+            tmp += expr[i];
+        }
+    }
+    nums.push_back(atoi(tmp.c_str()));
+
+    size_t N = nums.size();
+    size_t min[N][N];
+    size_t max[N][N];
+ 
+    for (size_t i = 0; i < N; ++i)
+    {
+        for (size_t j = 0; j < N; ++j)
+        {
+            min[i][j] = INT32_MAX;
+            max[i][j] = 0;
+ 
+            if (i == j)
+                min[i][j] = max[i][j] = nums[i];
+        }
+    }
+ 
+    for (size_t L = 2; L <= N; ++L)
+    {
+        for (size_t i = 0; i < N - L + 1; ++i)
+        {
+            size_t j = i + L - 1;
+            for (size_t k = i; k < j; ++k)
+            {
+                size_t minTmp = 0, maxTmp = 0;
+ 
+                if(ops[k] == '+')
+                {
+                    minTmp = min[i][k] + min[k + 1][j];
+                    maxTmp = max[i][k] + max[k + 1][j];
+                }
+
+                else if(ops[k] == '*')
+                {
+                    minTmp = min[i][k] * min[k + 1][j];
+                    maxTmp = max[i][k] * max[k + 1][j];
+                }
+ 
+                if (minTmp < min[i][j])
+                    min[i][j] = minTmp;
+                if (maxTmp > max[i][j])
+                    max[i][j] = maxTmp;
+            }
+        }
+    }
+
+    return std::make_tuple(min[0][N - 1], max[0][N - 1]);
+}
+
+size_t diff_way_as_sum_of(std::vector<size_t> &sums, int N)
+{
+    std::vector<size_t> opt_table(N + 1, 0);
+    opt_table[0] = 1;
+
+    for (int i = 1; i <= N; ++i) {
+        int sum  = 0;        
+        for (const int &s : sums) {
+            sum += (i - s < 0) ? 0 : opt_table[i - s];
+        }
+
+        opt_table[i] = sum;
+    }
+
+    return opt_table[N];
+}

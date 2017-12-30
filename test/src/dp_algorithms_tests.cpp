@@ -175,4 +175,16 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
         dims = { 30, 35, 15, 5, 10, 20, 25 };
         REQUIRE(matrix_chain_mul(dims) == 15125);
     }
+
+    SECTION("min_and_max_of_expr(expr) tests") {
+        std::tuple<size_t, size_t> min_and_max = min_and_max_of_expr("1+2*3+4*5");
+
+        REQUIRE(std::get<0>(min_and_max) == 27);
+        REQUIRE(std::get<1>(min_and_max) == 105);
+    }
+
+    SECTION("diff_way_as_sum_of(sums, N) tests") {
+        std::vector<size_t> sums = { 1, 3, 4 };
+        REQUIRE(diff_way_as_sum_of(sums, 5) == 6);
+    }
 }
