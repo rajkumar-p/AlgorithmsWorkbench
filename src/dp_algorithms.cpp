@@ -1,5 +1,6 @@
 #include "dp_algorithms.hpp"
 #include <algorithm>
+#include <iostream>
 
 size_t weighted_interval_scheduling(std::vector<interval> &intervals)
 {
@@ -386,4 +387,145 @@ size_t diff_way_as_sum_of(std::vector<size_t> &sums, int N)
     }
 
     return opt_table[N];
+}
+
+bool is_match(const std::string &text, const std::string &pattern)
+{
+    bool m[text.length() + 1][pattern.length() + 1];
+
+    // text.length() == pattern.length() == 0
+    m[0][0] = true;
+
+    // Entries for 0th column
+    for (size_t j = 1; j <= text.length(); ++j) {
+        m[j][0] = false;
+    }
+
+    // Entries for 0th row
+    for (size_t i = 1; i <= pattern.length(); ++i) {
+        if (pattern[i - 1] == '.') {
+            m[0][i] = pattern[i - 1];
+        } else if (pattern[i - 1] == '*') {
+            m[0][i] = pattern[i - 2];
+        } else {
+            m[0][i] = false;
+        }
+    }
+
+    // Fill for m[1..text.length()][1..pattern.length()]
+    for (size_t i = 1; i <= text.length(); ++i) {
+        for (size_t j = 1; j <=pattern.length(); ++j) {
+            if (text[i - 1] == pattern[j - 1] || pattern[j - 1] == '.') {
+                m[i][j] = m[i - 1][j - 1];
+            } else if (pattern[j - 1] == '*') {
+                m[i][j] = m[i][j - 2] || m[i - 1][j];
+            } else {
+                m[i][j] = false;
+            }
+        }
+    }
+
+    return m[text.length()][pattern.length()];
+}
+
+bool is_match_wc(const std::string &text, const std::string &pattern)
+{
+    bool m[text.length() + 1][pattern.length() + 1];
+
+    // text.length() == pattern.length() == 0
+    m[0][0] = true;
+
+    // Entries for 0th column
+    for (size_t j = 1; j <= text.length(); ++j) {
+        m[j][0] = false;
+    }
+
+    // Entries for 0th row
+    for (size_t i = 1; i <= pattern.length(); ++i) {
+        if (pattern[i - 1] == '.' || pattern[i - 1] == '*') {
+            m[0][i] = pattern[i - 1];
+        } else {
+            m[0][i] = false;
+        }
+    }
+
+    // Fill for m[1..text.length()][1..pattern.length()]
+    for (size_t i = 1; i <= text.length(); ++i) {
+        for (size_t j = 1; j <=pattern.length(); ++j) {
+            if (text[i - 1] == pattern[j - 1] || pattern[j - 1] == '.') {
+                m[i][j] = m[i - 1][j - 1];
+            } else if (pattern[j - 1] == '*') {
+                m[i][j] = m[i][j - 1] || m[i - 1][j];
+            } else {
+                m[i][j] = false;
+            }
+        }
+    }
+
+    return m[text.length()][pattern.length()];
+}
+
+size_t longest_palindromic_subsequence(const std::string &str)
+{
+    size_t P[str.length()][str.length()];
+
+    memset(P, 0, sizeof(P));
+    for (size_t i = 0; i < str.length(); ++i) {
+        P[i][i] = 1;
+    }
+
+    for (size_t cl = 2; cl <= str.length(); ++cl) {
+        for (size_t i = 0; i < str.length() - cl + 1; ++i) {
+            size_t j = cl + i - 1;
+            if (str[i] == str[j]) {
+                P[i][j] = P[i + 1][j - 1] + 2;
+            } else {
+                P[i][j] = std::max(P[i][j - 1], P[i + 1][j]);
+            }
+        }
+    }
+
+    // for (size_t i = 0; i < str.length(); ++i) {
+    //     for (size_t j = 0; j < str.length(); ++j) {
+    //         std::cout <<P[i][j]<<"\t";
+    //     }
+    //     std::cout <<std::endl;
+    // }
+
+    // std::cout <<std::endl;
+
+    return P[0][str.length() - 1];
+}
+
+size_t zig_zag(const std::vector<int> &seq)
+{
+    size_t Z[seq.size()][2];
+
+    memset(Z, 0, sizeof(Z));
+    Z[0][0] = 1;
+    Z[0][1] = 1;
+
+    size_t max_length = 1;
+    for (size_t i = 1; i < seq.size(); ++i) {
+        for (int j = i - 1; j >= 0; --j) {
+            if (seq[i] > seq[j]) {
+                Z[i][0] = std::max(Z[j][1] + 1, Z[i][0]);
+            }
+
+            if (seq[i] < seq[j]) {
+                Z[i][1] = std::max(Z[j][0] + 1, Z[i][1]);
+            }
+        }
+
+        max_length = std::max({ max_length, Z[i][0], Z[i][1] });
+    }
+
+    for (size_t i = 0; i < seq.size(); ++i) {
+        for (size_t j = 0; j < 2; ++j) {
+            std::cout <<Z[i][j]<<"\t";
+        }
+        std::cout <<std::endl;
+    }
+
+    return max_length;
 }

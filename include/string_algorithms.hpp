@@ -20,4 +20,10 @@ std::string reverse_words(std::string &s);
 // https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
 std::vector<std::string> lengthOfLongestSubstring(const std::string s);
 
+// https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/
+std::vector<std::string> letter_combinations(const std::string &digits);
+
+// https://leetcode.com/problems/generate-parentheses/description/
+std::vector<std::string> generate_parenthesis(const size_t n);
+
 #endif

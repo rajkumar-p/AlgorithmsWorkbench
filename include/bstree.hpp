@@ -3,6 +3,7 @@
 
 #include "bstree_node.hpp"
 #include <vector>
+#include <queue>
 
 template<typename T>
 class bstree {
@@ -45,6 +46,17 @@ public:
     void inorder_walk(bstree_node<T> *node, std::function<void(bstree_node<T> const *current)> fn);  
     void preorder_walk(bstree_node<T> *node, std::function<void(bstree_node<T> const *current)> fn);
     void postorder_walk(bstree_node<T> *node, std::function<void(bstree_node<T> const *current)> fn);
+
+    std::vector<std::vector<T>> levelorder_walk(bstree_node<T> *root);
+
+    size_t tree_depth(bstree_node<T> *root, size_t depth = 0);
+    bool is_balanced(bstree_node<T> *root);
+
+    int btree_max_path_sum(bstree_node<T> *root);
+    bstree_node<T> *lowest_common_ancestor(bstree_node<T> *node1, bstree_node<T> *node2);
+
+    bstree_node<T> *invert_btree(bstree_node<T> *root);
+    void invert(bstree_node<T> *node);
 };
 
 template<typename T>
@@ -347,6 +359,120 @@ bstree_node<T> *bstree<T>::root()
     } else {
         return _pseudo_root->_left;
     }
+}
+
+template<typename T>
+std::vector<std::vector<T>> bstree<T>::levelorder_walk(bstree_node<T> *root)
+{
+    if (root == nullptr) { return {}; }
+
+    std::vector<std::vector<T>> res_vec;
+    std::queue<bstree_node<T> *> Q1;
+    std::queue<bstree_node<T> *> Q2;
+
+    Q1.push(root);
+
+    while (!Q1.empty() || !Q2.empty()) {
+        if (Q2.empty()) {
+            std::vector<T> row;
+
+            while (!Q1.empty()) {
+                row.push_back(Q1.front()->data());
+                Q2.push(Q1.front());
+
+                Q1.pop();
+            }
+
+            res_vec.push_back(row);
+        } else {
+            bstree_node<int> *front = Q2.front();
+            Q2.pop();
+
+            if (front->_left != nullptr) {
+                Q1.push(front->_left);
+            }
+
+            if (front->_right != nullptr) {
+                Q1.push(front->_right);
+            }
+        }
+    }
+
+    return res_vec;
+}
+
+template<typename T>
+size_t bstree<T>::tree_depth(bstree_node<T> *root, size_t depth)
+{
+    if (root == nullptr) { return depth; }
+
+    return std::max(tree_depth(root->_left, depth + 1), tree_depth(root->_right, depth + 1));
+}
+
+template<typename T>
+bool bstree<T>::is_balanced(bstree_node<T> *root)
+{
+    if (root == nullptr) { return true; }
+
+    size_t child_count = 0;
+    if (root->_left != nullptr) { ++child_count; }
+    if (root->_right != nullptr) { ++child_count; }
+
+    if (child_count != 1) {
+        return is_balanced(root->_left) && is_balanced(root->_right);
+    }
+
+    return false;
+}
+
+template<typename T>
+int bstree<T>::btree_max_path_sum(bstree_node<T> *root)
+{
+    if (root == nullptr) {
+        return 0;
+    }
+
+    return root->data() + btree_max_path_sum(root->_left) + btree_max_path_sum(root->_right);
+}
+
+template<typename T>
+bstree_node<T> *bstree<T>::lowest_common_ancestor(bstree_node<T> *node1, bstree_node<T> *node2)
+{
+    if (node1 == nullptr || node2 == nullptr) { return nullptr; }
+
+    bstree_node<T> *n = this->root();
+    while (n != nullptr) {
+        if (node1->data() <= n->data() && node2->data() >= n->data()) {
+            return n;
+        }
+
+        if (n->data() < node2->data()) {
+            n = n->_right;
+        } else {
+            n = n->_left;
+        }
+    }
+
+    return nullptr;
+}
+
+template<typename T>
+bstree_node<T> *bstree<T>::invert_btree(bstree_node<T> *root)
+{
+    invert(root);
+
+    return root;
+}
+
+template<typename T>
+void bstree<T>::invert(bstree_node<T> *node)
+{
+    if (node == nullptr) { return; }
+
+    invert(node->_left);
+    invert(node->_right);
+
+    std::swap(node->_left, node->_right);
 }
 
 #endif
