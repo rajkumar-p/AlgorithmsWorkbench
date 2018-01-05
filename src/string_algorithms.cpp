@@ -4,6 +4,8 @@
 #include <set>
 #include <map>
 
+#include <iostream>
+
 std::string shortestCompletingWord(std::string licensePlate, std::vector<std::string> &words)
 {
     std::sort(words.begin(), words.end(), [](const std::string &s1, const std::string &s2) {
@@ -170,4 +172,67 @@ std::vector<std::string> lengthOfLongestSubstring(const std::string str)
     }
 
     return result;
+}
+
+std::vector<std::string> letter_combinations(const std::string &digits)
+{
+    void letter_mapper(const std::string digits, const std::string prefix, std::vector<std::string> &mappings);
+
+    std::vector<std::string> mappings;
+    letter_mapper(digits, "", mappings);
+
+    return mappings;
+}
+
+void letter_mapper(const std::string digits, const std::string prefix, std::vector<std::string> &mappings)
+{
+    std::string get_mappings_for(char c);
+
+    if (digits.empty()) {
+        mappings.push_back(prefix);
+    } else {
+        std::string char_mapping = get_mappings_for(digits[0]);
+
+        for (const char c : char_mapping) {
+            letter_mapper(digits.substr(1), prefix + c, mappings);
+        }
+    }
+}
+
+std::string get_mappings_for(char c)
+{
+    std::map<char, std::string> char_mappings = {
+        { '1', "" }, { '2', "abc" }, { '3', "def" },
+        { '4', "ghi" }, { '5', "jkl" }, { '6', "mno" },
+        { '7', "pqrs" }, { '8', "tuv" }, { '9', "wxyz" },
+        { '0', "~"}
+    };
+
+    return char_mappings[c];
+}
+
+std::vector<std::string> generate_parenthesis(const size_t n)
+{
+    void all_parenthesis(const std::string p, size_t left, size_t right, std::vector<std::string> &parens);
+
+    std::vector<std::string> parens;
+    all_parenthesis("", n, 0, parens);
+
+    return {};
+}
+
+void all_parenthesis(const std::string p, size_t left, size_t right, std::vector<std::string> &parens)
+{
+    if (left == 0 && right == 0) {
+        std::cout <<p<<std::endl;
+    }
+
+    if (left > 0) {
+        all_parenthesis(p + "(", left - 1, right + 1, parens);
+    }
+
+    if (right > 0) {
+        all_parenthesis(p + ")", left, right - 1, parens);
+    }
+
 }

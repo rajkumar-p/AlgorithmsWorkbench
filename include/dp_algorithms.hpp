@@ -77,4 +77,16 @@ std::tuple<size_t, size_t> min_and_max_of_expr(const std::string expr);
 // https://www.hackerearth.com/practice/algorithms/dynamic-programming/introduction-to-dynamic-programming-1/tutorial/
 size_t diff_way_as_sum_of(std::vector<size_t> &sums, int N);
 
+// https://leetcode.com/problems/regular-expression-matching/description/
+bool is_match(const std::string &text, const std::string &pattern);
+
+// https://leetcode.com/problems/wildcard-matching/description/
+bool is_match_wc(const std::string &text, const std::string &pattern);
+
+// https://www.geeksforgeeks.org/dynamic-programming-set-12-longest-palindromic-subsequence/
+size_t longest_palindromic_subsequence(const std::string &str);
+
+// https://community.topcoder.com/stat?c=problem_statement&pm=1259&rd=4493
+size_t zig_zag(const std::vector<int> &seq);
+
 #endif
