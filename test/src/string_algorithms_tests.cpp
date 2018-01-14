@@ -74,4 +74,20 @@ TEST_CASE("Checking String Algorithms Implementation", "[String Algorithms]")
 
         REQUIRE(lengthOfLongestSubstring(s) == result);
     }
+
+    SECTION("reverse_string(str) tests") {
+        std::string s = "abcabcbb";
+        std::vector<std::string> result = { "abc", "bca", "cab", "abc" };
+
+        REQUIRE(reverse_string("abcabcbb") == "bbcbacba");
+        REQUIRE(reverse_string("the sky   is      blue") == "eulb      si   yks eht");
+        REQUIRE(reverse_string("      ") == "      ");
+        REQUIRE(reverse_string("abcd") == "dcba");
+        REQUIRE(reverse_string("hello") == "olleh");
+    }
+
+    SECTION("zig_zag_convert(str, row) tests") {
+        REQUIRE(zig_zag_convert("PAYPALISHIRING", 3) == "PAHNAPLSIIGYIR");
+        REQUIRE(zig_zag_convert("ABCDEFGHIJKLMNOPQRSTUVWXYZ12345", 7) == "AMYBHNTZCIOU1DJPV2EKQW3FLRX4GS5");
+    }
 }
