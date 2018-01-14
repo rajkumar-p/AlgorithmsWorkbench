@@ -117,30 +117,36 @@ std::vector<size_t> compute_prefix_for(const std::string pattern)
     return prefix_table;
 }
 
-std::string reverse_words(std::string &s)
+std::string reverse_words(std::string &str)
 {
-    std::reverse(s.begin(), s.end());
+    std::reverse(str.begin(), str.end());
+    std::vector<std::tuple<size_t, size_t>> word_bounds;
 
-    std::vector<std::tuple<int, int>> words_start_end;
-    int prev_space = -1;
-    int m = s.length();
-    for (int i = -1; i < m - 1; ++i) {
-        if (isspace(s[i + 1]) ||  i + 1 == m - 1) {
-            if (prev_space + 1 != i + 1) {
-                words_start_end.push_back(std::make_tuple(prev_space + 1, i));
-            }
-
-            prev_space = i + 1;
+    size_t str_index = 0;
+    while (1) {
+        while (isspace(str[str_index]) && str_index < str.length()) {
+            ++str_index;
         }
+
+        size_t start_index = str_index;
+        size_t len = 0;
+        while (!isspace(str[str_index]) && str_index < str.length()) {
+            ++str_index;
+            ++len;
+        }
+
+        if (len > 0) {
+            word_bounds.push_back(std::make_tuple(start_index, len));
+        }
+
+        if (str_index >= str.length()) { break; }
     }
 
-    for (const std::tuple<int, int> &t : words_start_end) {
-        int start = std::get<0>(t);
-        int end = std::get<1>(t);
-        std::reverse(s.begin() + start, s.begin() + end + 1);
+    for (const std::tuple<size_t, size_t> &t : word_bounds) {
+        std::reverse(str.begin() + std::get<0>(t), str.begin() + std::get<0>(t) + std::get<1>(t));
     }
 
-    return s;
+    return str;
 }
 
 std::vector<std::string> lengthOfLongestSubstring(const std::string str)
@@ -235,4 +241,80 @@ void all_parenthesis(const std::string p, size_t left, size_t right, std::vector
         all_parenthesis(p + ")", left, right - 1, parens);
     }
 
+}
+
+std::string reverse_string(std::string str)
+{
+    size_t front_index = 0;
+    size_t rear_index = str.length() - 1;
+
+    while (front_index < rear_index) {
+        std::swap(str[front_index++], str[rear_index--]);
+    }
+
+    return str;
+}
+
+std::string zig_zag_convert(std::string str, size_t rows)
+{
+    std::string result;
+    size_t active_index;
+
+    // First row
+    active_index = 0;
+    while (active_index < str.length()) {
+        result += str[active_index];
+        active_index += rows - 1 + rows - 2 + 1;
+    }
+
+    // Other rows
+    for (size_t i = 1; i <= rows - 2; ++i) {
+        active_index = i;
+        while (active_index < str.length()) {
+            result += str[active_index];
+            active_index += rows - 2 + 1;
+        }
+    }
+
+    // last row
+    active_index = rows - 1;
+    while (active_index < str.length()) {
+        result += str[active_index];
+        active_index += rows - 1 + rows - 2 + 1;
+    }
+
+    return result;
+}
+
+void string_workings(const std::string str)
+{
+    std::vector<std::tuple<size_t, size_t>> word_bounds;
+
+    size_t str_index = 0;
+    while (1) {
+        while (isspace(str[str_index]) && str_index < str.length()) {
+            ++str_index;
+        }
+
+        size_t start_index = str_index;
+        size_t length = 0;
+        while (!isspace(str[str_index]) && str_index < str.length()) {
+            ++str_index;
+            ++length;
+        }
+        
+        if (length != 0) {
+            word_bounds.push_back(std::make_tuple(start_index, length));
+        }
+
+        if (str_index >= str.length()) { break; }
+    }
+
+    for (auto t : word_bounds) {
+        // std::cout <<"Start Index : "<<std::get<0>(t)<<", Length : "<<std::get<1>(t);
+        std::cout <<str.substr(std::get<0>(t), std::get<1>(t));
+        std::cout <<std::endl;
+        std::cout <<"Start : "<<std::get<0>(t)<<", Len : "<<std::get<1>(t);
+        std::cout <<std::endl;
+    }
 }
