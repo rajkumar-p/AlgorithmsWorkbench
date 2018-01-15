@@ -3,8 +3,9 @@
 #include <cctype>
 #include <set>
 #include <map>
-
 #include <iostream>
+#include <sstream>
+#include <string>
 
 std::string shortestCompletingWord(std::string licensePlate, std::vector<std::string> &words)
 {
@@ -284,6 +285,74 @@ std::string zig_zag_convert(std::string str, size_t rows)
     }
 
     return result;
+}
+
+std::vector<std::string> split_string(std::string str, char delim)
+{
+    std::vector<std::string> result;
+    std::stringstream ss(str);
+
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        if (!item.empty()) {
+            result.push_back(item);
+        }
+    }
+
+    return result;
+}
+
+std::string replace_multiple_spaces(std::string str)
+{
+    std::string result = "";
+    size_t str_index = 0;
+    while (1) {
+        size_t len = 0;
+        while (str[str_index] == ' ' && str_index < str.length()) {
+            ++str_index;
+            ++len;
+        }
+
+        if (len > 0) { result += " "; }
+
+        while (str[str_index] != ' ' && str_index < str.length()) {
+            result += str[str_index];
+            ++str_index;
+        }
+
+        if (str_index >= str.length()) {
+            break;
+        }
+    }
+
+    return result;
+}
+
+std::string trim_spaces(std::string str)
+{
+    size_t len = 0;
+    int str_index = 0;
+    while (str[str_index] == ' ' && str_index < str.length()) {
+        ++str_index;
+        ++len;
+    }
+
+    if (len > 0) {
+        str.erase(0, len);
+    }
+
+    len = 0;
+    str_index = str.length() - 1;
+    while (str[str_index] == ' ' && str_index >= 0) {
+        --str_index;
+        ++len;
+    }
+
+    if (len > 0) {
+        str.erase(str_index + 1, len);
+    }
+
+    return str;
 }
 
 void string_workings(const std::string str)

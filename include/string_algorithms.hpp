@@ -32,6 +32,10 @@ std::string reverse_string(std::string str);
 // https://leetcode.com/problems/zigzag-conversion/description/
 std::string zig_zag_convert(std::string str, size_t rows);
 
+std::vector<std::string> split_string(std::string str, char delim);
+std::string replace_multiple_spaces(std::string str);
+std::string trim_spaces(std::string str);
+
 void string_workings(std::string str);
 
 #endif

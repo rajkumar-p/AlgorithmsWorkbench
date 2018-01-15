@@ -90,4 +90,14 @@ TEST_CASE("Checking String Algorithms Implementation", "[String Algorithms]")
         REQUIRE(zig_zag_convert("PAYPALISHIRING", 3) == "PAHNAPLSIIGYIR");
         REQUIRE(zig_zag_convert("ABCDEFGHIJKLMNOPQRSTUVWXYZ12345", 7) == "AMYBHNTZCIOU1DJPV2EKQW3FLRX4GS5");
     }
+
+    SECTION("replace_multiple_spaces(str) tests") {
+        REQUIRE(replace_multiple_spaces("     the sky   is      blue") == " the sky is blue");
+        REQUIRE(replace_multiple_spaces("  Gone  are  the  multiple  spaces  ") == " Gone are the multiple spaces ");
+    }
+
+    SECTION("trim_spaces(str) tests") {
+        REQUIRE(trim_spaces("    This is a test.   ") == "This is a test.");
+        REQUIRE(trim_spaces("This is a test.") == "This is a test.");
+    }
 }
