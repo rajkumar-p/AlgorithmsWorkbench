@@ -6,6 +6,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <stack>
 
 std::string shortestCompletingWord(std::string licensePlate, std::vector<std::string> &words)
 {
@@ -287,6 +288,58 @@ std::string zig_zag_convert(std::string str, size_t rows)
     return result;
 }
 
+size_t longest_substr_with_uniq_chars(std::string str)
+{
+    size_t max_substr_len = 0;
+    std::map<char, size_t> char_indexes;
+    
+    size_t substr_win_start = 0;
+    for (size_t substr_win_end = 0; substr_win_end < str.length(); ++substr_win_end) {
+        if (char_indexes.find(str[substr_win_end]) != char_indexes.end()) {
+            // size_t char_index = char_indexes[str[substr_win_end]];
+            size_t char_index = char_indexes.find(str[substr_win_end])->second;
+            substr_win_start = char_index + 1;
+        }
+
+        char_indexes[str[substr_win_end]] = substr_win_end;
+
+        size_t substr_win_len = substr_win_end - substr_win_start + 1;
+        max_substr_len = std::max(max_substr_len, substr_win_len);
+    }
+
+    return max_substr_len;
+}
+
+bool is_parentheses_valid(std::string parens)
+{
+    std::map<char, char> paren_comp;
+    paren_comp['('] = ' ';
+    paren_comp[')'] = '(';
+    paren_comp['{'] = ' ';
+    paren_comp['}'] = '{';
+    paren_comp['['] = ' ';
+    paren_comp[']'] = '[';
+
+    std::stack<char> stk;
+    for (size_t i = 0; i < parens.length(); ++i) {
+        if (paren_comp[parens[i]] == ' ') {
+            stk.push(parens[i]);
+        } else {
+            while (!stk.empty() && stk.top() != paren_comp[parens[i]]) {
+                stk.pop();
+            }
+
+            if (stk.empty()) { return false; }
+            stk.pop();
+        }
+
+    }
+
+    if (stk.empty()) { return true; }
+
+    return false;
+}
+
 std::vector<std::string> split_string(std::string str, char delim)
 {
     std::vector<std::string> result;
@@ -331,8 +384,9 @@ std::string replace_multiple_spaces(std::string str)
 std::string trim_spaces(std::string str)
 {
     size_t len = 0;
+    int str_len = str.length();
     int str_index = 0;
-    while (str[str_index] == ' ' && str_index < str.length()) {
+    while (str[str_index] == ' ' && str_index < str_len) {
         ++str_index;
         ++len;
     }

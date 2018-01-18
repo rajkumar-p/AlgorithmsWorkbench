@@ -100,4 +100,19 @@ TEST_CASE("Checking String Algorithms Implementation", "[String Algorithms]")
         REQUIRE(trim_spaces("    This is a test.   ") == "This is a test.");
         REQUIRE(trim_spaces("This is a test.") == "This is a test.");
     }
+
+    SECTION("longest_substr_with_uniq_chars(str)") {
+        REQUIRE(longest_substr_with_uniq_chars("abcabcbb") == 3);
+        REQUIRE(longest_substr_with_uniq_chars("bbbbb") == 1);
+        REQUIRE(longest_substr_with_uniq_chars("pwwkew") == 3);
+    }
+
+    SECTION("is_parentheses_valid(parens)") {
+        REQUIRE(is_parentheses_valid("()") == true);
+        REQUIRE(is_parentheses_valid("()[]{}") == true);
+        REQUIRE(is_parentheses_valid("([{}])") == true);
+        REQUIRE(is_parentheses_valid("(]") == false);
+        REQUIRE(is_parentheses_valid("([)]") == false);
+    }
+
 }
