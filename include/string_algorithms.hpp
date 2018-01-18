@@ -32,6 +32,12 @@ std::string reverse_string(std::string str);
 // https://leetcode.com/problems/zigzag-conversion/description/
 std::string zig_zag_convert(std::string str, size_t rows);
 
+// https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+size_t longest_substr_with_uniq_chars(std::string str);
+
+// https://leetcode.com/problems/valid-parentheses/description/
+bool is_parentheses_valid(std::string parens);
+
 std::vector<std::string> split_string(std::string str, char delim);
 std::string replace_multiple_spaces(std::string str);
 std::string trim_spaces(std::string str);

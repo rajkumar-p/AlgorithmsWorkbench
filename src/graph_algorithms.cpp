@@ -40,3 +40,19 @@ std::map<std::string, vertex_search_prop> bfs(graph &G, std::string source_id)
 
     return bfs_results;
 }
+
+void print_bfs_path(std::map<std::string, vertex_search_prop> &bfs_results, std::string target_id)
+{
+    if (bfs_results.find(target_id) == bfs_results.end()) {
+        std::cout <<"NIL";
+        return;
+    }
+
+    std::string vertex_id = target_id;
+    while (vertex_id != "NIL") {
+        std::cout <<vertex_id<<"<-";
+        vertex_id = bfs_results[vertex_id].parent();
+    }
+    
+    std::cout <<"NIL"<<std::endl;
+}
