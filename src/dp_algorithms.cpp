@@ -520,12 +520,53 @@ size_t zig_zag(const std::vector<int> &seq)
         max_length = std::max({ max_length, Z[i][0], Z[i][1] });
     }
 
-    for (size_t i = 0; i < seq.size(); ++i) {
-        for (size_t j = 0; j < 2; ++j) {
-            std::cout <<Z[i][j]<<"\t";
+    return max_length;
+}
+
+std::string longest_palindromic_substring(const std::string str)
+{
+    size_t max_substr_start = 0;
+    size_t max_substr_len = 1;
+
+    size_t n = str.length();
+    bool pal[n][n];
+
+    for (size_t i = 0; i < n; ++i) {
+        for (size_t j = 0; j < n; ++j) {
+            pal[i][j] = false;
         }
-        std::cout <<std::endl;
     }
 
-    return max_length;
+    for (size_t i = 0; i < n; ++i) {
+        pal[i][i] = true;
+    }
+
+    for (size_t i = 0; i < n - 1; ++i) {
+        if (str[i] == str[i + 1]) {
+            pal[i][i + 1] = true;
+            
+            if (max_substr_len < 2) {
+                max_substr_len = 2;
+                max_substr_start = i;
+            }
+        }
+    }
+
+    for (size_t cycle_len = 3; cycle_len <= n; ++cycle_len) {
+        for (size_t i = 0; i < n - cycle_len + 1; ++i) {
+            size_t j = cycle_len + i - 1;
+
+            if (pal[i + 1][j - 1] && str[i] == str[j]) {
+                pal[i][j] = true;
+
+                size_t current_substr_len = j - i + 1;
+                if (current_substr_len > max_substr_len) {
+                    max_substr_len = current_substr_len;
+                    max_substr_start = i;
+                }
+            }
+        }
+    }
+
+    return str.substr(max_substr_start, max_substr_len);
 }
