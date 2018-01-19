@@ -89,4 +89,7 @@ size_t longest_palindromic_subsequence(const std::string &str);
 // https://community.topcoder.com/stat?c=problem_statement&pm=1259&rd=4493
 size_t zig_zag(const std::vector<int> &seq);
 
+// https://leetcode.com/problems/longest-palindromic-substring/description/
+std::string longest_palindromic_substring(const std::string str);
+
 #endif
