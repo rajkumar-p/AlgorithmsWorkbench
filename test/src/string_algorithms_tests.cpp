@@ -115,4 +115,15 @@ TEST_CASE("Checking String Algorithms Implementation", "[String Algorithms]")
         REQUIRE(is_parentheses_valid("([)]") == false);
     }
 
+    SECTION("stoi(digit)") {
+        REQUIRE(stoi("22") == 22);
+        REQUIRE(stoi("-543") == -543);
+        REQUIRE(stoi("   77  ") == 77);
+        REQUIRE(stoi("   42424.4322  ") == 42424);
+        REQUIRE(stoi("   0.0  ") == 0);
+        REQUIRE(stoi("2147483647") == 2147483647);
+        REQUIRE(stoi("-2147483648") == -2147483648);
+        REQUIRE(stoi("2222222222") == 2147483647);
+        REQUIRE(stoi("-2222222222") == -2147483648);
+    }
 }

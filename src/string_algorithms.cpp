@@ -441,3 +441,41 @@ void string_workings(const std::string str)
         std::cout <<std::endl;
     }
 }
+
+int stoi(std::string digits)
+{
+    bool neg = false;
+
+    int start_index = 0;
+    while (digits[start_index] == ' ') {
+        ++start_index;
+    }
+
+    if (digits[start_index] == '+') { ++start_index; }
+    if (digits[start_index] == '-') { neg = true; ++start_index; }
+
+    int end_index = digits.length() - 1;
+    while (digits[end_index] == ' ') {
+        --end_index;
+    }
+
+    for (int i = end_index; i > start_index; --i) {
+        if (digits[i] == '.') {
+            end_index = i - 1;
+            break;
+        }
+    }
+
+    size_t pow_of_10 = 1;
+    long long sum = 0;
+    for (int i = end_index; i >= start_index; --i) {
+        sum += ((digits[i] - '0') * pow_of_10);
+        pow_of_10 *= 10;
+    }
+
+    if (neg) { sum = -sum; }
+    if (neg && sum < INT32_MIN) { return INT32_MIN; }
+    if (!neg && sum > INT32_MAX) { return INT32_MAX; }
+
+    return sum;
+}
