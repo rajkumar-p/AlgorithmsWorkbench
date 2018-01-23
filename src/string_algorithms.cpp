@@ -479,3 +479,37 @@ int stoi(std::string digits)
 
     return sum;
 }
+
+std::string reverse_words_2(std::string str)
+{
+    std::vector<std::tuple<size_t, size_t>> word_start_len;
+
+    size_t str_index = 0;
+    while (1) {
+        while (str[str_index] == ' ' && str_index < str.length()) {
+            ++str_index;
+        }
+
+        size_t start_index = str_index;
+        size_t len = 0;
+        while (str[str_index] != ' ' && str_index < str.length()) {
+            ++str_index;
+            ++len;
+        }
+
+        if (len != 0) {
+            word_start_len.push_back(std::make_tuple(start_index, len));
+        }
+
+        if (str_index >= str.length()) { break; }
+    }
+
+    for (const std::tuple<size_t, size_t> &t : word_start_len) {
+        size_t word_start = std::get<0>(t);
+        size_t word_len = std::get<1>(t);
+
+        std::reverse(str.begin() + word_start, str.begin() + word_start + word_len);
+    }
+
+    return str;
+}

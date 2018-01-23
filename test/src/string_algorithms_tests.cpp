@@ -126,4 +126,9 @@ TEST_CASE("Checking String Algorithms Implementation", "[String Algorithms]")
         REQUIRE(stoi("2222222222") == 2147483647);
         REQUIRE(stoi("-2222222222") == -2147483648);
     }
+
+    SECTION("reverse_words_2(str)") {
+        REQUIRE(reverse_words_2("           the sky   is        blue    ") == "           eht yks   si        eulb    ");
+        REQUIRE(reverse_words_2("Let's take LeetCode contest") == "s'teL ekat edoCteeL tsetnoc");
+    }
 }
