@@ -41,6 +41,9 @@ bool is_parentheses_valid(std::string parens);
 // https://leetcode.com/problems/string-to-integer-atoi/description/
 int stoi(std::string digits);
 
+// https://leetcode.com/problems/reverse-words-in-a-string-iii/description/
+std::string reverse_words_2(std::string str);
+
 std::vector<std::string> split_string(std::string str, char delim);
 std::string replace_multiple_spaces(std::string str);
 std::string trim_spaces(std::string str);

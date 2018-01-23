@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include "string_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -18,6 +19,10 @@ int main(int argc, char *argv[])
     for (size_t i = 0; i < words.size(); ++i) {
         std::cout <<words[i]<<" : "<<words_lengths[i]<<std::endl;
     }
+
+    std::cout <<std::endl<<std::endl;
+    std::cout <<reverse_words_2("           the sky   is        blue    ");
+    std::cout <<std::endl;
 
     return 0;
 }
