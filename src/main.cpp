@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include "string_algorithms.hpp"
+#include "other_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -20,9 +20,9 @@ int main(int argc, char *argv[])
         std::cout <<words[i]<<" : "<<words_lengths[i]<<std::endl;
     }
 
-    std::cout <<std::endl<<std::endl;
-    std::cout <<reverse_words_2("           the sky   is        blue    ");
-    std::cout <<std::endl;
+    std::vector<int> arr1 = { 4, 5, 18, 25, 70 };
+    std::vector<int> arr2 = { 17 };
+    double median = median_of_two_sorted_arrays(arr1, arr2);
 
     return 0;
 }
