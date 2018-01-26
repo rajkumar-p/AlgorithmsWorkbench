@@ -1,5 +1,6 @@
 #include "catch.hpp"
 #include "other_algorithms.hpp"
+#include <map>
 
 TEST_CASE("Checking Other Algorithms", "[Other Algorithms]")
 {
@@ -34,5 +35,56 @@ TEST_CASE("Checking Other Algorithms", "[Other Algorithms]")
         a1 = { 4, 5, 18, 25, 70 };
         a2 = { 17 };
         REQUIRE(median_of_two_sorted_arrays(a1, a2) == 17.5);
+    }
+
+    SECTION("find_peak(nums)") {
+        std::vector<int> nums;
+        std::map<size_t, bool> peaks;
+
+        nums = { 1, 2, 6, 5, 3, 7, 4 };
+        peaks = { std::make_pair(2, true), std::make_pair(5, true) };
+        REQUIRE(peaks.find(find_peak(nums)) != peaks.end());
+
+        nums = { 1, 3, 4, 3, 5, 1, 3 };
+        peaks = { std::make_pair(2, true), std::make_pair(4, true), std::make_pair(6, true) };
+        REQUIRE(peaks.find(find_peak(nums)) != peaks.end());
+    }
+
+    SECTION("find_peak_2d(nums)") {
+        // int a[4][3] = { { 10, 20, 26 }, { 17, 19, 14 }, { 7, 16, 32 }, {21, 15, 14 } };
+        // std::map<std::tuple<int, int>, bool> peaks;
+
+        // peaks.emplace(std::make_tuple(0, 2), true);
+        // peaks.emplace(std::make_tuple(2, 2), true);
+
+        // std::tuple<int, int> peak_2d = find_peak_2d((int *)a, 0, 3, 0, 2);
+
+        // REQUIRE(peaks.find(peak_2d) != peaks.end());
+    }
+
+    SECTION("max_area_of_histogram(heights)") {
+        std::vector<size_t> heights;
+
+        heights = { 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2 };
+        REQUIRE(max_area_of_histogram(heights) == 16);
+
+        heights = { 9, 5, 2, 1, 3, 5, 4, 7, 2, 6 };
+        REQUIRE(max_area_of_histogram(heights) == 12);
+
+        heights = { 2, 1, 2, 3, 1 };
+        REQUIRE(max_area_of_histogram(heights) == 5);
+    }
+
+    SECTION("trapping_rain_water_in_histogram(heights)") {
+        std::vector<size_t> heights;
+
+        heights = { 3, 0, 0, 2, 0, 4 };
+        REQUIRE(trapping_rain_water_in_histogram(heights) == 10);
+
+        heights = { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
+        REQUIRE(trapping_rain_water_in_histogram(heights) == 6);
+
+        heights = { 9, 5, 2, 1, 3, 5, 4, 7, 2, 6 };
+        REQUIRE(trapping_rain_water_in_histogram(heights) == 26);
     }
 }
