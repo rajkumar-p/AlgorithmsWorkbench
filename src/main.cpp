@@ -20,9 +20,10 @@ int main(int argc, char *argv[])
         std::cout <<words[i]<<" : "<<words_lengths[i]<<std::endl;
     }
 
-    std::vector<int> arr1 = { 4, 5, 18, 25, 70 };
-    std::vector<int> arr2 = { 17 };
-    double median = median_of_two_sorted_arrays(arr1, arr2);
 
+    std::vector<size_t> heights;
+    heights = { 9, 5, 2, 1, 3, 5, 4, 7, 2, 6 };
+
+    size_t area = trapping_rain_water_in_histogram(heights);
     return 0;
 }

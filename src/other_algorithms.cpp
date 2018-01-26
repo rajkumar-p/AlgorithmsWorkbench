@@ -2,6 +2,7 @@
 #include <stack>
 #include <vector>
 #include <tuple>
+#include <map>
 
 std::vector<size_t> get_next_high_for_each(std::vector<size_t> &temps)
 {
@@ -89,4 +90,154 @@ int get_equal_or_next_high_in_sorted_array(std::vector<int> &arr, int low, int h
     }
 
     return arr[low];
+}
+
+size_t find_peak(std::vector<int> &numbers)
+{
+    int low = 0, high = numbers.size() - 1;
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        int mid_element = numbers[mid];
+        int left_element = mid - 1 < 0 ? mid_element - 1 : numbers[mid - 1];
+        int right_element = mid + 1 == numbers.size() ? mid_element + 1 : numbers[mid + 1];
+
+        if (left_element <= mid_element && mid_element >= right_element) {
+            return mid;
+        } else if (mid_element < left_element) {
+            high = mid - 1;
+        } else if (mid_element < right_element) {
+            low = mid + 1;
+        }
+    }
+
+    return 0;
+}
+
+std::tuple<int, int> find_peak_2d(int *arr, int begin_rows, int end_rows, int begin_cols, int end_cols)
+{
+    if (begin_rows <= end_rows && begin_cols <= end_cols) {
+        int row_to_check = begin_rows + (end_rows - begin_rows) / 2;
+        int col_to_check = begin_cols + (end_cols - begin_cols) / 2;
+
+        std::tuple<int, int> max_row_col;
+        int max_in_row_and_col = INT32_MIN;
+        for (int j = begin_cols; j <= end_cols; ++j) {
+            int arr_value = *(arr + row_to_check * (end_cols + 1) + j);
+            if (arr_value > max_in_row_and_col) {
+                max_in_row_and_col = arr_value;
+                max_row_col = std::make_tuple(row_to_check, j);
+            }
+        }
+
+        for (int i = begin_rows; i <= end_rows; ++i) {
+            int arr_value = *(arr + i * (end_cols + 1) + col_to_check);
+            if (arr_value > max_in_row_and_col) {
+                max_in_row_and_col = arr_value;
+                max_row_col = std::make_tuple(i, col_to_check);
+            }
+        }
+
+        int max_i = std::get<0>(max_row_col);
+        int max_j = std::get<1>(max_row_col);
+        int i_j_elem = *(arr + max_i * (end_cols + 1) + max_j);
+
+        std::map<int, std::tuple<int, int>> indexes;
+        int top_to_max = max_i - 1 < 0 ? INT32_MIN : *(arr + (max_i - 1) * (end_cols + 1) + max_j);
+        indexes.emplace(top_to_max, std::make_tuple(max_i - 1, max_j));
+
+        int bottom_to_max = max_i + 1 > end_rows ? INT32_MIN : *(arr + (max_i + 1) * (end_cols + 1) + max_j);
+        indexes.emplace(bottom_to_max, std::make_tuple(max_i + 1, max_j));
+
+        int left_to_max = max_j - 1 < 0 ? INT32_MIN : *(arr + max_i * (end_cols + 1) + max_j - 1);
+        indexes.emplace(left_to_max, std::make_tuple(max_i, max_j - 1));
+
+        int right_to_max = max_j + 1 > end_cols ? INT32_MIN : *(arr + max_i * (end_cols + 1) + max_j + 1);
+        indexes.emplace(right_to_max, std::make_tuple(max_i, max_j + 1));
+
+        int max_elem = std::max({ i_j_elem, top_to_max, bottom_to_max, left_to_max, right_to_max });
+        if (max_elem == i_j_elem) {
+            return std::make_tuple(max_i, max_j);
+        } 
+
+        int max_neig_i = std::get<0>(indexes.find(max_elem)->second);
+        int max_neig_j = std::get<1>(indexes.find(max_elem)->second);
+        std::tuple<int, int> next_row_to_check_begin_end = max_neig_i < row_to_check ? std::make_tuple(begin_rows, row_to_check - 1) : std::make_tuple(row_to_check + 1, end_rows);
+        std::tuple<int, int> next_col_to_check_begin_end = max_neig_j < col_to_check ? std::make_tuple(begin_cols, col_to_check - 1) : std::make_tuple(col_to_check + 1, end_cols);
+
+        return find_peak_2d(arr, std::get<0>(next_row_to_check_begin_end), std::get<1>(next_row_to_check_begin_end), std::get<0>(next_col_to_check_begin_end), std::get<1>(next_col_to_check_begin_end));
+    }
+
+    return std::make_tuple(0, 0);
+}
+
+size_t max_area_of_histogram(std::vector<size_t> &heights)
+{
+    std::stack<size_t> stk;
+    size_t max_area = 0;
+
+    size_t i = 0;
+    while (i < heights.size()) {
+        if (stk.empty() || heights[i] >= heights[stk.top()]) {
+            stk.push(i);
+            ++i;
+            continue;
+        }
+
+        size_t pop_elem = stk.top();
+        stk.pop();
+
+        size_t area = 0;
+        if (stk.empty()) {
+            area = heights[pop_elem] * i;
+        } else {
+            area = heights[pop_elem] * (i - stk.top() - 1);
+        }
+
+        max_area = std::max(area, max_area);
+    }
+
+    while (!stk.empty()) {
+        size_t pop_elem = stk.top();
+        stk.pop();
+
+        size_t area = 0;
+        if (stk.empty()) {
+            area = heights[pop_elem] * i;
+        } else {
+            area = heights[pop_elem] * (i - stk.top() - 1);
+        }
+
+        max_area = std::max(area, max_area);
+    }
+
+    return max_area;
+}
+
+size_t trapping_rain_water_in_histogram(std::vector<size_t> &heights)
+{
+    size_t left_max = 0, right_max = 0;
+    size_t max_sum = 0;
+
+    size_t left = 0, right = heights.size() - 1;
+
+    while (left < right) {
+        if (heights[left] <= heights[right]) {
+            if (heights[left] < left_max) {
+                max_sum = max_sum + (left_max - heights[left]);
+            }
+
+            left_max = std::max(heights[left], left_max);
+            ++left;
+        } else {
+            if (heights[right] < right_max) {
+                max_sum = max_sum + (right_max - heights[right]);
+            }
+
+            right_max = std::max(heights[right], right_max);
+            --right;
+        }
+    }
+
+    return max_sum;
 }
