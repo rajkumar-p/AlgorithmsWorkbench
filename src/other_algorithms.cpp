@@ -92,28 +92,6 @@ int get_equal_or_next_high_in_sorted_array(std::vector<int> &arr, int low, int h
     return arr[low];
 }
 
-size_t find_peak(std::vector<int> &numbers)
-{
-    int low = 0, high = numbers.size() - 1;
-    while (low <= high) {
-        int mid = low + (high - low) / 2;
-
-        int mid_element = numbers[mid];
-        int left_element = mid - 1 < 0 ? mid_element - 1 : numbers[mid - 1];
-        int right_element = mid + 1 == numbers.size() ? mid_element + 1 : numbers[mid + 1];
-
-        if (left_element <= mid_element && mid_element >= right_element) {
-            return mid;
-        } else if (mid_element < left_element) {
-            high = mid - 1;
-        } else if (mid_element < right_element) {
-            low = mid + 1;
-        }
-    }
-
-    return 0;
-}
-
 std::tuple<int, int> find_peak_2d(int *arr, int begin_rows, int end_rows, int begin_cols, int end_cols)
 {
     if (begin_rows <= end_rows && begin_cols <= end_cols) {
@@ -169,6 +147,28 @@ std::tuple<int, int> find_peak_2d(int *arr, int begin_rows, int end_rows, int be
     }
 
     return std::make_tuple(0, 0);
+}
+
+size_t find_peak(std::vector<int> &numbers)
+{
+    int low = 0, high = numbers.size() - 1;
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        int mid_element = numbers[mid];
+        int left_element = mid - 1 < 0 ? mid_element - 1 : numbers[mid - 1];
+        int right_element = mid + 1 == numbers.size() ? mid_element + 1 : numbers[mid + 1];
+
+        if (left_element <= mid_element && mid_element >= right_element) {
+            return mid;
+        } else if (mid_element < left_element) {
+            high = mid - 1;
+        } else if (mid_element < right_element) {
+            low = mid + 1;
+        }
+    }
+
+    return 0;
 }
 
 size_t max_area_of_histogram(std::vector<size_t> &heights)

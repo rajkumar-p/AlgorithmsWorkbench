@@ -1,6 +1,7 @@
 #include "dp_algorithms.hpp"
 #include <algorithm>
 #include <iostream>
+#include <numeric>
 
 size_t weighted_interval_scheduling(std::vector<interval> &intervals)
 {
@@ -569,4 +570,66 @@ std::string longest_palindromic_substring(const std::string str)
     }
 
     return str.substr(max_substr_start, max_substr_len);
+}
+
+std::tuple<size_t, std::vector<std::string>> text_justification(const std::vector<std::string> &words, const size_t margin)
+{
+    std::vector<size_t> words_len;
+
+    for (const std::string &w : words) {
+        words_len.push_back(w.length());
+    }
+
+    size_t cost[words.size()][words.size()];
+
+    for (size_t i = 0; i < words.size(); ++i) {
+        for (size_t j = i; j < words.size(); ++j) {
+            size_t i_to_j_words_len = std::accumulate(words_len.begin() + i, words_len.begin() + j + 1, 0);
+            size_t no_words_i_j = j - i + 1;
+            // Add spaces between words
+            i_to_j_words_len += no_words_i_j - 1;
+
+            int slack = margin - i_to_j_words_len;
+            if (slack >= 0) {
+                cost[i][j] = slack * slack;
+            } else {
+                cost[i][j] = INT32_MAX;
+            }
+        }
+    }
+
+    std::vector<size_t> opt_table(words.size(), INT32_MAX);
+    std::vector<int> sol_table(words.size(), -1);
+
+    for (size_t j = 0; j < words.size(); ++j) {
+        for (size_t i = 0; i <= j; ++i) {
+            size_t prev_opt_value = int(i) - 1 < 0 ? 0 : opt_table[i - 1];
+            size_t slack_from_i_to_j = cost[i][j];
+
+            size_t opt_value = prev_opt_value + slack_from_i_to_j;
+            if (opt_value < opt_table[j]) {
+                opt_table[j] = opt_value;
+                sol_table[j] = i;
+            }
+        }
+    }
+
+    std::vector<std::string> words_by_line;
+
+    int to = words.size() - 1;
+    while (to >= 0) {
+        int from = sol_table[to];
+        std::string joined_words = "";
+        for (int i = from + 1; i <= to; ++i) {
+            joined_words = joined_words + " " + words[i];
+        }
+        joined_words = words[from] + joined_words;
+        words_by_line.push_back(joined_words);
+
+        to = from - 1;
+    }
+
+    std::reverse(words_by_line.begin(), words_by_line.end());
+
+    return std::make_tuple(opt_table[words.size() - 1], words_by_line);
 }

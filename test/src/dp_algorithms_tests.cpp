@@ -228,4 +228,20 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
         REQUIRE(longest_palindromic_substring("cbbd") == "bb");
         REQUIRE(longest_palindromic_substring("forgeeksskeegfor") == "geeksskeeg");
     }
+
+    SECTION("text_justification(words)") {
+        std::vector<std::string> words;
+        size_t margin;
+
+        words = { "aaa", "bb", "cc", "ddddd" };
+        margin = 6;
+        REQUIRE(std::get<0>(text_justification(words, margin)) == 11);
+
+        words = { "organisations", "perhaps", "the", "automation", "monitoring",
+            "orchestration", "skillsets", "are", "of", "extremely", 
+            "then", "I", "components", "state", "expect"
+        };
+        margin = 19;
+        REQUIRE(std::get<0>(text_justification(words, margin)) == 430);
+    }
 }
