@@ -92,4 +92,7 @@ size_t zig_zag(const std::vector<int> &seq);
 // https://leetcode.com/problems/longest-palindromic-substring/description/
 std::string longest_palindromic_substring(const std::string str);
 
+// https://www.geeksforgeeks.org/dynamic-programming-set-18-word-wrap/
+std::tuple<size_t, std::vector<std::string>> text_justification(const std::vector<std::string> &words, const size_t margin);
+
 #endif
