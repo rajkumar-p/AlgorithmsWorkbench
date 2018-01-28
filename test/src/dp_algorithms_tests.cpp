@@ -244,4 +244,18 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
         margin = 19;
         REQUIRE(std::get<0>(text_justification(words, margin)) == 430);
     }
+
+    SECTION("partition_elements_into_k_subsets(elements, k)") {
+        // std::vector<int> elements;
+
+        // elements = { 5, 6, 1, 3, 4, 10 };
+        // std::tuple<size_t, std::string> t = partition_elements_into_k_subsets(elements, 3);
+        // REQUIRE(std::get<0>(t) == 7);
+        // REQUIRE(std::get<1>(t) == "Something");
+
+        // elements = { 100, 200, 300, 400, 500, 600, 700, 800, 900 };
+        // t = partition_elements_into_k_subsets(elements, 3);
+        // REQUIRE(std::get<0>(t) == 7);
+        // REQUIRE(std::get<1>(t) == "Something");
+    }
 }

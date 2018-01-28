@@ -61,4 +61,24 @@ TEST_CASE("Checking Graph Algorithms", "[Graph Algorithms]")
             REQUIRE(kv.second == bfs_results.find(kv.first)->second.parent());
         }
     }
+
+    SECTION("Depth First Search (DFS)") {
+        graph G;
+
+        G.add_vertex("U");
+        G.add_vertex("V");
+        G.add_vertex("X");
+        G.add_vertex("Y");
+        G.add_vertex("W");
+        G.add_vertex("Z");
+
+        G.add_directed_edge("U", "V");
+        G.add_directed_edge("U", "X");
+        G.add_directed_edge("X", "V");
+        G.add_directed_edge("V", "Y");
+        G.add_directed_edge("Y", "X");
+        G.add_directed_edge("W", "Z");
+        G.add_directed_edge("W", "Y");
+        G.add_directed_edge("Z", "Z");
+    }
 }
