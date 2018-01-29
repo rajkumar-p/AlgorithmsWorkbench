@@ -48,4 +48,16 @@ void dfs_walk(graph &G, std::string from_vertex_id, std::atomic<size_t> &time_co
 std::map<std::string, edge_type> classify_edges(graph &G);
 void dfs_walk_to_classify_edges(graph &G, std::string from_vertex_id, std::map<std::string, vertex_color> &vertex_colors, std::map<std::string, edge_type> &edge_results);
 
+std::map<std::string, vertex_search_prop> dfs_custom_order(graph &G, std::vector<std::string> vertices_order);
+std::map<std::string, vertex_search_prop> strongly_connected_components(graph &G);
+void transverse_of(graph &G, graph &GT);
+
+std::list<std::string> topological_sort(graph &G);
+
+void mst_prim(graph &G, const std::string source_id, graph &output_tree);
+
+bool bellman_ford(graph &G, std::string source_id, std::map<std::string, vertex_search_prop> &results);
+std::map<std::string, vertex_search_prop> dag_shortest_path(graph &DAG, std::string source_id);
+std::map<std::string, vertex_search_prop> djikstra(graph &G, std::string source_id);
+
 #endif

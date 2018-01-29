@@ -9,7 +9,7 @@ void graph::add_vertex(const std::string id)
     }
 }
 
-void graph::add_directed_edge(const std::string from, const std::string to, const size_t weight)
+void graph::add_directed_edge(const std::string from, const std::string to, const int weight)
 {
     auto vertex_not_present = _vertex_and_adj_edges.end();
     if (_vertex_and_adj_edges.find(from) != vertex_not_present && _vertex_and_adj_edges.find(to) != vertex_not_present) {
@@ -18,7 +18,7 @@ void graph::add_directed_edge(const std::string from, const std::string to, cons
     }
 }
 
-void graph::add_edge(const std::string from, const std::string to, const size_t weight)
+void graph::add_edge(const std::string from, const std::string to, const int weight)
 {
     add_directed_edge(from, to, weight);
     add_directed_edge(to, from, weight);
