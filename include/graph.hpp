@@ -9,14 +9,14 @@ class edge {
 private:
     std::string _from;
     std::string _to;
-    size_t _weight;
+    int _weight;
 
 public:
     edge(const std::string from, const std::string to, const size_t weight) : _from(from), _to(to), _weight(weight) {}
 
     std::string from() const { return _from; }
     std::string to() const { return _to; }
-    size_t weight() const { return _weight; }
+    int weight() const { return _weight; }
 };
 
 class graph {
@@ -28,8 +28,8 @@ public:
     graph() : _vertex_and_adj_edges(), _edge_count(0) {}
 
     void add_vertex(const std::string id);
-    void add_directed_edge(const std::string from, const std::string to, const size_t weight = 1);
-    void add_edge(const std::string from, const std::string to, const size_t weight = 1);
+    void add_directed_edge(const std::string from, const std::string to, const int weight = 1);
+    void add_edge(const std::string from, const std::string to, const int weight = 1);
 
     size_t get_vertex_count() const;
     size_t get_edge_count() const;

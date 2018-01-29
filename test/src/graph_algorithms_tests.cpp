@@ -81,4 +81,7 @@ TEST_CASE("Checking Graph Algorithms", "[Graph Algorithms]")
         G.add_directed_edge("W", "Y");
         G.add_directed_edge("Z", "Z");
     }
+
+    SECTION("topological_sort(graph)") {
+    }
 }
