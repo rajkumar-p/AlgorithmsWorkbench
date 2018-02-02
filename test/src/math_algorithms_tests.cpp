@@ -32,6 +32,7 @@ TEST_CASE("Checking Math Algorithms Implementation", "[Math Algorithms]")
         REQUIRE(lcm(9, 6) == 18);
     }
 
+<<<<<<< HEAD
     SECTION("to_decimal() tests") {
         REQUIRE(to_decimal(1011, 2) == 11);
         REQUIRE(to_decimal(0000, 2) == 0);
@@ -50,5 +51,22 @@ TEST_CASE("Checking Math Algorithms Implementation", "[Math Algorithms]")
         REQUIRE(from_decimal(16, 7) == 22);
         REQUIRE(from_decimal(25, 7) == 34);
         REQUIRE(from_decimal(66, 7) == 123);
+=======
+    SECTION("k_points_closest_to_origin(points, k)") {
+        std::vector<std::tuple<int, int>> points;
+
+        points.push_back(std::make_tuple(-2, 4));
+        points.push_back(std::make_tuple(0, -2));
+        points.push_back(std::make_tuple(-1, 0));
+        points.push_back(std::make_tuple(3, 5));
+        points.push_back(std::make_tuple(-2, -3));
+        points.push_back(std::make_tuple(3, 2));
+
+        size_t k = 3;
+        std::vector<size_t> test_result = { 2, 1, 4 };
+        std::vector<size_t> closest_points = k_points_closest_to_origin(points, k);
+        REQUIRE(closest_points.size() == k);
+        REQUIRE(closest_points == test_result);
+>>>>>>> AlgProblems
     }
 }

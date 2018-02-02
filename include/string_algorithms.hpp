@@ -44,6 +44,12 @@ int stoi(std::string digits);
 // https://leetcode.com/problems/reverse-words-in-a-string-iii/description/
 std::string reverse_words_2(std::string str);
 
+// https://algorithm.yuanbin.me/zh-hans/string/space_replacement.html
+std::string space_replacement(std::string str, size_t len, size_t new_len);
+
+// https://algorithm.yuanbin.me/zh-hans/string/length_of_last_word.html
+size_t length_of_last_word(const std::string &str);
+
 std::vector<std::string> split_string(std::string str, char delim);
 std::string replace_multiple_spaces(std::string str);
 std::string trim_spaces(std::string str);
