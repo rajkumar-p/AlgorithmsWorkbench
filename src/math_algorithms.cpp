@@ -51,7 +51,6 @@ int lcm(int a, int b)
     return (a * b) / gcd(a, b);
 }
 
-<<<<<<< HEAD
 int to_decimal(int number, int base)
 {
     int n = number;
@@ -82,7 +81,8 @@ int from_decimal(const int number, const int base)
     }
 
     return sum;
-=======
+}
+
 std::vector<size_t> k_points_closest_to_origin(std::vector<std::tuple<int, int>> &points, size_t k)
 {
     struct points_compare {
@@ -110,5 +110,4 @@ std::vector<size_t> k_points_closest_to_origin(std::vector<std::tuple<int, int>>
     }
 
     return closest_points_indexes;
->>>>>>> AlgProblems
 }
