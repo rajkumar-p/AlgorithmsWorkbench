@@ -513,3 +513,41 @@ std::string reverse_words_2(std::string str)
 
     return str;
 }
+
+std::string space_replacement(std::string str, size_t len, size_t new_len)
+{
+    size_t no_spaces = 0;
+    for (size_t i = 0; i < len; ++i) {
+        if (str[i] == ' ') { ++no_spaces; }
+    }
+
+    size_t new_str_len = std::min(len + 2 * no_spaces, new_len);
+    size_t n_pos = new_str_len - 1;
+    for (int i = len - 1; i >= 0; --i) {
+        if (str[i] != ' ') {
+            str[n_pos--] = str[i];
+        } else {
+            str[n_pos--] = '0';
+            str[n_pos--] = '2';
+            str[n_pos--] = '%';
+        }
+    }
+
+    return str.substr(0, new_str_len);
+}
+
+size_t length_of_last_word(const std::string &str)
+{
+    int str_index = str.length() - 1;
+    while (str_index >= 0 && !isalpha(str[str_index])) {
+        --str_index;
+    }
+
+    size_t last_word_len = 0;
+    while (str_index >= 0 && isalpha(str[str_index])) {
+        --str_index;
+        ++last_word_len;
+    }
+
+    return last_word_len;
+}

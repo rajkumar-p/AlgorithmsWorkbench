@@ -2,7 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cmath>
-#include "graph_algorithms.hpp"
+#include "math_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -184,28 +184,43 @@ int main(int argc, char *argv[])
     // }
     // std::cout <<std::endl;
 
-    graph G;
+    // graph G;
 
-    G.add_vertex("S");
-    G.add_vertex("T");
-    G.add_vertex("Y");
-    G.add_vertex("X");
-    G.add_vertex("Z");
+    // G.add_vertex("S");
+    // G.add_vertex("T");
+    // G.add_vertex("Y");
+    // G.add_vertex("X");
+    // G.add_vertex("Z");
 
-    G.add_directed_edge("S", "T", 10);
-    G.add_directed_edge("S", "Y", 5);
-    G.add_directed_edge("T", "Y", 2);
-    G.add_directed_edge("Y", "T", 3);
-    G.add_directed_edge("T", "X", 1);
-    G.add_directed_edge("Y", "Z", 2);
-    G.add_directed_edge("Y", "X", 9);
-    G.add_directed_edge("X", "Z", 4);
-    G.add_directed_edge("Z", "X", 6);
-    G.add_directed_edge("Z", "S", 7);
+    // G.add_directed_edge("S", "T", 10);
+    // G.add_directed_edge("S", "Y", 5);
+    // G.add_directed_edge("T", "Y", 2);
+    // G.add_directed_edge("Y", "T", 3);
+    // G.add_directed_edge("T", "X", 1);
+    // G.add_directed_edge("Y", "Z", 2);
+    // G.add_directed_edge("Y", "X", 9);
+    // G.add_directed_edge("X", "Z", 4);
+    // G.add_directed_edge("Z", "X", 6);
+    // G.add_directed_edge("Z", "S", 7);
 
-    std::map<std::string, vertex_search_prop> results = djikstra(G, "S");
-    for (const std::pair<std::string, vertex_search_prop> &p : results) {
-        std::cout <<"V : "<<p.first<<", D : "<<p.second.dist_from_root()<<std::endl;
+    // std::map<std::string, vertex_search_prop> results = djikstra(G, "S");
+    // for (const std::pair<std::string, vertex_search_prop> &p : results) {
+    //     std::cout <<"V : "<<p.first<<", D : "<<p.second.dist_from_root()<<std::endl;
+    // }
+
+    std::vector<std::tuple<int, int>> points;
+
+    points.push_back(std::make_tuple(-2, 4));
+    points.push_back(std::make_tuple(0, -2));
+    points.push_back(std::make_tuple(-1, 0));
+    points.push_back(std::make_tuple(3, 5));
+    points.push_back(std::make_tuple(-2, -3));
+    points.push_back(std::make_tuple(3, 2));
+
+    size_t k = 3;
+    std::vector<size_t> indexes = k_points_closest_to_origin(points, k);
+    for (const size_t &i : indexes) {
+        std::cout <<i<<"\t";
     }
 
     return 0;

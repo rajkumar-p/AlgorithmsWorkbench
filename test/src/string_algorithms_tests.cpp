@@ -131,4 +131,17 @@ TEST_CASE("Checking String Algorithms Implementation", "[String Algorithms]")
         REQUIRE(reverse_words_2("           the sky   is        blue    ") == "           eht yks   si        eulb    ");
         REQUIRE(reverse_words_2("Let's take LeetCode contest") == "s'teL ekat edoCteeL tsetnoc");
     }
+
+    SECTION("space_replacement(str, len, new_len)") {
+        REQUIRE(space_replacement("Mr John Smith         ", 13, 22) == "Mr%20John%20Smith");
+    }
+
+    SECTION("length_of_last_word(str)") {
+        REQUIRE(length_of_last_word("Hello World") == 5);
+        REQUIRE(length_of_last_word("    Hello World      ") == 5);
+        REQUIRE(length_of_last_word("~~~~Hello World~~~~~~") == 5);
+        REQUIRE(length_of_last_word("") == 0);
+        REQUIRE(length_of_last_word("World") == 5);
+        REQUIRE(length_of_last_word("    World    ") == 5);
+    }
 }
