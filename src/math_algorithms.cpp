@@ -111,3 +111,21 @@ std::vector<size_t> k_points_closest_to_origin(std::vector<std::tuple<int, int>>
 
     return closest_points_indexes;
 }
+
+double angle_between_points(std::tuple<int, int> &point1, std::tuple<int, int> &point2)
+{
+    // Find the vector dot product
+    // A.B = |A||B| Cos(Θ)
+    int x1 = std::get<0>(point1);
+    int y1 = std::get<1>(point1);
+
+    int x2 = std::get<0>(point2);
+    int y2 = std::get<1>(point2);
+
+    double dot_product = (x1 * x2) + (y1 * y2);
+    double cos_theta =  dot_product == 0 ? 0 : dot_product / (sqrt(x1 * x1 + y1 * y1) * sqrt(x2 * x2 + y2 * y2));
+    double angle_in_radians = acos(cos_theta);
+    double angle_in_degrees = angle_in_radians * 180 / 3.14;
+
+    return angle_in_degrees;
+}

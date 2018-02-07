@@ -208,19 +208,18 @@ int main(int argc, char *argv[])
     //     std::cout <<"V : "<<p.first<<", D : "<<p.second.dist_from_root()<<std::endl;
     // }
 
-    std::vector<std::tuple<int, int>> points;
+    // std::vector<std::tuple<int, int>> points;
 
-    points.push_back(std::make_tuple(-2, 4));
-    points.push_back(std::make_tuple(0, -2));
-    points.push_back(std::make_tuple(-1, 0));
-    points.push_back(std::make_tuple(3, 5));
-    points.push_back(std::make_tuple(-2, -3));
-    points.push_back(std::make_tuple(3, 2));
+    // points.push_back(std::make_tuple(5, 0));
+    // points.push_back(std::make_tuple(1, -5));
 
-    size_t k = 3;
-    std::vector<size_t> indexes = k_points_closest_to_origin(points, k);
-    for (const size_t &i : indexes) {
-        std::cout <<i<<"\t";
+    // double angle = angle_between_points(points[0], points[1]);
+
+    std::string str = "➡︎℞∋⁉︎௹";
+    std::cout <<"Len : "<<str.length()<<std::endl;
+    std::cout <<str<<std::endl;
+    for (const char c : str) {
+        std::wcout<<c<<"\t";
     }
 
     return 0;

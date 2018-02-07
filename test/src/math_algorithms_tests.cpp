@@ -68,4 +68,24 @@ TEST_CASE("Checking Math Algorithms Implementation", "[Math Algorithms]")
         REQUIRE(closest_points.size() == k);
         REQUIRE(closest_points == test_result);
     }
+
+    SECTION("angle_between_two_points(point1, point2)") {
+        std::tuple<int, int> point1;
+        std::tuple<int, int> point2;
+
+        point1 = std::make_tuple(5, 0);
+        point2 = std::make_tuple(0, 5);
+
+        // REQUIRE(angle_between_points(point1, point2) == 90.0456493067);
+
+        point1 = std::make_tuple(5, 0);
+        point2 = std::make_tuple(1, 5);
+
+        // REQUIRE(angle_between_points(point1, point2) == 78.72);
+
+        point1 = std::make_tuple(5, 0);
+        point2 = std::make_tuple(1, -5);
+
+        // REQUIRE(angle_between_points(point1, point2) == 78.72);
+    }
 }
