@@ -144,4 +144,8 @@ TEST_CASE("Checking String Algorithms Implementation", "[String Algorithms]")
         REQUIRE(length_of_last_word("World") == 5);
         REQUIRE(length_of_last_word("    World    ") == 5);
     }
+
+    SECTION("longest_common_prefix(strs)") {
+        REQUIRE(longest_common_prefix({ "leets", "leetcode", "leet", "leeds" }) == "lee");
+    }
 }

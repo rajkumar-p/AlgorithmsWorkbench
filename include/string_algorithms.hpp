@@ -50,6 +50,9 @@ std::string space_replacement(std::string str, size_t len, size_t new_len);
 // https://algorithm.yuanbin.me/zh-hans/string/length_of_last_word.html
 size_t length_of_last_word(const std::string &str);
 
+// https://leetcode.com/problems/longest-common-prefix/description/
+std::string longest_common_prefix(const std::vector<std::string> &strs);
+
 std::vector<std::string> split_string(std::string str, char delim);
 std::string replace_multiple_spaces(std::string str);
 std::string trim_spaces(std::string str);

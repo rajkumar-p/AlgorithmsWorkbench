@@ -2,7 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cmath>
-#include "math_algorithms.hpp"
+#include "string_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -215,12 +215,7 @@ int main(int argc, char *argv[])
 
     // double angle = angle_between_points(points[0], points[1]);
 
-    std::string str = "➡︎℞∋⁉︎௹";
-    std::cout <<"Len : "<<str.length()<<std::endl;
-    std::cout <<str<<std::endl;
-    for (const char c : str) {
-        std::wcout<<c<<"\t";
-    }
+    std::cout <<longest_common_prefix({ "leets", "leetcode", "leet", "leeds" });
 
     return 0;
 }

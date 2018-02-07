@@ -551,3 +551,24 @@ size_t length_of_last_word(const std::string &str)
 
     return last_word_len;
 }
+
+std::string longest_common_prefix(const std::vector<std::string> &strs)
+{
+    size_t min_len_of_all_strings = INT32_MAX;
+    for (const std::string &s : strs) {
+        min_len_of_all_strings = std::min(min_len_of_all_strings, s.length());
+    }
+
+    std::string longest_common_prefix = "";
+    for (size_t j = 0; j < min_len_of_all_strings; ++j) {
+        for (size_t i = 1; i < strs.size(); ++i) {
+            if (strs[i - 1][j] != strs[i][j]) {
+                return longest_common_prefix;
+            }
+        }
+
+        longest_common_prefix.push_back(strs[0][j]);
+    }
+
+    return longest_common_prefix;
+}
