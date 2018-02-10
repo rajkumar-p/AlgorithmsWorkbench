@@ -572,3 +572,50 @@ std::string longest_common_prefix(const std::vector<std::string> &strs)
 
     return longest_common_prefix;
 }
+
+std::string min_window_substring(const std::string &str, const std::string &substr)
+{
+    std::map<char, size_t> nchars_in_substr_to_find;
+    std::map<char, size_t> nchars_in_str_found;
+    size_t min_win_length = INT32_MAX;
+
+    for (const char &c : substr) {
+        if (nchars_in_substr_to_find.find(c) == nchars_in_substr_to_find.end()) {
+            nchars_in_substr_to_find[c] = 1;
+        } else {
+            nchars_in_substr_to_find[c] += 1;
+        }
+
+        nchars_in_str_found[c] = 0;
+    }
+
+    size_t count_found = 0;
+    size_t win_begin = 0;
+    std::string min_win_str = "";
+    for (size_t i = 0; i < str.length(); ++i) {
+        if (nchars_in_substr_to_find.find(str[i]) != nchars_in_substr_to_find.end()) {
+            nchars_in_str_found[str[i]] += 1;
+            if (nchars_in_str_found[str[i]] <= nchars_in_substr_to_find[str[i]]) {
+                ++count_found;
+            }
+        }
+
+        if (count_found == substr.length()) {
+            while (nchars_in_substr_to_find.find(str[win_begin]) == nchars_in_substr_to_find.end() || nchars_in_str_found[str[win_begin]] > nchars_in_substr_to_find[str[win_begin]]) {
+                if (nchars_in_substr_to_find.find(str[win_begin]) != nchars_in_substr_to_find.end()) {
+                    nchars_in_str_found[str[win_begin]] -= 1;
+                }
+
+                ++win_begin;
+            }
+
+            size_t curr_win_length = i - win_begin + 1;
+            if (curr_win_length < min_win_length) {
+                min_win_length = curr_win_length;
+                min_win_str = str.substr(win_begin, curr_win_length);
+            }
+        }
+    }
+
+    return min_win_str;
+}

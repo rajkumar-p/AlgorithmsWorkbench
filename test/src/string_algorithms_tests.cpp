@@ -148,4 +148,9 @@ TEST_CASE("Checking String Algorithms Implementation", "[String Algorithms]")
     SECTION("longest_common_prefix(strs)") {
         REQUIRE(longest_common_prefix({ "leets", "leetcode", "leet", "leeds" }) == "lee");
     }
+
+    SECTION("min_window_substring(str, substr)") {
+        REQUIRE(min_window_substring("ADOBECODEBANC", "ABC") == "BANC");
+        REQUIRE(min_window_substring("ACBBACA", "ABA") == "BACA");
+    }
 }

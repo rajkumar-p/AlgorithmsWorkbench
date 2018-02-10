@@ -2,7 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cmath>
-#include "trie.hpp"
+#include "string_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -216,23 +216,24 @@ int main(int argc, char *argv[])
     // double angle = angle_between_points(points[0], points[1]);
 
     // std::cout <<longest_common_prefix({ "leets", "leetcode", "leet", "leeds" });
-    trie *t = new trie();
+    // trie *t = new trie();
 
-    t->insert_word(t->root(), "BYE");
-    t->insert_word(t->root(), "ANY");
-    t->insert_word(t->root(), "ANSWER");
-    t->insert_word(t->root(), "THERE");
-    t->insert_word(t->root(), "THEIR");
+    // t->insert_word(t->root(), "BYE");
+    // t->insert_word(t->root(), "ANY");
+    // t->insert_word(t->root(), "ANSWER");
+    // t->insert_word(t->root(), "THERE");
+    // t->insert_word(t->root(), "THEIR");
 
-    std::vector<std::string> patterns;
-    t->get_all_patterns(t->root(), patterns);
+    // std::vector<std::string> patterns;
+    // t->get_all_patterns(t->root(), patterns);
 
-    for (const std::string &s : patterns) {
-        std::cout <<s<<std::endl;
-    }
-    std::cout <<std::endl;
+    // for (const std::string &s : patterns) {
+    //     std::cout <<s<<std::endl;
+    // }
+    // std::cout <<std::endl;
 
-    delete t;
+    // delete t;
+    std::cout <<min_window_substring("ACBBACA", "ABA");
 
     return 0;
 }
