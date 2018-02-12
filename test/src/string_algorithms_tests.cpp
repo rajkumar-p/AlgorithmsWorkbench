@@ -153,4 +153,9 @@ TEST_CASE("Checking String Algorithms Implementation", "[String Algorithms]")
         REQUIRE(min_window_substring("ADOBECODEBANC", "ABC") == "BANC");
         REQUIRE(min_window_substring("ACBBACA", "ABA") == "BACA");
     }
+
+    SECTION("group_anagrams(strs)") {
+        // std::vector<std::vector<std::string>> result_vec = { { "ate", "eat", "tea" }, { "nat", "tan" }, { "bat" } };
+        // REQUIRE(group_anagrams({ "eat", "tea", "tan", "ate", "nat", "bat" }) == result_vec);
+    }
 }

@@ -56,6 +56,9 @@ std::string longest_common_prefix(const std::vector<std::string> &strs);
 // https://leetcode.com/problems/minimum-window-substring/description/
 std::string min_window_substring(const std::string &str, const std::string &substr);
 
+// https://leetcode.com/problems/group-anagrams/
+std::vector<std::vector<std::string>> group_anagrams(const std::vector<std::string> &strs);
+
 std::vector<std::string> split_string(std::string str, char delim);
 std::string replace_multiple_spaces(std::string str);
 std::string trim_spaces(std::string str);

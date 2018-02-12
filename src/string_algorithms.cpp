@@ -619,3 +619,21 @@ std::string min_window_substring(const std::string &str, const std::string &subs
 
     return min_win_str;
 }
+
+std::vector<std::vector<std::string>> group_anagrams(const std::vector<std::string> &strs)
+{
+    std::map<std::string, std::vector<std::string>> groups;
+    for (size_t i = 0; i < strs.size(); ++i) {
+        std::string key = strs[i];
+        std::sort(key.begin(), key.end());
+
+        groups[key].push_back(strs[i]);
+    }
+
+    std::vector<std::vector<std::string>> results;
+    for (const std::pair<std::string, std::vector<std::string>> &p : groups) {
+        results.push_back(p.second);
+    }
+
+    return results;
+}
