@@ -2,7 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cmath>
-#include "string_algorithms.hpp"
+#include "dp_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -233,7 +233,10 @@ int main(int argc, char *argv[])
     // std::cout <<std::endl;
 
     // delete t;
-    std::cout <<min_window_substring("ACBBACA", "ABA");
+    // std::cout <<min_window_substring("ACBBACA", "ABA");
+    // std::cout <<regex_matching("XAABYC", "XA*B.C");
+    std::cout <<regex_matching("AA", ".*");
+    // std::cout <<wildcard_matching("XAYLMZ", "X?Y*Z");
 
     return 0;
 }

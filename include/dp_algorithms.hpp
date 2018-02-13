@@ -78,9 +78,11 @@ std::tuple<size_t, size_t> min_and_max_of_expr(const std::string expr);
 size_t diff_way_as_sum_of(std::vector<size_t> &sums, int N);
 
 // https://leetcode.com/problems/regular-expression-matching/description/
+bool regex_matching(const std::string &text_to_match, const std::string &regex_pattern);
 bool is_match(const std::string &text, const std::string &pattern);
 
 // https://leetcode.com/problems/wildcard-matching/description/
+bool wildcard_matching(const std::string &text_to_match, const std::string &wc_pattern);
 bool is_match_wc(const std::string &text, const std::string &pattern);
 
 // https://www.geeksforgeeks.org/dynamic-programming-set-12-longest-palindromic-subsequence/
@@ -90,7 +92,7 @@ size_t longest_palindromic_subsequence(const std::string &str);
 size_t zig_zag(const std::vector<int> &seq);
 
 // https://leetcode.com/problems/longest-palindromic-substring/description/
-std::string longest_palindromic_substring(const std::string str);
+std::string longest_palindromic_substring(const std::string &str);
 
 // https://www.geeksforgeeks.org/dynamic-programming-set-18-word-wrap/
 std::tuple<size_t, std::vector<std::string>> text_justification(const std::vector<std::string> &words, const size_t margin);

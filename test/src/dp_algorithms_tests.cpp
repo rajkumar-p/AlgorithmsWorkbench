@@ -188,24 +188,24 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
         REQUIRE(diff_way_as_sum_of(sums, 5) == 6);
     }
 
-    SECTION("is_match(text, pattern) tests") {
-        REQUIRE(is_match("aa", "a") == false);
-        REQUIRE(is_match("aa", "aa") == true);
-        REQUIRE(is_match("aaa", "aa") == false);
-        REQUIRE(is_match("aa", "a*") == true);
-        REQUIRE(is_match("aa", ".*") == true);
-        REQUIRE(is_match("ab", ".*") == true);
-        REQUIRE(is_match("aab", "c*a*b") == true);
+    SECTION("regex_matching(text_to_match, regex_pattern) tests") {
+        REQUIRE(regex_matching("aa", "a") == false);
+        REQUIRE(regex_matching("aa", "aa") == true);
+        REQUIRE(regex_matching("aaa", "aa") == false);
+        REQUIRE(regex_matching("aa", "a*") == true);
+        REQUIRE(regex_matching("aa", ".*") == true);
+        REQUIRE(regex_matching("ab", ".*") == true);
+        REQUIRE(regex_matching("aab", "c*a*b") == true);
     }
 
-    SECTION("is_match_wc(text, pattern) tests") {
-        REQUIRE(is_match_wc("aa","a") == false);
-        REQUIRE(is_match_wc("aa","aa") == true);
-        REQUIRE(is_match_wc("aaa","aa") == false);
-        REQUIRE(is_match_wc("aa", "*") == true);
-        REQUIRE(is_match_wc("aa", "a*") == true);
-        REQUIRE(is_match_wc("ab", "?*") == true);
-        REQUIRE(is_match_wc("aab", "c*a*b") == false);
+    SECTION("wildcard_matching(text_to_match, regex_pattern) tests") {
+        REQUIRE(wildcard_matching("aa","a") == false);
+        REQUIRE(wildcard_matching("aa","aa") == true);
+        REQUIRE(wildcard_matching("aaa","aa") == false);
+        REQUIRE(wildcard_matching("aa", "*") == true);
+        REQUIRE(wildcard_matching("aa", "a*") == true);
+        REQUIRE(wildcard_matching("ab", "?*") == true);
+        REQUIRE(wildcard_matching("aab", "c*a*b") == false);
     }
 
     SECTION("longest_palindromic_subsequence(str)") {
