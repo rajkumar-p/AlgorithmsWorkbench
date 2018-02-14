@@ -633,49 +633,110 @@ std::tuple<size_t, std::vector<std::string>> text_justification(const std::vecto
     return std::make_tuple(opt_table[words.size() - 1], words_by_line);
 }
 
-std::tuple<size_t, std::string> partition_elements_into_k_subsets(const std::vector<int> &elements, const size_t k)
+std::vector<std::vector<size_t>> partition_elements_into_k_subsets(const std::vector<size_t> &elements, const size_t K)
 {
-    size_t opt_table[k + 1][elements.size() + 1];
-    size_t sol_table[k + 1][elements.size() + 1];
+    size_t N = elements.size();
 
-    for (size_t i = 1; i < k + 1; ++i) {
-        for (size_t j = 1; j < elements.size() + 1; ++j) {
-            opt_table[i][j] = INT32_MAX;
-            sol_table[i][j] = 0;
+    size_t sum[K + 1][N + 1];
+    size_t sol[K + 1][N + 1];
+
+    sum[0][0] = 0;
+    sol[0][0] = 0;
+
+    for (size_t i = 1; i < K + 1; ++i) {
+        sum[i][0] = 0;
+        sol[i][0] = 0;
+    }
+
+    for (size_t j = 1; j < N + 1; ++j) {
+        sum[0][j] = sum[0][j - 1] + elements[j - 1];
+        sol[0][j] = 0;
+    }
+
+    for (size_t i = 1; i < K + 1; ++i) {
+        for (size_t j = 1; j < N + 1; ++j) {
+            sum[i][j] = INT32_MAX;
         }
     }
 
-    for (size_t i = 0; i < k + 1; ++i) {
-        opt_table[i][0] = 0;
-        sol_table[i][0] = 0;
+    std::vector<size_t> prefix_sum(N + 1, 0);
+    for (size_t i = 1; i < N + 1; ++i) {
+        prefix_sum[i] = prefix_sum[i - 1] + elements[i - 1];
     }
 
-    std::vector<int> prefix_sum_arr(elements.size() + 1, 0);
-    for (size_t i = 1; i < elements.size() + 1; ++i) {
-        prefix_sum_arr[i] = prefix_sum_arr[i - 1] + elements[i - 1];
-    }
+    for (size_t i = 1; i < K + 1; ++i) {
+        for (size_t j = 1; j < N + 1; ++j) {
+            for (size_t p = 1; p <= j; ++p) {
+                size_t sum_from_k_to_j = prefix_sum[j] - prefix_sum[p - 1];
+                size_t max_of_partitions = std::max(sum_from_k_to_j, sum[i - 1][p - 1]);
 
-    for (size_t j = 1; j < elements.size() + 1; ++j) {
-        opt_table[0][j] = prefix_sum_arr[j];
-        sol_table[0][j] = j;
-    }
-
-    opt_table[0][0] = sol_table[0][0]  = 0;
-    for (size_t i = 1; i < k + 1; ++i) {
-        for (size_t j = 1; j < elements.size() + 1; ++j) {
-            for (size_t m = 1; m <= j; ++m) {
-                size_t prev_value = opt_table[i - 1][m - 1];
-                int sum_from_m_to_j = abs(prefix_sum_arr[j] - prefix_sum_arr[m - 1]);
-                // int sum_from_m_to_j = abs(prefix_sum_arr[m - 1] - (prefix_sum_arr[j] - prefix_sum_arr[m - 1]));
-
-                size_t opt_value = abs(int(prev_value) - sum_from_m_to_j);
-                if (opt_value < opt_table[i][j]) {
-                    opt_table[i][j] = opt_value;
-                    sol_table[i][j] = m;
+                if (max_of_partitions < sum[i][j]) {
+                    sum[i][j] = max_of_partitions;
+                    sol[i][j] = p - 1;
                 }
             }
         }
     }
 
-    return std::make_tuple(0, "");
+    std::vector<std::vector<size_t>> partitions;
+    int blocks = K;
+    int from_index = sol[blocks][N];
+    int to_index = N - 1;
+    while (blocks >= 0) {
+        std::vector<size_t> v(elements.begin() + from_index, elements.begin() + to_index + 1);
+        partitions.push_back(v);
+
+        --blocks;
+        to_index = from_index - 1;
+        from_index = sol[blocks][from_index];
+    }
+
+    return partitions;
 }
+
+// std::tuple<size_t, std::string> partition_elements_into_k_subsets(const std::vector<int> &elements, const size_t k)
+// {
+//     size_t opt_table[k + 1][elements.size() + 1];
+//     size_t sol_table[k + 1][elements.size() + 1];
+
+//     for (size_t i = 1; i < k + 1; ++i) {
+//         for (size_t j = 1; j < elements.size() + 1; ++j) {
+//             opt_table[i][j] = INT32_MAX;
+//             sol_table[i][j] = 0;
+//         }
+//     }
+
+//     for (size_t i = 0; i < k + 1; ++i) {
+//         opt_table[i][0] = 0;
+//         sol_table[i][0] = 0;
+//     }
+
+//     std::vector<int> prefix_sum_arr(elements.size() + 1, 0);
+//     for (size_t i = 1; i < elements.size() + 1; ++i) {
+//         prefix_sum_arr[i] = prefix_sum_arr[i - 1] + elements[i - 1];
+//     }
+
+//     for (size_t j = 1; j < elements.size() + 1; ++j) {
+//         opt_table[0][j] = prefix_sum_arr[j];
+//         sol_table[0][j] = j;
+//     }
+
+//     opt_table[0][0] = sol_table[0][0]  = 0;
+//     for (size_t i = 1; i < k + 1; ++i) {
+//         for (size_t j = 1; j < elements.size() + 1; ++j) {
+//             for (size_t m = 1; m <= j; ++m) {
+//                 size_t prev_value = opt_table[i - 1][m - 1];
+//                 int sum_from_m_to_j = abs(prefix_sum_arr[j] - prefix_sum_arr[m - 1]);
+//                 // int sum_from_m_to_j = abs(prefix_sum_arr[m - 1] - (prefix_sum_arr[j] - prefix_sum_arr[m - 1]));
+
+//                 size_t opt_value = abs(int(prev_value) - sum_from_m_to_j);
+//                 if (opt_value < opt_table[i][j]) {
+//                     opt_table[i][j] = opt_value;
+//                     sol_table[i][j] = m;
+//                 }
+//             }
+//         }
+//     }
+
+//     return std::make_tuple(0, "");
+// }

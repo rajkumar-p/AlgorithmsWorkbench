@@ -98,6 +98,7 @@ std::string longest_palindromic_substring(const std::string &str);
 std::tuple<size_t, std::vector<std::string>> text_justification(const std::vector<std::string> &words, const size_t margin);
 
 // https://www8.cs.umu.se/kurser/TDBA77/VT06/algorithms/BOOK/BOOK2/NODE45.HTM
-std::tuple<size_t, std::string> partition_elements_into_k_subsets(const std::vector<int> &elements, const size_t k);
+std::vector<std::vector<size_t>> partition_elements_into_k_subsets(const std::vector<size_t> &elements, const size_t K);
+// std::tuple<size_t, std::string> partition_elements_into_k_subsets(const std::vector<int> &elements, const size_t k);
 
 #endif

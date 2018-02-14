@@ -235,7 +235,7 @@ int main(int argc, char *argv[])
     // delete t;
     // std::cout <<min_window_substring("ACBBACA", "ABA");
     // std::cout <<regex_matching("XAABYC", "XA*B.C");
-    std::cout <<regex_matching("AA", ".*");
+    // std::cout <<regex_matching("AA", ".*");
     // std::cout <<wildcard_matching("XAYLMZ", "X?Y*Z");
 
     return 0;
