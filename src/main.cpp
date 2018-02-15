@@ -238,5 +238,8 @@ int main(int argc, char *argv[])
     // std::cout <<regex_matching("AA", ".*");
     // std::cout <<wildcard_matching("XAYLMZ", "X?Y*Z");
 
+    std::vector<size_t> elements = { 1, 5, 6, 11 };
+    std::cout <<partition_into_two_subsets(elements);
+
     return 0;
 }

@@ -694,49 +694,42 @@ std::vector<std::vector<size_t>> partition_elements_into_k_subsets(const std::ve
     return partitions;
 }
 
-// std::tuple<size_t, std::string> partition_elements_into_k_subsets(const std::vector<int> &elements, const size_t k)
-// {
-//     size_t opt_table[k + 1][elements.size() + 1];
-//     size_t sol_table[k + 1][elements.size() + 1];
+size_t partition_into_two_subsets(const std::vector<size_t> &elements)
+{
+    size_t sum = 0;
+    for (size_t i = 0; i < elements.size(); ++i) {
+        sum += elements[i];
+    }
 
-//     for (size_t i = 1; i < k + 1; ++i) {
-//         for (size_t j = 1; j < elements.size() + 1; ++j) {
-//             opt_table[i][j] = INT32_MAX;
-//             sol_table[i][j] = 0;
-//         }
-//     }
+    size_t M = elements.size();
+    size_t N = sum;
+    bool part[M + 1][N + 1];
 
-//     for (size_t i = 0; i < k + 1; ++i) {
-//         opt_table[i][0] = 0;
-//         sol_table[i][0] = 0;
-//     }
+    for (size_t i = 0; i < M + 1; ++i) {
+        part[i][0] = true;
+    }
 
-//     std::vector<int> prefix_sum_arr(elements.size() + 1, 0);
-//     for (size_t i = 1; i < elements.size() + 1; ++i) {
-//         prefix_sum_arr[i] = prefix_sum_arr[i - 1] + elements[i - 1];
-//     }
+    for (size_t j = 1; j < N + 1; ++j) {
+        part[0][j] = false;
+    }
 
-//     for (size_t j = 1; j < elements.size() + 1; ++j) {
-//         opt_table[0][j] = prefix_sum_arr[j];
-//         sol_table[0][j] = j;
-//     }
+    for (size_t i = 1; i < M + 1; ++i) {
+        for (size_t j = 1; j < N + 1; ++j) {
+            if (j < elements[i - 1]) {
+                part[i][j] = part[i - 1][j];
+            } else {
+                part[i][j] = part[i - 1][j] || part[i - 1][j - elements[i - 1]];
+            }
+        }
+    }
 
-//     opt_table[0][0] = sol_table[0][0]  = 0;
-//     for (size_t i = 1; i < k + 1; ++i) {
-//         for (size_t j = 1; j < elements.size() + 1; ++j) {
-//             for (size_t m = 1; m <= j; ++m) {
-//                 size_t prev_value = opt_table[i - 1][m - 1];
-//                 int sum_from_m_to_j = abs(prefix_sum_arr[j] - prefix_sum_arr[m - 1]);
-//                 // int sum_from_m_to_j = abs(prefix_sum_arr[m - 1] - (prefix_sum_arr[j] - prefix_sum_arr[m - 1]));
+    size_t diff = INT32_MAX;
+    for (int j = sum / 2; j >= 0; ++j) {
+        if (part[M][j] == true) {
+            diff = sum - 2*j;
+            break;
+        }
+    }
 
-//                 size_t opt_value = abs(int(prev_value) - sum_from_m_to_j);
-//                 if (opt_value < opt_table[i][j]) {
-//                     opt_table[i][j] = opt_value;
-//                     sol_table[i][j] = m;
-//                 }
-//             }
-//         }
-//     }
-
-//     return std::make_tuple(0, "");
-// }
+    return diff;
+}

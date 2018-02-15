@@ -263,4 +263,11 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
             REQUIRE(partitions[i] == partitions_results[i]);
         }
     }
+
+    SECTION("partition_elements_into_two_subsets(elements)") {
+        std::vector<size_t> elements;
+
+        elements = { 1, 5, 6, 11 };
+        REQUIRE(partition_into_two_subsets(elements) == 1);
+    }
 }

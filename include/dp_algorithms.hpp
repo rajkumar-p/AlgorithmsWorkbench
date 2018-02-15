@@ -101,4 +101,7 @@ std::tuple<size_t, std::vector<std::string>> text_justification(const std::vecto
 std::vector<std::vector<size_t>> partition_elements_into_k_subsets(const std::vector<size_t> &elements, const size_t K);
 // std::tuple<size_t, std::string> partition_elements_into_k_subsets(const std::vector<int> &elements, const size_t k);
 
+// https://www.geeksforgeeks.org/partition-a-set-into-two-subsets-such-that-the-difference-of-subset-sums-is-minimum/
+size_t partition_into_two_subsets(const std::vector<size_t> &elements);
+
 #endif
