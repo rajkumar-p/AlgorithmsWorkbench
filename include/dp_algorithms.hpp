@@ -104,4 +104,10 @@ std::vector<std::vector<size_t>> partition_elements_into_k_subsets(const std::ve
 // https://www.geeksforgeeks.org/partition-a-set-into-two-subsets-such-that-the-difference-of-subset-sums-is-minimum/
 size_t partition_into_two_subsets(const std::vector<size_t> &elements);
 
+// https://www.geeksforgeeks.org/find-number-times-string-occurs-given-string/
+size_t no_times_pat_as_subseq_of_str(const std::string &str, const std::string &patt);
+
+// https://www.geeksforgeeks.org/count-distinct-subsequences/
+size_t count_distinct_subsequences(const std::string &str);
+
 #endif

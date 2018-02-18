@@ -1,6 +1,7 @@
 #include "dp_algorithms.hpp"
 #include <algorithm>
 #include <iostream>
+#include <map>
 #include <numeric>
 
 size_t weighted_interval_scheduling(std::vector<interval> &intervals)
@@ -732,4 +733,57 @@ size_t partition_into_two_subsets(const std::vector<size_t> &elements)
     }
 
     return diff;
+}
+
+size_t no_times_pat_as_subseq_of_str(const std::string &str, const std::string &patt)
+{
+    size_t M = str.length();
+    size_t N = patt.length();
+
+    size_t times_table[M + 1][N + 1];
+
+    times_table[0][0] = 1;
+
+    for (size_t i = 1; i < M + 1; ++i) {
+        times_table[i][0] = 1;
+    }
+
+    for (size_t j = 1; j < N + 1; ++j) {
+        times_table[0][j] = 0;
+    }
+
+    for (size_t i = 1; i < M + 1; ++i) {
+        for (size_t j = 1; j < N + 1; ++j) {
+            if (str[i - 1] == patt[j - 1]) {
+                times_table[i][j] = times_table[i - 1][j - 1] + times_table[i - 1][j];
+            } else {
+                times_table[i][j] = times_table[i - 1][j];
+            }
+        }
+    }
+
+    return times_table[M][N];
+}
+
+size_t count_distinct_subsequences(const std::string &str)
+{
+    std::map<char, size_t> last_char_pos;
+
+    size_t N = str.length();
+
+    std::vector<size_t> count_table(N + 1, 0);
+    count_table[0] = 1;
+
+    for (size_t i = 1; i < N + 1; ++i) {
+        if (last_char_pos.find(str[i - 1]) == last_char_pos.end()) {
+            count_table[i] = 2 * count_table[i - 1];
+        } else {
+            size_t last_pos = last_char_pos[str[i - 1]];
+            count_table[i] = 2 * count_table[i - 1] - count_table[last_pos];
+        }
+
+        last_char_pos[str[i - 1]] = i - 1;
+    }
+
+    return count_table[N];
 }

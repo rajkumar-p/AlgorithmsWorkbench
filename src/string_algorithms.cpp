@@ -637,3 +637,41 @@ std::vector<std::vector<std::string>> group_anagrams(const std::vector<std::stri
 
     return results;
 }
+
+size_t get_num_decodings(const std::string &str)
+{
+    size_t get_decoding_for(std::map<size_t, char> &mappings, const std::string &prefix, const std::string &suffix);
+    
+    std::map<size_t, char> mappings;
+    for (int i = 1, j = 65; i <= 26; ++i, ++j) {
+        char c = j;
+        mappings[i] = c;
+    }
+
+    size_t num_mappings = get_decoding_for(mappings, "", str);
+
+    return num_mappings;
+}
+
+size_t get_decoding_for(std::map<size_t, char> &mappings, const std::string &prefix, const std::string &suffix)
+{
+    if (suffix.empty()) {
+        return 1;
+    }
+
+    if (suffix.length() < 2) {
+        size_t one_digit_repr = std::stoi(suffix.substr(0, 1));
+
+        return get_decoding_for(mappings, prefix + mappings[one_digit_repr], suffix.substr(1));
+    } else {
+        size_t one_digit_repr = std::stoi(suffix.substr(0, 1));
+        size_t two_digit_repr = std::stoi(suffix.substr(0, 2));
+
+        if (two_digit_repr > 26) {
+            return get_decoding_for(mappings, prefix + mappings[one_digit_repr], suffix.substr(1));
+        } else {
+            return get_decoding_for(mappings, prefix + mappings[one_digit_repr], suffix.substr(1))
+                + get_decoding_for(mappings, prefix + mappings[two_digit_repr], suffix.substr(2));
+        }
+    }
+}

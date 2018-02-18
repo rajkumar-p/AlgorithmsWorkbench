@@ -158,4 +158,9 @@ TEST_CASE("Checking String Algorithms Implementation", "[String Algorithms]")
         // std::vector<std::vector<std::string>> result_vec = { { "ate", "eat", "tea" }, { "nat", "tan" }, { "bat" } };
         // REQUIRE(group_anagrams({ "eat", "tea", "tan", "ate", "nat", "bat" }) == result_vec);
     }
+
+    SECTION("get_num_decodings(str)") {
+        REQUIRE(get_num_decodings("12") == 2);
+        REQUIRE(get_num_decodings("126") == 3);
+    }
 }

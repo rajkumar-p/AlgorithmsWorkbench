@@ -59,6 +59,9 @@ std::string min_window_substring(const std::string &str, const std::string &subs
 // https://leetcode.com/problems/group-anagrams/
 std::vector<std::vector<std::string>> group_anagrams(const std::vector<std::string> &strs);
 
+// https://leetcode.com/problems/decode-ways/description/
+size_t get_num_decodings(const std::string &str);
+
 std::vector<std::string> split_string(std::string str, char delim);
 std::string replace_multiple_spaces(std::string str);
 std::string trim_spaces(std::string str);

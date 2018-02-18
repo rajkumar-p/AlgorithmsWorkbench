@@ -270,4 +270,14 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
         elements = { 1, 5, 6, 11 };
         REQUIRE(partition_into_two_subsets(elements) == 1);
     }
+
+    SECTION("no_times_pat_as_subseq_of_str(str, patt)") {
+        REQUIRE(no_times_pat_as_subseq_of_str("geeksforgeeks", "gks") == 4);
+        REQUIRE(no_times_pat_as_subseq_of_str("rabbbit", "rabbit") == 3);
+    }
+
+    SECTION("count_distinct_subsequences(str)") {
+        REQUIRE(count_distinct_subsequences("gfg") == 7);
+        REQUIRE(count_distinct_subsequences("ggg") == 4);
+    }
 }

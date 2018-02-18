@@ -2,7 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cmath>
-#include "dp_algorithms.hpp"
+#include "string_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -238,8 +238,12 @@ int main(int argc, char *argv[])
     // std::cout <<regex_matching("AA", ".*");
     // std::cout <<wildcard_matching("XAYLMZ", "X?Y*Z");
 
-    std::vector<size_t> elements = { 1, 5, 6, 11 };
-    std::cout <<partition_into_two_subsets(elements);
+    // std::vector<size_t> elements = { 1, 5, 6, 11 };
+    // std::cout <<partition_into_two_subsets(elements);
+    // std::cout <<count_distinct_subsequences("ggg");
+
+    size_t num_decodings = get_num_decodings("126");
+    std::cout <<num_decodings<<std::endl;
 
     return 0;
 }
