@@ -280,4 +280,9 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
         REQUIRE(count_distinct_subsequences("gfg") == 7);
         REQUIRE(count_distinct_subsequences("ggg") == 4);
     }
+
+    SECTION("max_subsquare_with_sides_as_1(mat, M, N)") {
+        bool mat[5][5] = { { 0, 0, 0, 0, 1}, { 1, 0, 1, 1, 1 }, { 1, 0, 1, 0, 1 }, { 1, 1, 1, 1, 1 }, { 0, 0, 1, 1, 1 } };
+        REQUIRE(max_subsquare_with_sides_as_1((bool *) mat, 5, 5) == 3);
+    }
 }

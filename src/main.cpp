@@ -242,13 +242,9 @@ int main(int argc, char *argv[])
     // std::cout <<partition_into_two_subsets(elements);
     // std::cout <<count_distinct_subsequences("ggg");
 
-    std::vector<interval> intervals;
-    intervals.push_back(interval("1", 1, 2, 50));
-    intervals.push_back(interval("2", 3, 5, 20));
-    intervals.push_back(interval("3", 6, 19, 100));
-    intervals.push_back(interval("4", 2, 100, 200));
-
-    std::cout <<weighted_interval_scheduling(intervals);
+    bool mat[5][5] = { { 0, 0, 0, 0, 1}, { 1, 0, 1, 1, 1 }, { 1, 0, 1, 0, 1 }, { 1, 1, 1, 1, 1 }, { 0, 0, 1, 1, 1 } };
+    std::cout <<max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
+    // max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
 
     return 0;
 }

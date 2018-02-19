@@ -789,3 +789,63 @@ size_t count_distinct_subsequences(const std::string &str)
 
     return count_table[N];
 }
+
+size_t max_subsquare_with_sides_as_1(bool *mat, size_t M, size_t N)
+{
+    std::tuple<size_t, size_t> prev_table[M][N];
+
+    if (*(mat + 0 * N + 0) == 0) {
+        prev_table[0][0] = std::make_tuple<size_t, size_t>(0, 0);
+    } else {
+        prev_table[0][0] = std::make_tuple<size_t, size_t>(1, 1);
+    }
+
+    for (size_t i = 1, j = 0; i < M; ++i) {
+        if (*(mat + i * N + j) == 0) {
+            prev_table[i][j] = std::make_tuple<size_t, size_t>(0, 0);
+        } else {
+            size_t i_th_prev_value = std::get<0>(prev_table[i - 1][j]);
+            prev_table[i][j] = std::make_tuple<size_t, size_t>(i_th_prev_value + 1, 1);
+        }
+    }
+
+    for (size_t j = 1, i = 0; j < N; ++j) {
+        if (*(mat + i * N + j) == 0) {
+            prev_table[i][j] = std::make_tuple<size_t, size_t>(0, 0);
+        } else {
+            size_t j_th_prev_value = std::get<1>(prev_table[i][j - 1]);
+            prev_table[i][j] = std::make_tuple<size_t, size_t>(1, j_th_prev_value + 1);
+        }
+    }
+
+    for (size_t i = 1; i < M; ++i) {
+        for (size_t j = 1; j < N; ++j) {
+            if (*(mat + i * N + j) == 0) {
+                prev_table[i][j] = std::make_tuple<size_t, size_t>(0, 0);
+            } else {
+                size_t i_th_prev_value = std::get<0>(prev_table[i - 1][j]);
+                size_t j_th_prev_value = std::get<1>(prev_table[i][j - 1]);
+                prev_table[i][j] = std::make_tuple<size_t, size_t>(i_th_prev_value + 1, j_th_prev_value + 1);
+            }
+        }
+    }
+
+    size_t max_square_size = 0;
+    for (size_t i = M - 1; i > 0; --i) {
+        for (size_t j = N - 1; j > 0; --j) {
+            std::tuple<size_t, size_t> prev_table_value = prev_table[i][j];
+            size_t min_value = std::min(std::get<0>(prev_table_value), std::get<1>(prev_table_value));
+
+            for (size_t check = min_value; check > max_square_size; --check) {
+                size_t left_of_top_value = std::get<1>(prev_table[i - check + 1][j]);
+                size_t top_of_left_value = std::get<0>(prev_table[i][j - check + 1]);
+
+                if (left_of_top_value >= check && top_of_left_value >= check) {
+                    max_square_size = std::max(max_square_size, check);
+                }
+            }
+        }
+    }
+
+    return max_square_size;
+}

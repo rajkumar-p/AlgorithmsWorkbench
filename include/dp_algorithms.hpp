@@ -110,4 +110,7 @@ size_t no_times_pat_as_subseq_of_str(const std::string &str, const std::string &
 // https://www.geeksforgeeks.org/count-distinct-subsequences/
 size_t count_distinct_subsequences(const std::string &str);
 
+// https://www.youtube.com/watch?v=vi_1eHCsR9A&index=42&list=PLrmLmBdmIlpsHaNTPP_jHHDx_os9ItYXr
+size_t max_subsquare_with_sides_as_1(bool *mat, size_t M, size_t N);
+
 #endif
