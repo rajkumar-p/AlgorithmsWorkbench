@@ -2,7 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cmath>
-#include "string_algorithms.hpp"
+#include "dp_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -242,8 +242,13 @@ int main(int argc, char *argv[])
     // std::cout <<partition_into_two_subsets(elements);
     // std::cout <<count_distinct_subsequences("ggg");
 
-    size_t num_decodings = get_num_decodings("126");
-    std::cout <<num_decodings<<std::endl;
+    std::vector<interval> intervals;
+    intervals.push_back(interval("1", 1, 2, 50));
+    intervals.push_back(interval("2", 3, 5, 20));
+    intervals.push_back(interval("3", 6, 19, 100));
+    intervals.push_back(interval("4", 2, 100, 200));
+
+    std::cout <<weighted_interval_scheduling(intervals);
 
     return 0;
 }

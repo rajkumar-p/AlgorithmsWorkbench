@@ -4,21 +4,23 @@
 #include <map>
 #include <numeric>
 
-size_t weighted_interval_scheduling(std::vector<interval> &intervals)
+size_t weighted_interval_scheduling(const std::vector<interval> &intervals)
 {
     void fill_p_table(const std::vector<interval> &intervals, std::vector<int> &ptable);
 
-    std::sort(intervals.begin(), intervals.end(), [](const interval &i1, const interval &i2) { 
-        return i1.end() < i2.end(); 
+    std::vector<interval> intervals_copy(intervals.begin(), intervals.end());
+    std::sort(intervals_copy.begin(), intervals_copy.end(), [](const interval &i1, const interval &i2) {
+        return i1.end() < i2.end();
     });
 
     std::vector<int> p_table(intervals.size(), -1);
-    fill_p_table(intervals, p_table);
+    fill_p_table(intervals_copy, p_table);
     std::for_each(p_table.begin(), p_table.end(), [](int &i) { i += 1; });
 
     std::vector<size_t> opt_table(intervals.size() + 1, 0);
-    for (size_t i = 1; i < opt_table.size(); ++i) {
-        opt_table[i] = std::max(opt_table[i - 1], intervals[i - 1].weight() + opt_table[p_table[i - 1]]);
+    opt_table[1] = std::max(opt_table[0], intervals_copy[0].weight());
+    for (size_t i = 2; i < intervals_copy.size() + 1; ++i) {
+        opt_table[i] = std::max(opt_table[i - 1], opt_table[p_table[i - 1]] + intervals_copy[i - 1].weight());
     }
 
     return opt_table[opt_table.size() - 1];

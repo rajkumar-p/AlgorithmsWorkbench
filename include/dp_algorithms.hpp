@@ -31,7 +31,7 @@ public:
     size_t weight() const { return _weight; }
 };
 
-size_t weighted_interval_scheduling(std::vector<interval> &intervals);
+size_t weighted_interval_scheduling(const std::vector<interval> &intervals);
 
 class max_subarray_struct {
 private:
