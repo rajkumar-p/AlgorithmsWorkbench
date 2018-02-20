@@ -849,3 +849,47 @@ size_t max_subsquare_with_sides_as_1(bool *mat, size_t M, size_t N)
 
     return max_square_size;
 }
+
+std::vector<int> sub_rectangular_sum(int *mat, size_t M, size_t N, std::vector<std::tuple<std::tuple<size_t, size_t>, std::tuple<size_t, size_t>>> &from_to_q)
+{
+    int sum_table[M + 1][N + 1];
+
+    for (size_t i = 0; i < M + 1; ++i) {
+        sum_table[i][0] = 0;
+    }
+
+    for (size_t j = 0; j < N + 1; ++j) {
+        sum_table[0][j] = 0;
+    }
+
+    // sum_table[1][1] = mat[0][0]
+    sum_table[1][1] = *(mat + 0 * N + 0);
+    for (size_t i = 2; i < M + 1; ++i) {
+        sum_table[i][1] = sum_table[i - 1][1] + *(mat + (i - 1) * N + (1 - 1));
+    }
+
+    for (size_t j = 2; j < N + 1; ++j) {
+        sum_table[1][j] = sum_table[1][j - 1] + *(mat + (1 - 1) * N + (j - 1));
+    }
+
+    for (size_t i = 2; i < M + 1; ++i) {
+        for (size_t j = 2; j < N + 1; ++j) {
+            sum_table[i][j] = *(mat + (i - 1) * N + (j - 1)) + sum_table[i - 1][j] + sum_table[i][j - 1] - sum_table[i - 1][j - 1];
+        }
+    }
+
+    std::vector<int> sums;
+    for (const std::tuple<std::tuple<size_t, size_t>, std::tuple<size_t, size_t>> &q : from_to_q) {
+        size_t from_i = std::get<0>(std::get<0>(q)) + 1;
+        size_t from_j = std::get<1>(std::get<0>(q)) + 1;
+
+        size_t to_i = std::get<0>(std::get<1>(q)) + 1;
+        size_t to_j = std::get<1>(std::get<1>(q)) + 1;
+
+        int sum = sum_table[to_i][to_j] - sum_table[to_i][from_j - 1] - sum_table[from_i - 1][to_j] + sum_table[from_i - 1][from_j - 1];
+
+        sums.push_back(sum);
+    }
+
+    return sums;
+}

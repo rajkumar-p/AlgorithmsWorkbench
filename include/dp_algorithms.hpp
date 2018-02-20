@@ -113,4 +113,7 @@ size_t count_distinct_subsequences(const std::string &str);
 // https://www.youtube.com/watch?v=vi_1eHCsR9A&index=42&list=PLrmLmBdmIlpsHaNTPP_jHHDx_os9ItYXr
 size_t max_subsquare_with_sides_as_1(bool *mat, size_t M, size_t N);
 
+// https://www.youtube.com/watch?v=PwDqpOMwg6U&t=0s&list=PLrmLmBdmIlpsHaNTPP_jHHDx_os9ItYXr&index=40
+std::vector<int> sub_rectangular_sum(int *mat, size_t M, size_t N, std::vector<std::tuple<std::tuple<size_t, size_t>, std::tuple<size_t, size_t>>> &from_to_q);
+
 #endif
