@@ -246,13 +246,10 @@ int main(int argc, char *argv[])
     // std::cout <<max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
     // max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
 
-    int mat[4][4] = { { 2, 0, -3, 4 }, { 6, 3, 2, -1 }, { 5, 4, 7, 3 }, { 2, -6, 8, 1 } };
+    std::vector<size_t> jump_indexes;
+    std::vector<size_t> jump_test_results;
 
-    std::vector<std::tuple<std::tuple<size_t, size_t>, std::tuple<size_t, size_t>>> from_to_q;
-    from_to_q.push_back(std::make_tuple(std::make_tuple(1, 1), std::make_tuple(3, 2)));
-    from_to_q.push_back(std::make_tuple(std::make_tuple(0, 2), std::make_tuple(3, 3)));
-
-    std::vector<int> sums = sub_rectangular_sum((int *) mat, 4, 4, from_to_q);
+    jump_indexes = min_jumps_to_reach_end({ 2, 3, 1, 1, 2, 4, 2, 0, 1, 1 });
 
     return 0;
 }

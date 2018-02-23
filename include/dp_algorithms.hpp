@@ -116,4 +116,7 @@ size_t max_subsquare_with_sides_as_1(bool *mat, size_t M, size_t N);
 // https://www.youtube.com/watch?v=PwDqpOMwg6U&t=0s&list=PLrmLmBdmIlpsHaNTPP_jHHDx_os9ItYXr&index=40
 std::vector<int> sub_rectangular_sum(int *mat, size_t M, size_t N, std::vector<std::tuple<std::tuple<size_t, size_t>, std::tuple<size_t, size_t>>> &from_to_q);
 
+// https://www.geeksforgeeks.org/minimum-number-of-jumps-to-reach-end-of-a-given-array/
+std::vector<size_t> min_jumps_to_reach_end(const std::vector<int> &elements);
+
 #endif

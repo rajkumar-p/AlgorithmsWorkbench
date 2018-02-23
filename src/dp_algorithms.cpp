@@ -893,3 +893,33 @@ std::vector<int> sub_rectangular_sum(int *mat, size_t M, size_t N, std::vector<s
 
     return sums;
 }
+
+std::vector<size_t> min_jumps_to_reach_end(const std::vector<int> &elements)
+{
+    size_t N = elements.size();
+    std::vector<size_t> jumps_table(N, 0);
+    std::vector<int> sol_table(N, -1);
+
+    jumps_table[0] = 0;
+    for (size_t i = 1; i < elements.size(); ++i) {
+        jumps_table[i] = INT32_MAX;
+        for (size_t j = 0; j < i; ++j) {
+            bool can_jump = (i - j) <= elements[j];
+            if (can_jump && jumps_table[j] + 1 < jumps_table[i]) {
+                jumps_table[i] = jumps_table[j] + 1;
+                sol_table[i] = j;
+            }
+        }
+    }
+
+    int index = N - 1;
+    std::vector<size_t> jump_indexes;
+    while (index > 0) {
+        jump_indexes.push_back(sol_table[index]);
+        index = sol_table[index];
+    }
+
+    std::reverse(jump_indexes.begin(), jump_indexes.end());
+
+    return jump_indexes;
+}

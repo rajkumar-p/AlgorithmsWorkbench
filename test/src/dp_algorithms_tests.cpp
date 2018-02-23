@@ -299,4 +299,23 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
         REQUIRE(sums[0] == 18);
         REQUIRE(sums[1] == 21);
     }
+
+    SECTION("min_jumps_to_reach_end(elements)") {
+        std::vector<size_t> jump_indexes;
+        std::vector<size_t> jump_test_results;
+
+        jump_indexes = min_jumps_to_reach_end({ 1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9 });
+        jump_test_results = { 0, 1, 3 };
+        REQUIRE(jump_indexes.size() == jump_test_results.size());
+        for (size_t i = 0; i < jump_test_results.size(); ++i) {
+            REQUIRE(jump_indexes[i] == jump_test_results[i]);
+        }
+
+        jump_indexes = min_jumps_to_reach_end({ 2, 3, 1, 1, 2, 4, 2, 0, 1, 1 });
+        jump_test_results = { 0, 1, 4, 5 };
+        REQUIRE(jump_indexes.size() == jump_test_results.size());
+        for (size_t i = 0; i < jump_test_results.size(); ++i) {
+            REQUIRE(jump_indexes[i] == jump_test_results[i]);
+        }
+    }
 }
