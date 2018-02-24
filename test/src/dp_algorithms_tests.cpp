@@ -318,4 +318,9 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
             REQUIRE(jump_indexes[i] == jump_test_results[i]);
         }
     }
+
+    SECTION("check_interleaving(str1, str2, interleaved_str") {
+        REQUIRE(check_interleaving("AAB", "AXY", "AAXABY") == true);
+        REQUIRE(check_interleaving("AAB", "AXY", "ABAAXY") == false);
+    }
 }

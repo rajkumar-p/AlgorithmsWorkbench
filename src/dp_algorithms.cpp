@@ -923,3 +923,46 @@ std::vector<size_t> min_jumps_to_reach_end(const std::vector<int> &elements)
 
     return jump_indexes;
 }
+
+bool check_interleaving(const std::string &str1, const std::string &str2, const std::string &interleaved_str)
+{
+    size_t M = str1.length();
+    size_t N = str2.length();
+
+    if (interleaved_str.length() < M + N) {
+        return false;
+    }
+
+    bool inter_table[M + 1][N + 1];
+    inter_table[0][0] = true;
+
+    for (size_t i = 1; i < M + 1; ++i) {
+        if (str1[i - 1] == interleaved_str[i - 1]) {
+            inter_table[i][0] = inter_table[i - 1][0];
+        } else {
+            inter_table[i][0] = false;
+        }
+    }
+
+    for (size_t j = 1; j < N + 1; ++j) {
+        if (str2[j - 1] == interleaved_str[j - 1]) {
+            inter_table[0][j] = inter_table[0][j - 1];
+        } else {
+            inter_table[0][j] = false;
+        }
+    }
+
+    for (size_t i = 1; i < M + 1; ++i) {
+        for (size_t j = 1; j < N + 1; ++j) {
+            if (str1[i - 1] == interleaved_str[i + j - 1]) {
+                inter_table[i][j] = inter_table[i - 1][j];
+            } else if (str2[j - 1] == interleaved_str[i + j - 1]) {
+                inter_table[i][j] = inter_table[i][j - 1];
+            } else {
+                inter_table[i][j] = false;
+            }
+        }
+    }
+
+    return inter_table[M][N];
+}

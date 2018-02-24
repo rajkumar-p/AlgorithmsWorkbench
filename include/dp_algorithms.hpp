@@ -119,4 +119,7 @@ std::vector<int> sub_rectangular_sum(int *mat, size_t M, size_t N, std::vector<s
 // https://www.geeksforgeeks.org/minimum-number-of-jumps-to-reach-end-of-a-given-array/
 std::vector<size_t> min_jumps_to_reach_end(const std::vector<int> &elements);
 
+// https://www.youtube.com/watch?v=ih2OZ9-M3OM&list=PLrmLmBdmIlpsHaNTPP_jHHDx_os9ItYXr&index=32&t=0s
+bool check_interleaving(const std::string &str1, const std::string &str2, const std::string &interleaved_str);
+
 #endif

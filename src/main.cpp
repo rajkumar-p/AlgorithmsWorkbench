@@ -246,10 +246,7 @@ int main(int argc, char *argv[])
     // std::cout <<max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
     // max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
 
-    std::vector<size_t> jump_indexes;
-    std::vector<size_t> jump_test_results;
-
-    jump_indexes = min_jumps_to_reach_end({ 2, 3, 1, 1, 2, 4, 2, 0, 1, 1 });
+    std::cout <<check_interleaving("AAB", "AXY", "AAXABY");
 
     return 0;
 }
