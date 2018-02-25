@@ -246,7 +246,7 @@ int main(int argc, char *argv[])
     // std::cout <<max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
     // max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
 
-    std::cout <<check_interleaving("AAB", "AXY", "AAXABY");
-
+    bool mat[4][6] = { { 1, 0, 0, 1, 1, 1 }, { 1, 0, 1, 1, 0, 1 }, { 0, 1, 1, 1, 1, 1 }, { 0, 0, 1, 1, 1, 1 } };
+    max_size_rectangle_in_mat_with_0_1((bool *) mat, 4, 6);
     return 0;
 }

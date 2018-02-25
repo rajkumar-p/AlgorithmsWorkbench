@@ -323,4 +323,18 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
         REQUIRE(check_interleaving("AAB", "AXY", "AAXABY") == true);
         REQUIRE(check_interleaving("AAB", "AXY", "ABAAXY") == false);
     }
+
+    SECTION("max_sum_non_adj(elements)") {
+        REQUIRE(max_sum_non_adj({ 4, 1, 1, 4, 2, 1 }) == 9);
+    }
+
+    SECTION("max_sub_square_mat_with_0_1(mat, M, N)") {
+        bool mat[5][5] = { { 0, 0, 1, 1, 1 }, { 1, 0, 1, 1, 1 }, { 0, 1, 1, 1, 1 }, { 1, 0, 1, 1, 1 } };
+        REQUIRE(max_sub_square_mat_with_0_1((bool *) mat, 4, 5) == 3);
+    }
+
+    SECTION("max_size_rectangle_in_mat_with_0_1(mat, M, N)") {
+        bool mat[4][6] = { { 1, 0, 0, 1, 1, 1 }, { 1, 0, 1, 1, 0, 1 }, { 0, 1, 1, 1, 1, 1 }, { 0, 0, 1, 1, 1, 1 } };
+        REQUIRE(max_size_rectangle_in_mat_with_0_1((bool *) mat, 4, 6) == 8);
+    }
 }

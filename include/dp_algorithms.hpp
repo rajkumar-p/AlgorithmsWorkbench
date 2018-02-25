@@ -122,4 +122,13 @@ std::vector<size_t> min_jumps_to_reach_end(const std::vector<int> &elements);
 // https://www.youtube.com/watch?v=ih2OZ9-M3OM&list=PLrmLmBdmIlpsHaNTPP_jHHDx_os9ItYXr&index=32&t=0s
 bool check_interleaving(const std::string &str1, const std::string &str2, const std::string &interleaved_str);
 
+// https://www.youtube.com/watch?v=UtGtF6nc35g&list=PLrmLmBdmIlpsHaNTPP_jHHDx_os9ItYXr&index=34&t=0s
+int max_sum_non_adj(const std::vector<int> &elements);
+
+// https://www.youtube.com/watch?v=_Lf1looyJMU&list=PLrmLmBdmIlpsHaNTPP_jHHDx_os9ItYXr&index=29&t=0s
+size_t max_sub_square_mat_with_0_1(bool *mat, size_t M, size_t N);
+
+// https://www.youtube.com/watch?v=g8bSdXCG-lA&list=PLrmLmBdmIlpsHaNTPP_jHHDx_os9ItYXr&index=17&t=0s
+size_t max_size_rectangle_in_mat_with_0_1(bool *mat, size_t M, size_t N);
+
 #endif

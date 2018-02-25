@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iostream>
 #include <map>
+#include <stack>
 #include <numeric>
 
 size_t weighted_interval_scheduling(const std::vector<interval> &intervals)
@@ -965,4 +966,149 @@ bool check_interleaving(const std::string &str1, const std::string &str2, const 
     }
 
     return inter_table[M][N];
+}
+
+int max_sum_non_adj(const std::vector<int> &elements)
+{
+    int inclusive = elements[0];
+    int exclusive = 0;
+
+    for (size_t i = 1; i < elements.size(); ++i) {
+        int t = inclusive;
+        inclusive = std::max(exclusive + elements[i], inclusive);
+        exclusive = t;
+    }
+
+    return std::max(inclusive, exclusive);
+}
+
+size_t max_sub_square_mat_with_0_1(bool *mat, size_t M, size_t N)
+{
+    size_t sq_table[M + 1][N + 1];
+
+    for (size_t i = 0; i < M + 1; ++i) {
+        sq_table[i][0] = false;
+    }
+
+    for (size_t j = 0; j < N + 1; ++j) {
+        sq_table[0][j] = false;
+    }
+
+    for (size_t i = 1; i < M + 1; ++i) {
+        for (size_t j = 1; j < N + 1; ++j) {
+            if (*(mat + (i - 1) * N + (j - 1)) == 0) {
+                sq_table[i][j] = 0;
+            } else {
+                sq_table[i][j] = std::min({ sq_table[i - 1][j - 1], sq_table[i - 1][j], sq_table[i][j - 1] }) + 1;
+            }
+        }
+    }
+
+    return sq_table[M][N];
+}
+
+size_t max_size_rectangle_in_mat_with_0_1(bool *mat, size_t M, size_t N)
+{
+    size_t get_max_histogram_area_of_array(const std::vector<size_t> &elements);
+
+    size_t max_size_rect = 0;
+    std::vector<size_t> sizes(N, 0);
+
+    size_t i = 0;
+    for (size_t j = 0; j < N; ++j) {
+        sizes[j] = *(mat + i * N + j);
+    }
+
+    max_size_rect = std::max(max_size_rect, get_max_histogram_area_of_array(sizes));
+
+    for (size_t i = 1; i < M; ++i) {
+        for (size_t j = 0; j < N; ++j) {
+            if (*(mat + i * N + j) == 0) {
+                sizes[j] = 0;
+            } else {
+                sizes[j] += *(mat + i * N + j);
+            }
+        }
+
+        max_size_rect = std::max(max_size_rect, get_max_histogram_area_of_array(sizes));
+    }
+
+    return max_size_rect;
+}
+
+size_t get_max_histogram_area_of_array(const std::vector<size_t> &elements)
+{
+    size_t get_max_histogram_area_of(const std::vector<size_t> &elements);
+
+    size_t max_area = 0;
+    size_t elem_index = 0;
+    while (1) {
+        size_t start_index = elem_index;
+        size_t len = 0;
+        while (elem_index < elements.size() && elements[elem_index] != 0) {
+            ++elem_index;
+            ++len;
+        }
+
+        std::vector<size_t> nums(elements.begin() + start_index, elements.begin() + start_index + len);
+        if (nums.size() == 1) {
+            max_area = std::max(max_area, elements[start_index]);
+        } else {
+            max_area = std::max(max_area, get_max_histogram_area_of(nums));
+        }
+
+        while (elem_index < elements.size() && elements[elem_index] == 0) {
+            ++elem_index;
+        }
+
+        if (elem_index >= elements.size()) {
+            break;
+        }
+    }
+
+    return max_area;
+}
+
+size_t get_max_histogram_area_of(const std::vector<size_t> &elements)
+{
+    std::stack<size_t> stk;
+
+    size_t i = 0;
+    size_t max_area = 0;
+    while (i < elements.size()) {
+        if (stk.empty() || elements[stk.top()] <= elements[i]) {
+            stk.push(i);
+            ++i;
+        } else {
+            while (!stk.empty() && elements[stk.top()] > elements[i]) {
+                size_t popped_element = stk.top();
+                stk.pop();
+
+                size_t area = 0;
+                if (stk.empty()) {
+                    area = elements[popped_element] * i;
+                } else {
+                    area = elements[popped_element] * (i - stk.top() - 1);
+                }
+
+                max_area = std::max(max_area, area);
+            }
+        }
+    }
+
+    while (!stk.empty()) {
+        size_t popped_element = stk.top();
+        stk.pop();
+
+        size_t area = 0;
+        if (stk.empty()) {
+            area = elements[popped_element] * i;
+        } else {
+            area = elements[popped_element] * (i - stk.top() - 1);
+        }
+
+        max_area = std::max(max_area, area);
+    }
+
+    return max_area;
 }
