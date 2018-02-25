@@ -241,3 +241,34 @@ size_t trapping_rain_water_in_histogram(std::vector<size_t> &heights)
 
     return max_sum;
 }
+
+std::vector<int> sliding_window_max_of_size_k(const std::vector<int> &elements, size_t k)
+{
+    std::deque<size_t> indexes;
+
+    for (size_t i = 0; i < k; ++i) {
+        while (!indexes.empty() && elements[indexes.front()] <= elements[i]) {
+            indexes.pop_front();
+        }
+
+        indexes.push_back(i);
+    }
+
+    std::vector<int> results;
+    results.push_back(elements[indexes.front()]);
+
+    for (size_t i = k; i < elements.size(); ++i) {
+        while (!indexes.empty() && indexes.front() < i - k + 1) {
+            indexes.pop_front();
+        }
+
+        while (!indexes.empty() && elements[indexes.front()] <= elements[i]) {
+            indexes.pop_front();
+        }
+
+        indexes.push_back(i);
+        results.push_back(elements[indexes.front()]);
+    }
+
+    return results;
+}

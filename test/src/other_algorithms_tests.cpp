@@ -87,4 +87,17 @@ TEST_CASE("Checking Other Algorithms", "[Other Algorithms]")
         heights = { 9, 5, 2, 1, 3, 5, 4, 7, 2, 6 };
         REQUIRE(trapping_rain_water_in_histogram(heights) == 26);
     }
+
+    SECTION("sliding_window_max_of_size_k(elements, k)") {
+        std::vector<int> result_vector;
+
+        result_vector = { 3, 3, 4, 5, 5, 5, 6 };
+        REQUIRE(sliding_window_max_of_size_k({ 1, 2, 3, 1, 4, 5, 2, 3, 6 }, 3) == result_vector);
+
+        result_vector = { 10, 10, 10, 15, 15, 90, 90 };
+        REQUIRE(sliding_window_max_of_size_k({ 8, 5, 10, 7, 9, 4, 15, 12, 90, 13 }, 4) == result_vector);
+
+        result_vector = { 3, 3, 5, 5, 6, 7 };
+        REQUIRE(sliding_window_max_of_size_k({ 1, 3, -1, -3, 5, 3, 6, 7 }, 3) == result_vector);
+    }
 }

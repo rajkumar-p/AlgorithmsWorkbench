@@ -17,4 +17,7 @@ std::tuple<int, int> find_peak_2d(int *arr, int begin_rows, int end_rows, int be
 size_t max_area_of_histogram(std::vector<size_t> &heights);
 size_t trapping_rain_water_in_histogram(std::vector<size_t> &heights);
 
+// https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/
+std::vector<int> sliding_window_max_of_size_k(const std::vector<int> &elements, size_t k);
+
 #endif

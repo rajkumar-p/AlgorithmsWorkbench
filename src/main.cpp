@@ -2,7 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cmath>
-#include "dp_algorithms.hpp"
+#include "other_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -246,7 +246,6 @@ int main(int argc, char *argv[])
     // std::cout <<max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
     // max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
 
-    bool mat[4][6] = { { 1, 0, 0, 1, 1, 1 }, { 1, 0, 1, 1, 0, 1 }, { 0, 1, 1, 1, 1, 1 }, { 0, 0, 1, 1, 1, 1 } };
-    max_size_rectangle_in_mat_with_0_1((bool *) mat, 4, 6);
+    std::vector<int> v = sliding_window_max_of_size_k({ 1, 2, 3, 1, 4, 5, 2, 3, 6 }, 3);
     return 0;
 }
