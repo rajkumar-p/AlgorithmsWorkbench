@@ -4,14 +4,14 @@
 #include <vector>
 
 template<typename T>
-int binary_search(std::vector<T> &v, int low, int high, T key);
+int binary_search(std::vector<T> &v, long low, long high, T key);
 
 template<typename T>
-int binary_search(std::vector<T> &v, int low, int high, T key)
+int binary_search(std::vector<T> &v, long low, long high, T key)
 {
     if (low > high) { return -1; }
 
-    unsigned long mid = ((unsigned long) low + (unsigned long) high) >> 1;
+    size_t mid = low + (high - low) / 2;
 
     if (v[mid] == key) {
         return mid;
