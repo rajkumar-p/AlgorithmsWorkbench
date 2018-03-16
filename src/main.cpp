@@ -2,7 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cmath>
-#include "other_algorithms.hpp"
+#include "bstree.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -246,6 +246,5 @@ int main(int argc, char *argv[])
     // std::cout <<max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
     // max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
 
-    std::vector<int> v = sliding_window_max_of_size_k({ 1, 2, 3, 1, 4, 5, 2, 3, 6 }, 3);
     return 0;
 }

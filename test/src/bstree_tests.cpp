@@ -49,7 +49,7 @@ TEST_CASE("Checking Bstree Implementation", "[BSTree]")
         REQUIRE(std::is_sorted(walk_output_vec.begin(), walk_output_vec.end()) == true);
         walk_output_vec.clear();
 
-        std::vector<int> preorder_vec = { 3, 7, 6, 10, 13, 12, 5, 18, 22, 21, 23, 20, 16, 15 };
+        std::vector<int> preorder_vec = { 15, 5, 3, 12, 10, 6, 7, 13, 16, 20, 18, 23, 21, 22 };
         bst->preorder_walk(bst->root(), [&walk_output_vec](bstree_node<int> const *current) {
             walk_output_vec.push_back(current->data());
         });
@@ -57,7 +57,7 @@ TEST_CASE("Checking Bstree Implementation", "[BSTree]")
         REQUIRE(walk_output_vec == preorder_vec);
         walk_output_vec.clear();
 
-        std::vector<int> postorder_vec = { 15, 5, 3, 12, 10, 6, 7, 13, 16, 20, 18, 23, 21, 22 };
+        std::vector<int> postorder_vec = { 3, 7, 6, 10, 13, 12, 5, 18, 22, 21, 23, 20, 16, 15 };
         bst->postorder_walk(bst->root(), [&walk_output_vec](bstree_node<int> const *current) {
             walk_output_vec.push_back(current->data());
         });

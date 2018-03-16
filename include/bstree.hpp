@@ -67,7 +67,7 @@ bstree<T>::bstree() : _pseudo_root(new bstree_node<T>(T()))
 }
 
 template<typename T>
-bstree<T>::bstree(bstree_node<T> *root) : _pseudo_root(new bstree_node<T>(T()))
+bstree<T>::bstree(bstree_node<T> *root) : bstree()
 {
     root->_left = nullptr;
     root->_right = nullptr;
@@ -326,9 +326,9 @@ void bstree<T>::preorder_walk(bstree_node<T> *node, std::function<void(bstree_no
         return;
     }
 
+    fn(node);
     preorder_walk(node->_left, fn);
     preorder_walk(node->_right, fn);
-    fn(node);
 }
 
 template<typename T>
@@ -338,9 +338,9 @@ void bstree<T>::postorder_walk(bstree_node<T> *node, std::function<void(bstree_n
         return;
     }
 
-    fn(node);
     postorder_walk(node->_left, fn);
     postorder_walk(node->_right, fn);
+    fn(node);
 }
 
 template<typename T>
