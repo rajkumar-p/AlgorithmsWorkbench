@@ -2,7 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cmath>
-#include "bstree.hpp"
+#include "counting.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -246,5 +246,8 @@ int main(int argc, char *argv[])
     // std::cout <<max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
     // max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
 
+    std::vector<int> v10 = {827, -558, 265, -384, -805, 94, -443, -624, 94, 986};
+
+    count_inversions(v10, 0, v10.size() - 1);
     return 0;
 }
