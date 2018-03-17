@@ -9,6 +9,7 @@ class priority_queue {
 public:
     priority_queue();
     priority_queue(const std::vector<T> &);
+    priority_queue(std::initializer_list<T> &init_list);
 
     void heapify(const size_t index);
     void reverse_heapify(const size_t index);
@@ -49,13 +50,20 @@ priority_queue<T, F>::priority_queue() : cmp_fn(F())
 }
 
 template<typename T, typename F>
-priority_queue<T, F>::priority_queue(const std::vector<T> &v)
+priority_queue<T, F>::priority_queue(const std::vector<T> &v) : elements(v.size()), cmp_fn(F())
 {
-    std::copy(v.begin(), v.end(), std::back_inserter(elements));
+    std::copy(v.begin(), v.end(), elements.begin());
+    // std::copy(v.begin(), v.end(), std::back_inserter(elements));
 
     for(int i = std::floor((v.size() - 1) / 2) - 1; i >= 0; --i) {
         heapify(i);
     }
+}
+
+template<typename T, typename F>
+priority_queue<T, F>::priority_queue(std::initializer_list<T> &init_list) : elements(init_list), cmp_fn(F())
+{
+
 }
 
 template<typename T, typename F>

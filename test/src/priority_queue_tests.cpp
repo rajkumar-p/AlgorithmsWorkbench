@@ -70,6 +70,13 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
         REQUIRE(max_pq.top() == 14);
     }
 
+    SECTION("[extract_top() test] - Max Priority Queue - Built-In Data Types - Initializer lists") {
+        priority_queue<int, std::greater<int>> max_pq({ 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 });
+        REQUIRE(max_pq.extract_top() == 16);
+        REQUIRE(max_pq.size() == 9);
+        REQUIRE(max_pq.top() == 14);
+    }
+
     SECTION("[extract_top() test] - Max Priority Queue - Custom Data Types") {
         std::vector<name_and_value> nv_v = { 
             {"Marina", 4}, {"Robyn", 1},
@@ -98,6 +105,42 @@ TEST_CASE("Priority Queue Tests", "[Priority Queue Tests - Max PQ and Min PQ]")
 
         priority_queue<int, std::greater<int>> max_pq(v);
         v = { 16, 14, 10, 8, 7, 9, 3, 2, 4, 1 };
+        REQUIRE(max_pq.elements_copy() == v);
+        REQUIRE(max_pq.top() == 16);
+
+        max_pq.modify(-2, 19);
+        max_pq.modify(max_pq.size(), 19);
+        max_pq.modify(3, 19);
+        max_pq.modify(max_pq.size() - 1, 6);
+
+        v = {19, 16, 10, 14, 7, 9, 3, 2, 4, 6};
+        REQUIRE(max_pq.elements_copy() == v);
+        REQUIRE(max_pq.top() == 19);
+
+        max_pq.add(20);
+        max_pq.add(5);
+        max_pq.add(25);
+        max_pq.add(22);
+        max_pq.add(15);
+
+        v = {25, 19, 22, 14, 16, 10, 20, 2, 4, 6, 7, 5, 9, 3, 15};
+        REQUIRE(max_pq.elements_copy() == v);
+        REQUIRE(max_pq.top() == 25);
+
+        max_pq.remove(max_pq.size());
+        max_pq.remove(-2);
+        max_pq.remove(max_pq.size() - 1);
+        max_pq.remove(0);
+
+        v = {22, 19, 20, 14, 16, 10, 3, 2, 4, 6, 7, 5, 9};
+        REQUIRE(max_pq.elements_copy() == v);
+        REQUIRE(max_pq.top() == 22);
+    }
+
+    SECTION("Max Priority Queue - Built-In Data Types - Initializer lists") {
+        priority_queue<int, std::greater<int>> max_pq({ 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 });
+        std::vector<int> v = { 16, 14, 10, 8, 7, 9, 3, 2, 4, 1 };
+
         REQUIRE(max_pq.elements_copy() == v);
         REQUIRE(max_pq.top() == 16);
 
