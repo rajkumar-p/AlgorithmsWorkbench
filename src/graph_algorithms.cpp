@@ -57,7 +57,6 @@ void print_bfs_path(std::map<std::string, vertex_search_prop> &bfs_results, std:
     std::cout <<"NIL"<<std::endl;
 }
 
-// std::map<std::string, vertex_search_prop> dfs(graph &G)
 std::map<std::string, vertex_search_prop> dfs(graph &G)
 {
     std::map<std::string, vertex_search_prop> dfs_results;
@@ -226,7 +225,7 @@ void mst_prim(graph &G, const std::string source_id, graph &output_tree)
     };
 
     struct compare {
-        bool operator()(vertex &v1, vertex &v2) {
+        bool operator()(const vertex &v1, const vertex &v2) {
             return v1.key > v2.key;
         }
     };
@@ -312,7 +311,7 @@ bool bellman_ford(graph &G, std::string source_id, std::map<std::string, vertex_
     return true;
 }
 
-std::map<std::string, vertex_search_prop> dag_shortest_path(graph &DAG, std::string source_id)
+std::map<std::string, vertex_search_prop> dag_shortest_path(graph &DAG)
 {
     std::map<std::string, vertex_search_prop> results;
 

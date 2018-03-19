@@ -65,23 +65,83 @@ TEST_CASE("Checking Graph Algorithms", "[Graph Algorithms]")
     SECTION("Depth First Search (DFS)") {
         graph G;
 
-        G.add_vertex("U");
-        G.add_vertex("V");
-        G.add_vertex("X");
-        G.add_vertex("Y");
-        G.add_vertex("W");
+        G.add_vertex("S");
         G.add_vertex("Z");
+        G.add_vertex("Y");
+        G.add_vertex("X");
+        G.add_vertex("W");
+        G.add_vertex("T");
+        G.add_vertex("V");
+        G.add_vertex("U");
 
-        G.add_directed_edge("U", "V");
-        G.add_directed_edge("U", "X");
-        G.add_directed_edge("X", "V");
-        G.add_directed_edge("V", "Y");
+        G.add_directed_edge("S", "Z");
+        G.add_directed_edge("S", "W");
+        G.add_directed_edge("Z", "Y");
+        G.add_directed_edge("Z", "W");
         G.add_directed_edge("Y", "X");
-        G.add_directed_edge("W", "Z");
-        G.add_directed_edge("W", "Y");
-        G.add_directed_edge("Z", "Z");
+        G.add_directed_edge("X", "Z");
+        G.add_directed_edge("W", "X");
+        G.add_directed_edge("V", "W");
+        G.add_directed_edge("V", "S");
+        G.add_directed_edge("T", "U");
+        G.add_directed_edge("T", "V");
+        G.add_directed_edge("U", "T");
+        G.add_directed_edge("U", "V");
+
+        std::map<std::string, vertex_search_prop> dfs_results = dfs(G);
+        for (const std::pair<std::string, vertex_search_prop> &p : dfs_results) {
+            if (p.second.parent() != "NIL") {
+                REQUIRE(p.second.end_time() < dfs_results[p.second.parent()].end_time());
+            }
+        }
     }
 
-    SECTION("topological_sort(graph)") {
+    SECTION("Edge Classification") {
+        graph G;
+
+        G.add_vertex("S");
+        G.add_vertex("Z");
+        G.add_vertex("Y");
+        G.add_vertex("X");
+        G.add_vertex("W");
+        G.add_vertex("T");
+        G.add_vertex("V");
+        G.add_vertex("U");
+
+        G.add_directed_edge("S", "Z");
+        G.add_directed_edge("S", "W");
+        G.add_directed_edge("Z", "Y");
+        G.add_directed_edge("Z", "W");
+        G.add_directed_edge("Y", "X");
+        G.add_directed_edge("X", "Z");
+        G.add_directed_edge("W", "X");
+        G.add_directed_edge("V", "W");
+        G.add_directed_edge("V", "S");
+        G.add_directed_edge("T", "U");
+        G.add_directed_edge("T", "V");
+        G.add_directed_edge("U", "T");
+        G.add_directed_edge("U", "V");
+
+        std::map<std::string, edge_type> edge_results = classify_edges(G);
+        std::map<std::string, edge_type> edge_type_to_check = {
+            std::make_pair("S-W", edge_type::forward_or_cross),
+            std::make_pair("S-Z", edge_type::tree),
+            std::make_pair("T-U", edge_type::tree),
+            std::make_pair("T-V", edge_type::forward_or_cross),
+            std::make_pair("U-T", edge_type::back),
+            std::make_pair("U-V", edge_type::tree),
+            std::make_pair("V-S", edge_type::forward_or_cross),
+            std::make_pair("V-W", edge_type::forward_or_cross),
+            std::make_pair("W-X", edge_type::forward_or_cross),
+            std::make_pair("X-Z", edge_type::back),
+            std::make_pair("Y-X", edge_type::tree),
+            std::make_pair("Z-W", edge_type::tree),
+            std::make_pair("Z-Y", edge_type::tree)
+        };
+
+        REQUIRE(edge_results.size() == edge_type_to_check.size());
+        for (const std::pair<std::string, edge_type> &p : edge_results) {
+            REQUIRE(p.second == edge_type_to_check[p.first]);
+        }
     }
 }

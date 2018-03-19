@@ -2,7 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cmath>
-#include "counting.hpp"
+#include "graph_algorithms.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -77,7 +77,10 @@ int main(int argc, char *argv[])
     // G.add_directed_edge("belt", "jacket");
     // G.add_directed_edge("tie", "jacket");
 
-    // topological_sort(G);
+    // std::list<std::string> sorted_ids = topological_sort(G);
+    // for (const std::string &str : sorted_ids) {
+    //     std::cout <<str<<std::endl;
+    // }
 
     // graph G;
 
@@ -246,8 +249,8 @@ int main(int argc, char *argv[])
     // std::cout <<max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
     // max_subsquare_with_sides_as_1((bool *) mat, 5, 5);
 
-    std::vector<int> v10 = {827, -558, 265, -384, -805, 94, -443, -624, 94, 986};
+    // std::vector<int> v10 = {827, -558, 265, -384, -805, 94, -443, -624, 94, 986};
 
-    count_inversions(v10, 0, v10.size() - 1);
+    // count_inversions(v10, 0, v10.size() - 1);
     return 0;
 }
