@@ -41,6 +41,13 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
         REQUIRE(max_subarray.sum() == 6);
         REQUIRE(max_subarray.start_index() == 3);
         REQUIRE(max_subarray.end_index() == 6);
+
+        numbers = { -50, -100, -150, -200, -250 };
+        max_subarray = get_max_subarray_properties(numbers);
+
+        REQUIRE(max_subarray.sum() == -50);
+        REQUIRE(max_subarray.start_index() == 0);
+        REQUIRE(max_subarray.end_index() == 0);
     }
 
     SECTION("Longest Increasing Subsequence Problem") {

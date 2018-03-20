@@ -54,13 +54,13 @@ int ceil_binary_search(const std::vector<interval> &intervals, int low, int high
 
 max_subarray_struct get_max_subarray_properties(std::vector<int> &numbers)
 {
-    int max_global = -1;
-    int max_local = -1;
+    int max_global = numbers[0];
+    int max_local = numbers[0];
 
     size_t max_global_start_index = 0, max_global_end_index = 0;
     size_t max_local_start_index = 0, max_local_end_index = 0;
 
-    for (size_t i = 0; i < numbers.size(); ++i) {
+    for (size_t i = 1; i < numbers.size(); ++i) {
         if (max_local + numbers[i] > numbers[i]) {
             ++max_local_end_index;
             max_local = max_local + numbers[i];
