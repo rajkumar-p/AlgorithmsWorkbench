@@ -131,4 +131,7 @@ size_t max_sub_square_mat_with_0_1(bool *mat, size_t M, size_t N);
 // https://www.youtube.com/watch?v=g8bSdXCG-lA&list=PLrmLmBdmIlpsHaNTPP_jHHDx_os9ItYXr&index=17&t=0s
 size_t max_size_rectangle_in_mat_with_0_1(bool *mat, size_t M, size_t N);
 
+// https://community.topcoder.com/stat?c=problem_statement&pm=2402&rd=5009
+int bad_neighbors(const std::vector<int> &donations);
+
 #endif

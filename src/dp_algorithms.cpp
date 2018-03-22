@@ -93,19 +93,20 @@ std::vector<int> get_longest_increasing_subsequence(std::vector<int> &numbers)
     for (size_t i = 1; i < numbers.size(); ++i) {
         if (numbers[i] > incr_values_list.back()) {
             incr_values_list.push_back(numbers[i]);
-
-            result_table[i] = incr_index_list.back();
             incr_index_list.push_back(i);
+            
+            result_table[i] = incr_index_list[incr_index_list.size() - 2];
+        } else if (numbers[i] < incr_values_list.front()) {
+            incr_values_list[0] = numbers[i];
+            incr_index_list[0] = i;
+
+            result_table[i] = -1;
         } else {
             size_t pos_to_replace = floor_binary_search(incr_values_list, 0, incr_values_list.size() - 1, numbers[i]);
             incr_values_list[pos_to_replace] = numbers[i];
             incr_index_list[pos_to_replace] = i;
 
-            if (pos_to_replace == 0) {
-                result_table[i] = -1;
-            } else {
-                result_table[i] = incr_index_list[pos_to_replace - 1];
-            }
+            result_table[i] = incr_index_list[pos_to_replace - 1];
         }
     }
 
@@ -504,25 +505,25 @@ size_t longest_palindromic_subsequence(const std::string &str)
 
 size_t zig_zag(const std::vector<int> &seq)
 {
-    size_t Z[seq.size()][2];
+    size_t zz_table[seq.size()][2];
 
-    memset(Z, 0, sizeof(Z));
-    Z[0][0] = 1;
-    Z[0][1] = 1;
+    zz_table[0][0] = 1;
+    zz_table[0][1] = 1;
 
     size_t max_length = 1;
     for (size_t i = 1; i < seq.size(); ++i) {
-        for (int j = i - 1; j >= 0; --j) {
+        zz_table[i][0] = zz_table[i][1] = 1;
+        for (size_t j = 0; j < i; ++j) {
             if (seq[i] > seq[j]) {
-                Z[i][0] = std::max(Z[j][1] + 1, Z[i][0]);
+                zz_table[i][0] = std::max(zz_table[i][0], zz_table[j][1] + 1);
             }
 
             if (seq[i] < seq[j]) {
-                Z[i][1] = std::max(Z[j][0] + 1, Z[i][1]);
+                zz_table[i][1] = std::max(zz_table[i][1], zz_table[j][0] + 1);
             }
         }
 
-        max_length = std::max({ max_length, Z[i][0], Z[i][1] });
+        max_length = std::max({ max_length, zz_table[i][0], zz_table[i][1] });
     }
 
     return max_length;
@@ -970,16 +971,23 @@ bool check_interleaving(const std::string &str1, const std::string &str2, const 
 
 int max_sum_non_adj(const std::vector<int> &elements)
 {
-    int inclusive = elements[0];
-    int exclusive = 0;
+    int max_sum = INT32_MIN;
+    if (elements.size() == 1) {
+        max_sum = elements[0];
+    } else if (elements.size() == 2) {
+        max_sum = std::max(elements[0], elements[1]);
+    } else {
+        std::vector<int> opt_table(elements.size() + 1, 0);
 
-    for (size_t i = 1; i < elements.size(); ++i) {
-        int t = inclusive;
-        inclusive = std::max(exclusive + elements[i], inclusive);
-        exclusive = t;
+        opt_table[1] = elements[0];
+        for (size_t i = 2; i < opt_table.size(); ++i) {
+            opt_table[i] = std::max(opt_table[i - 1], opt_table[i - 2] + elements[i - 1]);
+        }
+
+        max_sum = opt_table[elements.size()];
     }
 
-    return std::max(inclusive, exclusive);
+    return max_sum;
 }
 
 size_t max_sub_square_mat_with_0_1(bool *mat, size_t M, size_t N)
@@ -1111,4 +1119,33 @@ size_t get_max_histogram_area_of(const std::vector<size_t> &elements)
     }
 
     return max_area;
+}
+
+int bad_neighbors(const std::vector<int> &donations)
+{
+    int max_donation;
+    if (donations.size() == 1) {
+        max_donation = donations[0];
+    } else if (donations.size() == 2) {
+        max_donation = std::max(donations[0], donations[1]);
+    } else {
+       std::vector<int> opt_table(donations.size(), 0) ;
+       int max1 = INT32_MIN, max2 = INT32_MIN;
+       
+       opt_table[1] = donations[0];
+       for (size_t i = 2; i < opt_table.size(); ++i) {
+           opt_table[i] = std::max(opt_table[i - 1], opt_table[i - 2] + donations[i - 1]);
+       }
+       max1 = std::max(max1, opt_table[donations.size() - 1]);
+
+       opt_table[1] = donations[1];
+       for (size_t i = 2; i < opt_table.size(); ++i) {
+           opt_table[i] = std::max(opt_table[i - 1], opt_table[i - 2] + donations[i]);
+       }
+       max2 = std::max(max2, opt_table[donations.size() - 1]);
+
+       max_donation = std::max(max1, max2);
+    }
+
+    return max_donation;
 }

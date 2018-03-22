@@ -333,6 +333,10 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
 
     SECTION("max_sum_non_adj(elements)") {
         REQUIRE(max_sum_non_adj({ 4, 1, 1, 4, 2, 1 }) == 9);
+        REQUIRE(max_sum_non_adj({ 5, 5, 10, 100, 10, 5 }) == 110);
+        REQUIRE(max_sum_non_adj({ 1, 2, 3 }) == 4);
+        REQUIRE(max_sum_non_adj({ 1, 20, 3 }) == 20);
+        REQUIRE(max_sum_non_adj({ 5,  5, 10, 40, 50, 35 }) == 80);
     }
 
     SECTION("max_sub_square_mat_with_0_1(mat, M, N)") {
@@ -343,5 +347,15 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
     SECTION("max_size_rectangle_in_mat_with_0_1(mat, M, N)") {
         bool mat[4][6] = { { 1, 0, 0, 1, 1, 1 }, { 1, 0, 1, 1, 0, 1 }, { 0, 1, 1, 1, 1, 1 }, { 0, 0, 1, 1, 1, 1 } };
         REQUIRE(max_size_rectangle_in_mat_with_0_1((bool *) mat, 4, 6) == 8);
+    }
+
+    SECTION("bad_neighbors(donations)") {
+        REQUIRE(bad_neighbors({ 10, 3, 2, 5, 7, 8 }) == 19);
+        REQUIRE(bad_neighbors({ 11, 15 }) == 15);
+        REQUIRE(bad_neighbors({ 7, 7, 7, 7, 7, 7, 7 }) == 21);
+        REQUIRE(bad_neighbors({ 1, 2, 3, 4, 5, 1, 2, 3, 4, 5 }) == 16);
+        REQUIRE(bad_neighbors({ 94, 40, 49, 65, 21, 21, 106, 80, 92, 81, 679, 4, 61,  
+                                6, 237, 12, 72, 74, 29, 95, 265, 35, 47, 1, 61, 397,
+                                52, 72, 37, 51, 1, 81, 45, 435, 7, 36, 57, 86, 81, 72 }) == 2926);
     }
 }
