@@ -238,7 +238,7 @@ void mst_prim(graph &G, const std::string source_id, graph &output_tree)
         vertex v;
         v.id = id;
         v.parent = "NIL";
-        v.key = id == source_id ? 0 : INT32_MAX;
+        v.key = id == source_id ? 0 : std::numeric_limits<std::int32_t>::max();
 
         max_pq.push(v);
         visited[id] = false;
@@ -278,7 +278,7 @@ bool bellman_ford(graph &G, std::string source_id, std::map<std::string, vertex_
     G.foreach_vertex([&results] (std::string id) {
         vertex_search_prop vsp;
         vsp.set_parent("NIL");
-        vsp.set_dist_from_root(INT32_MAX);
+        vsp.set_dist_from_root(std::numeric_limits<std::int32_t>::max());
 
         results.emplace(id, vsp);
     });
@@ -318,7 +318,7 @@ std::map<std::string, vertex_search_prop> dag_shortest_path(graph &DAG)
     DAG.foreach_vertex([&results] (std::string id) {
         vertex_search_prop vsp;
         vsp.set_parent("NIL");
-        vsp.set_dist_from_root(INT32_MAX);
+        vsp.set_dist_from_root(std::numeric_limits<std::int32_t>::max());
 
         results.emplace(id, vsp);
     });
@@ -358,7 +358,7 @@ std::map<std::string, vertex_search_prop> djikstra(graph &G, std::string source_
         vertex v;
         v.id = id;
         v.parent = "NIL";
-        v.key = id == source_id ? 0 : INT32_MAX;
+        v.key = id == source_id ? 0 : std::numeric_limits<std::int32_t>::max();
 
         max_pq.push(v);
         visited[id] = false;

@@ -74,31 +74,31 @@ TEST_CASE("Checking Dynamic Programming Algorithms", "[Dynamic Programming Algor
     }
 
     SECTION("cut_rod(len_and_prices, n) tests") {
-        std::vector<std::pair<size_t, size_t>> len_and_prices;
-        std::vector<std::pair<size_t, size_t>> cuts;
-        std::vector<std::pair<size_t, size_t>> result_to_check;
+        std::map<size_t, size_t> len_and_prices;
+        std::vector<std::tuple<size_t, size_t>> cuts;
+        std::vector<std::tuple<size_t, size_t>> result_to_check;
 
         len_and_prices = { {1, 1}, {2, 5},{3, 8}, {4, 9}, {5, 10}, {6, 17}, {7, 17}, {8, 20}, {9, 24}, {10, 30} };
 
         result_to_check = { {2, 5}, {2, 5} };
         cuts = cut_rod(len_and_prices, 4);
         for (size_t i = 0; i < result_to_check.size(); ++i) {
-            REQUIRE(result_to_check[i].first == cuts[i].first);
-            REQUIRE(result_to_check[i].second == cuts[i].second);
+            REQUIRE(std::get<0>(result_to_check[i]) == std::get<0>(cuts[i]));
+            REQUIRE(std::get<1>(result_to_check[i]) == std::get<1>(cuts[i]));
         }
 
         result_to_check = { {6, 17}, {2, 5} };
         cuts = cut_rod(len_and_prices, 8);
         for (size_t i = 0; i < result_to_check.size(); ++i) {
-            REQUIRE(result_to_check[i].first == cuts[i].first);
-            REQUIRE(result_to_check[i].second == cuts[i].second);
+            REQUIRE(std::get<0>(result_to_check[i]) == std::get<0>(cuts[i]));
+            REQUIRE(std::get<1>(result_to_check[i]) == std::get<1>(cuts[i]));
         }
 
         result_to_check = { {10, 30} };
         cuts = cut_rod(len_and_prices, 10);
         for (size_t i = 0; i < result_to_check.size(); ++i) {
-            REQUIRE(result_to_check[i].first == cuts[i].first);
-            REQUIRE(result_to_check[i].second == cuts[i].second);
+            REQUIRE(std::get<0>(result_to_check[i]) == std::get<0>(cuts[i]));
+            REQUIRE(std::get<1>(result_to_check[i]) == std::get<1>(cuts[i]));
         }
     }
 

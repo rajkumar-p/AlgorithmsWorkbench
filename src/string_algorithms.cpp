@@ -474,8 +474,8 @@ int stoi(std::string digits)
     }
 
     if (neg) { sum = -sum; }
-    if (neg && sum < INT32_MIN) { return INT32_MIN; }
-    if (!neg && sum > INT32_MAX) { return INT32_MAX; }
+    if (neg && sum < std::numeric_limits<std::int32_t>::min()) { return std::numeric_limits<std::int32_t>::min(); }
+    if (!neg && sum > std::numeric_limits<std::int32_t>::max()) { return std::numeric_limits<std::int32_t>::max(); }
 
     return sum;
 }
@@ -554,7 +554,7 @@ size_t length_of_last_word(const std::string &str)
 
 std::string longest_common_prefix(const std::vector<std::string> &strs)
 {
-    size_t min_len_of_all_strings = INT32_MAX;
+    size_t min_len_of_all_strings = std::numeric_limits<std::int32_t>::max();
     for (const std::string &s : strs) {
         min_len_of_all_strings = std::min(min_len_of_all_strings, s.length());
     }
@@ -577,7 +577,7 @@ std::string min_window_substring(const std::string &str, const std::string &subs
 {
     std::map<char, size_t> nchars_in_substr_to_find;
     std::map<char, size_t> nchars_in_str_found;
-    size_t min_win_length = INT32_MAX;
+    size_t min_win_length = std::numeric_limits<std::int32_t>::max();
 
     for (const char &c : substr) {
         if (nchars_in_substr_to_find.find(c) == nchars_in_substr_to_find.end()) {

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 /**
  * [Weighted Interval Scheduling] *
@@ -51,7 +52,7 @@ max_subarray_struct get_max_subarray_properties(std::vector<int> &numbers);
 std::vector<int> get_longest_increasing_subsequence(std::vector<int> &numbers);
 
 // http://www.radford.edu/~nokie/classes/360/dp-rod-cutting.html
-std::vector<std::pair<size_t, size_t>> cut_rod(std::vector<std::pair<size_t, size_t>> &len_and_prices, size_t n);
+std::vector<std::tuple<size_t, size_t>> cut_rod(std::map<size_t, size_t> &len_and_prices, size_t n);
 
 // https://www.geeksforgeeks.org/dynamic-programming-set-7-coin-change/
 size_t min_coin_change(std::vector<size_t> &coins, size_t sum);

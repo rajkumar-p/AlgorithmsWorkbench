@@ -1,9 +1,9 @@
 #include "dp_algorithms.hpp"
 #include <algorithm>
 #include <iostream>
-#include <map>
 #include <stack>
 #include <numeric>
+#include <limits>
 
 size_t weighted_interval_scheduling(const std::vector<interval> &intervals)
 {
@@ -139,28 +139,28 @@ size_t floor_binary_search(std::vector<int> &numbers, int low, int high, int key
     return low;
 }
 
-std::vector<std::pair<size_t, size_t>> cut_rod(std::vector<std::pair<size_t, size_t>> &len_and_prices, size_t n)
+std::vector<std::tuple<size_t, size_t>> cut_rod(std::map<size_t, size_t> &len_and_prices, size_t n)
 {
     std::vector<size_t> opt_table(n + 1, 0);
     std::vector<size_t> sol_table(n + 1, 0);
 
-    for (size_t i = 0; i < len_and_prices.size(); ++i) {
-        size_t i_len = len_and_prices[i].first;
-        size_t i_price = len_and_prices[i].second;
+    for (const std::pair<size_t, size_t> &len_and_price : len_and_prices) {
+        size_t i_len = len_and_price.first;
+        size_t i_price = len_and_price.second;
 
         for (size_t j = i_len; j <= n; ++j) {
-            if (opt_table[j] < i_price + opt_table[j - i_len]) {
+            if (i_price + opt_table[j - i_len] > opt_table[j]) {
                 opt_table[j] = i_price + opt_table[j - i_len];
-                sol_table[j] = i;
+                sol_table[j] = i_len;
             }
         }
     }
 
-    std::vector<std::pair<size_t, size_t>> cuts;
+    std::vector<std::tuple<size_t, size_t>> cuts;
     size_t result_index = n;
     while (result_index > 0) {
-        cuts.push_back(len_and_prices[sol_table[result_index]]);
-        result_index -= len_and_prices[sol_table[result_index]].first;
+        cuts.push_back(std::make_tuple(sol_table[result_index], len_and_prices[sol_table[result_index]]));
+        result_index -= sol_table[result_index];
     }
 
     return cuts;
@@ -168,11 +168,11 @@ std::vector<std::pair<size_t, size_t>> cut_rod(std::vector<std::pair<size_t, siz
 
 size_t min_coin_change(std::vector<size_t> &coins, size_t sum)
 {
-    std::vector<size_t> opt_table(sum + 1, INT32_MAX);
+    std::vector<size_t> opt_table(sum + 1, std::numeric_limits<std::int32_t>::max());
 
     opt_table[0] = 0;
     for (size_t i = 0; i < coins.size(); ++i) {
-        for (size_t j = i; j <= sum; ++j) {
+        for (size_t j = coins[i]; j <= sum; ++j) {
             if (opt_table[j] > 1 + opt_table[j - coins[i]]) {
                 opt_table[j] = 1 + opt_table[j - coins[i]];
             }
@@ -295,7 +295,7 @@ size_t matrix_chain_mul(const std::vector<size_t> &dims)
     for (size_t chain_len = 2; chain_len < N; ++chain_len) {
         for (size_t i = 1; i < N - chain_len + 1; i++) {
             size_t j = i + chain_len - 1;
-            opt_table[i][j] = INT32_MAX;
+            opt_table[i][j] = std::numeric_limits<std::int32_t>::max();
 
             for (size_t k = i; k <= j - 1; ++k) {
                 size_t val = opt_table[i][k] + opt_table[k+1][j] + dims[i - 1] * dims[k] * dims[j];
@@ -338,7 +338,7 @@ std::tuple<size_t, size_t> min_and_max_of_expr(const std::string expr) {
     {
         for (size_t j = 0; j < N; ++j)
         {
-            min[i][j] = INT32_MAX;
+            min[i][j] = std::numeric_limits<std::int32_t>::max();
             max[i][j] = 0;
  
             if (i == j)
@@ -597,12 +597,12 @@ std::tuple<size_t, std::vector<std::string>> text_justification(const std::vecto
             if (slack >= 0) {
                 cost[i][j] = slack * slack;
             } else {
-                cost[i][j] = INT32_MAX;
+                cost[i][j] = std::numeric_limits<std::int32_t>::max();
             }
         }
     }
 
-    std::vector<size_t> opt_table(words.size(), INT32_MAX);
+    std::vector<size_t> opt_table(words.size(), std::numeric_limits<std::int32_t>::max());
     std::vector<int> sol_table(words.size(), -1);
 
     for (size_t j = 0; j < words.size(); ++j) {
@@ -660,7 +660,7 @@ std::vector<std::vector<size_t>> partition_elements_into_k_subsets(const std::ve
 
     for (size_t i = 1; i < K + 1; ++i) {
         for (size_t j = 1; j < N + 1; ++j) {
-            sum[i][j] = INT32_MAX;
+            sum[i][j] = std::numeric_limits<std::int32_t>::max();
         }
     }
 
@@ -728,7 +728,7 @@ size_t partition_into_two_subsets(const std::vector<size_t> &elements)
         }
     }
 
-    size_t diff = INT32_MAX;
+    size_t diff = std::numeric_limits<std::int32_t>::max();
     for (int j = sum / 2; j >= 0; ++j) {
         if (part[M][j] == true) {
             diff = sum - 2*j;
@@ -904,7 +904,7 @@ std::vector<size_t> min_jumps_to_reach_end(const std::vector<int> &elements)
 
     jumps_table[0] = 0;
     for (size_t i = 1; i < elements.size(); ++i) {
-        jumps_table[i] = INT32_MAX;
+        jumps_table[i] = std::numeric_limits<std::int32_t>::max();
         for (size_t j = 0; j < i; ++j) {
             bool can_jump = (i - j) <= elements[j];
             if (can_jump && jumps_table[j] + 1 < jumps_table[i]) {
@@ -971,7 +971,7 @@ bool check_interleaving(const std::string &str1, const std::string &str2, const 
 
 int max_sum_non_adj(const std::vector<int> &elements)
 {
-    int max_sum = INT32_MIN;
+    int max_sum = std::numeric_limits<std::int32_t>::min();
     if (elements.size() == 1) {
         max_sum = elements[0];
     } else if (elements.size() == 2) {
@@ -1130,7 +1130,7 @@ int bad_neighbors(const std::vector<int> &donations)
         max_donation = std::max(donations[0], donations[1]);
     } else {
        std::vector<int> opt_table(donations.size(), 0) ;
-       int max1 = INT32_MIN, max2 = INT32_MIN;
+       int max1 = std::numeric_limits<std::int32_t>::min(), max2 = std::numeric_limits<std::int32_t>::min();
        
        opt_table[1] = donations[0];
        for (size_t i = 2; i < opt_table.size(); ++i) {
